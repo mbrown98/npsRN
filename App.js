@@ -18,8 +18,9 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from './components/Home';
 import Details from './components/Details';
 import Liked from './components/Liked';
-import Profile from './components/Profile';
+
 import colors from './assets/colors/colors';
+import {Profile} from './pages';
 
 Entypo.loadFont();
 MaterialCommunityIcons.loadFont();
