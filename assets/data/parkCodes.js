@@ -3,11 +3,12 @@ const parkCodes = [
     code: 'yell',
   },
   {
-    code: 'acad',
+    code: 'yose',
   },
   {
-    code: 'adam',
+    code: 'acad',
   },
+
   {
     code: 'afam',
   },
