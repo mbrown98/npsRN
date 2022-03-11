@@ -1,10 +1,12 @@
 import React from 'react';
-import colors from './assets/colors/colors';
 import {View, Text, StyleSheet} from 'react-native';
-import Home from './components/Home';
-import Details from './components/Details';
-import Liked from './components/Liked';
-import Profile from './components/Profile';
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
 
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -12,6 +14,12 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+
+import Home from './components/Home';
+import Details from './components/Details';
+import Liked from './components/Liked';
+import Profile from './components/Profile';
+import colors from './assets/colors/colors';
 
 Entypo.loadFont();
 MaterialCommunityIcons.loadFont();
@@ -59,21 +67,27 @@ const TabNavigator = () => {
     </Tab.Navigator>
   );
 };
+
+// Create a client
+const queryClient = new QueryClient();
+
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="TabNavigator"
-          component={TabNavigator}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Details"
-          component={Details}
-          options={{headerShown: false}}
-        />
-      </Stack.Navigator>
+      <QueryClientProvider client={queryClient}>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="TabNavigator"
+            component={TabNavigator}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Details"
+            component={Details}
+            options={{headerShown: false}}
+          />
+        </Stack.Navigator>
+      </QueryClientProvider>
     </NavigationContainer>
   );
 }
