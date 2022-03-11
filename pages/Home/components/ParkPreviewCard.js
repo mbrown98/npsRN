@@ -11,13 +11,15 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import useParkByID from '../../../api/hooks/useParkByID';
 import colors from '../../../assets/colors/colors';
 
 Entypo.loadFont();
 
-export default function ParkPreviewCard({navigation, item}) {
+export default function ParkPreviewCard({item}) {
+  const navigation = useNavigation();
   const {
     index,
     item: {code},
@@ -36,7 +38,7 @@ export default function ParkPreviewCard({navigation, item}) {
 
   console.log('iamgesss', images[0].url);
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate('Park', {code})}>
       <ImageBackground
         source={{uri: images[0].url}}
         style={[styles.discoverItem, {marginLeft: !index ? 20 : 0}]}

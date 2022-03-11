@@ -79,7 +79,7 @@ export default function App() {
             options={{headerShown: false}}
           />
           <Stack.Screen
-            name="Details"
+            name="Park"
             component={Park}
             options={{headerShown: false}}
           />
