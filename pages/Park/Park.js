@@ -7,15 +7,15 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import colors from '../assets/colors/colors';
+import colors from '../../assets/colors/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
-import usePosts from '../api/hooks/usePosts';
-import useParkByID from '../api/hooks/useParkByID';
+
+import useParkByID from '../../api/hooks/useParkByID';
 
 Entypo.loadFont();
 const height = Dimensions.get('window').height;
 
-export default function Details({
+export default function Park({
   navigation,
   route: {
     params: {item},

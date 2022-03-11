@@ -11,14 +11,14 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-import colors from '../assets/colors/colors';
-import profile from '../assets/images/person.png';
+
+import profile from '../../assets/images/person.png';
 import Feather from 'react-native-vector-icons/Feather';
 import Entypo from 'react-native-vector-icons/Entypo';
-import activitiesData from '../assets/data/activitiesData';
-import discoverCategoriesData from '../assets/data/discoverCategoriesData';
-import learnMoreData from '../assets/data/learnMoreData';
-import discoverData from '../assets/data/discoverData';
+import activitiesData from '../../assets/data/activitiesData';
+import learnMoreData from '../../assets/data/learnMoreData';
+import discoverData from '../../assets/data/discoverData';
+import colors from '../../assets/colors/colors';
 
 Feather.loadFont();
 Entypo.loadFont();

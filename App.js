@@ -15,12 +15,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import Home from './components/Home';
-import Details from './components/Details';
-import Liked from './components/Liked';
-
 import colors from './assets/colors/colors';
-import {Profile} from './pages';
+import {Profile, Favorites, Home, Park} from './pages';
 
 Entypo.loadFont();
 MaterialCommunityIcons.loadFont();
@@ -48,8 +44,8 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Liked"
-        component={Liked}
+        name="Favorites"
+        component={Favorites}
         options={{
           tabBarIcon: ({color}) => (
             <Entypo name="heart" size={32} color={color} />
@@ -84,7 +80,7 @@ export default function App() {
           />
           <Stack.Screen
             name="Details"
-            component={Details}
+            component={Park}
             options={{headerShown: false}}
           />
         </Stack.Navigator>
