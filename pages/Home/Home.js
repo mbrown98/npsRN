@@ -17,32 +17,14 @@ import Feather from 'react-native-vector-icons/Feather';
 import Entypo from 'react-native-vector-icons/Entypo';
 import activitiesData from '../../assets/data/activitiesData';
 import learnMoreData from '../../assets/data/learnMoreData';
-import discoverData from '../../assets/data/discoverData';
+import parkCodes from '../../assets/data/parkCodes';
 import colors from '../../assets/colors/colors';
+import ParkPreviewCard from './components/ParkPreviewCard';
 
 Feather.loadFont();
 Entypo.loadFont();
 
 export default function Home({navigation}) {
-  const renderDiscoveryItem = ({item}) => (
-    <TouchableOpacity
-      onPress={() => navigation.navigate('Details', {item: item})}>
-      <ImageBackground
-        source={item.image}
-        style={[
-          styles.discoverItem,
-          {marginLeft: item.id === 'discover-1' ? 20 : 0},
-        ]}
-        imageStyle={styles.discoverItemImage}>
-        <Text style={styles.discoverItemTitle}>{item.title}</Text>
-        <View style={styles.discoverItemLocationWrapper}>
-          <Entypo name="location-pin" size={18} color={colors.white} />
-          <Text style={styles.discoverItemLocationText}>{item.location}</Text>
-        </View>
-      </ImageBackground>
-    </TouchableOpacity>
-  );
-
   const renderActivityItem = ({item}) => (
     <View
       style={[
@@ -95,9 +77,12 @@ export default function Home({navigation}) {
 
           <View style={styles.discoverItemsWrapper}>
             <FlatList
-              data={discoverData}
-              renderItem={renderDiscoveryItem}
-              keyExtractor={item => item.id}
+              data={parkCodes}
+              renderItem={item => {
+                console.log('DDDDD', item);
+                return <ParkPreviewCard item={item} />;
+              }}
+              keyExtractor={item => item.code}
               horizontal
               showScroll={false}
             />
