@@ -7,34 +7,44 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import colors from '../assets/colors/colors';
+import colors from '../../assets/colors/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
-import usePosts from '../api/hooks/usePosts';
-import useParkByID from '../api/hooks/useParkByID';
+
+import useParkByID from '../../api/hooks/useParkByID';
 
 Entypo.loadFont();
 const height = Dimensions.get('window').height;
 
-export default function Details({
+export default function Park({
   navigation,
   route: {
-    params: {item},
+    params: {code},
   },
 }) {
-  const {data, isLoading, isSuccess} = useParkByID('tt');
+  const {data, isLoading, isSuccess} = useParkByID(code);
+  if (!data) return null;
+
+  const {images, fullName, name, addresses, description} = data;
+  const {city, stateCode} = addresses[0];
+
   return (
     <View style={styles.container}>
-      <ImageBackground source={item.imageBig} style={styles.backgroundImage}>
+      <ImageBackground
+        source={{uri: images[0].url}}
+        style={styles.backgroundImage}>
         <TouchableOpacity
           style={styles.backIcon}
           onPress={() => navigation.goBack()}>
           <Entypo name="chevron-left" color={colors.white} size={32} />
         </TouchableOpacity>
         <View style={styles.titleWrapper}>
-          <Text style={styles.itemTitle}>{item.title}</Text>
+          <Text style={styles.itemTitle}>{fullName}</Text>
           <View style={styles.locationWrapper}>
             <Entypo name="location-pin" color={colors.white} size={24} />
-            <Text style={styles.locationText}>{item.location}</Text>
+            <Text style={styles.locationText}>
+              {' '}
+              {city}, {stateCode}
+            </Text>
           </View>
         </View>
       </ImageBackground>
@@ -44,9 +54,7 @@ export default function Details({
         </View>
         <View style={styles.descriptionTextWrapper}>
           <Text style={styles.descriptionTitle}>Description</Text>
-          <Text style={styles.descriptionText}>
-            {data && JSON.stringify(data)}
-          </Text>
+          <Text style={styles.descriptionText}>{description}</Text>
         </View>
       </View>
     </View>
@@ -122,6 +130,5 @@ const styles = StyleSheet.create({
     fontFamily: 'Lato-Regular',
     fontSize: 16,
     color: colors.darkGray,
-    height: 85,
   },
 });

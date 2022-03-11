@@ -6,12 +6,13 @@ const NPS_URL_BASE = 'https://developer.nps.gov/api/v1';
 const K = 'xVDrllRsZGSuU1sLpzu687U6R8bZG9NpU4W2wwSM';
 
 const fetchParkData = async parkId => {
-  const query = `/parks?parkCode=abli`;
+  console.log('PPPPPP', parkId);
+  const query = `/parks?parkCode=${parkId}`;
   const URL = `${NPS_URL_BASE}${query}?&api_key=${K}`;
   const {data} = await axios.get(`${URL}`);
-  return data;
+  return data.data[0];
 };
 
 const useParkByID = parkId =>
-  useQuery(['posts', parkId], () => fetchParkData(parkId));
+  useQuery(['park', parkId], () => fetchParkData(parkId));
 export default useParkByID;
