@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import colors from '../assets/colors/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
+import usePosts from '../api/hooks/usePosts';
 
 Entypo.loadFont();
 const height = Dimensions.get('window').height;
@@ -19,6 +20,7 @@ export default function Details({
     params: {item},
   },
 }) {
+  const {data, isLoading, isSuccess} = usePosts();
   return (
     <View style={styles.container}>
       <ImageBackground source={item.imageBig} style={styles.backgroundImage}>
@@ -41,7 +43,9 @@ export default function Details({
         </View>
         <View style={styles.descriptionTextWrapper}>
           <Text style={styles.descriptionTitle}>Description</Text>
-          <Text style={styles.descriptionText}>{item.description}</Text>
+          <Text style={styles.descriptionText}>
+            {data && JSON.stringify(data)}
+          </Text>
         </View>
       </View>
     </View>
