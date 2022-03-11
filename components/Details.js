@@ -39,6 +39,10 @@ export default function Details({
         <View style={styles.heartWrapper}>
           <Entypo name="heart" color={colors.orange} size={32} />
         </View>
+        <View style={styles.descriptionTextWrapper}>
+          <Text style={styles.descriptionTitle}>Description</Text>
+          <Text style={styles.descriptionText}>{item.description}</Text>
+        </View>
       </View>
     </View>
   );
@@ -101,5 +105,18 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
 
     elevation: 5,
+  },
+  descriptionTextWrapper: {marginTop: 30, marginHorizontal: 20},
+  descriptionTitle: {
+    fontFamily: 'Lato-Bold',
+    fontSize: 24,
+    color: colors.black,
+  },
+  descriptionText: {
+    marginTop: 20,
+    fontFamily: 'Lato-Regular',
+    fontSize: 16,
+    color: colors.darkGray,
+    height: 85,
   },
 });
