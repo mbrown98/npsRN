@@ -10,6 +10,7 @@ import {
 import colors from '../assets/colors/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
 import usePosts from '../api/hooks/usePosts';
+import useParkByID from '../api/hooks/useParkByID';
 
 Entypo.loadFont();
 const height = Dimensions.get('window').height;
@@ -20,7 +21,7 @@ export default function Details({
     params: {item},
   },
 }) {
-  const {data, isLoading, isSuccess} = usePosts();
+  const {data, isLoading, isSuccess} = useParkByID('tt');
   return (
     <View style={styles.container}>
       <ImageBackground source={item.imageBig} style={styles.backgroundImage}>
