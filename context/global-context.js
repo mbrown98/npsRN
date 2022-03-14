@@ -20,7 +20,24 @@ const GlobalProvider = ({...props}) => {
     });
   }, []);
 
-  return <GlobalContext.Provider value={{onboardComplete}} {...props} />;
+  useEffect(() => {
+    AsyncStorage.getItem('ONBOARD_COMPLETE').then(value => {
+      setOnboardComplete(!!value);
+    });
+  }, [onboardComplete]);
+
+  useEffect(() => {
+    if (onboardComplete) {
+      AsyncStorage.setItem('ONBOARD_COMPLETE', 'COMPLETE');
+    }
+  }, [onboardComplete]);
+
+  return (
+    <GlobalContext.Provider
+      value={{onboardComplete, setOnboardComplete}}
+      {...props}
+    />
+  );
 };
 
 export {GlobalProvider, useGlobal};

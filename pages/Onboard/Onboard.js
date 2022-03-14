@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Image, Dimensions, Text, View} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Swiper from 'react-native-swiper';
@@ -9,14 +9,23 @@ import {useGlobal} from '../../context/global-context';
 
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
+const {zion, olympic, bryce, yosemite} = IMAGES.onboard;
 
 Entypo.loadFont();
 
 export default function Onboard() {
-  const {zion, olympic, bryce, yosemite} = IMAGES.onboard;
-  const {name} = useGlobal();
+  const [onFinal, setOnFinal] = useState(false);
+  const {name, setOnboardComplete} = useGlobal();
   return (
     <Swiper
+      autoplay={false}
+      onIndexChanged={index => {
+        if (onFinal) {
+          setOnboardComplete(true);
+        }
+        index === 3 ? setOnFinal(true) : setOnFinal(false);
+      }}
+      on
       buttonWrapperStyle={buttonWrapperStyle}
       style={styles.wrapper}
       showsButtons={true}
@@ -40,9 +49,9 @@ export default function Onboard() {
         <Image source={bryce} style={styles.img} />
         <Text style={styles.title}>Travel</Text>
         <Text style={styles.text}>
-          {name} Lorem Ipsum is simply dummy text of the printing and
-          typesetting industry. Lorem Ipsum has been the industry's standard
-          dummy text ever since the 1500s.
+          Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry. Lorem Ipsum has been the industry's standard dummy text ever
+          since the 1500s.
         </Text>
       </View>
       <View style={styles.slide}>
