@@ -26,7 +26,7 @@ Feather.loadFont();
 Entypo.loadFont();
 
 export default function Home({navigation}) {
-  const {name} = useGlobal();
+  const {name, onboardComplete} = useGlobal();
   const renderActivityItem = ({item}) => (
     <View
       style={[
@@ -66,7 +66,9 @@ export default function Home({navigation}) {
         </SafeAreaView>
         {/* Discover */}
         <View style={styles.discoverWrapper}>
-          <Text style={styles.discoverTitle}>Discover {name}</Text>
+          <Text style={styles.discoverTitle}>
+            Discover {onboardComplete ? 'T' : 'F'}
+          </Text>
           <View style={styles.discoverCategoriesWrapper}>
             <Text
               style={[styles.discoverCategoriesText, {color: colors.orange}]}>

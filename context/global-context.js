@@ -15,14 +15,18 @@ const GlobalProvider = ({...props}) => {
   const [onboardComplete, setOnboardComplete] = useState(false);
 
   useEffect(() => {
-    AsyncStorage.getItem('DEMO_APP::COUNT_VALUE').then(value => {
-      if (value) {
-        console.log('valueeee', value);
-      }
+    console.log('runbnonggg');
+    AsyncStorage.getItem('ONBOARD_COMPLETE').then(value => {
+      setOnboardComplete(!!value);
     });
   }, []);
 
-  return <GlobalContext.Provider value={{name: 'matt'}} {...props} />;
+  return (
+    <GlobalContext.Provider
+      value={{name: 'matt', onboardComplete}}
+      {...props}
+    />
+  );
 };
 
 export {GlobalProvider, useGlobal};
