@@ -14,18 +14,9 @@ const {zion, olympic, bryce, yosemite} = IMAGES.onboard;
 Entypo.loadFont();
 
 export default function Onboard() {
-  const [onFinal, setOnFinal] = useState(false);
   const {name, setOnboardComplete} = useGlobal();
   return (
     <Swiper
-      autoplay={false}
-      onIndexChanged={index => {
-        if (onFinal) {
-          setOnboardComplete(true);
-        }
-        index === 3 ? setOnFinal(true) : setOnFinal(false);
-      }}
-      on
       buttonWrapperStyle={buttonWrapperStyle}
       style={styles.wrapper}
       showsButtons={true}
@@ -75,7 +66,7 @@ export default function Onboard() {
       </View>
       <View style={styles.slide}>
         <Image source={yosemite} style={styles.img} />
-        <Text style={styles.title}>Welcome</Text>
+        <Text style={styles.title}>Welcome {index}</Text>
         <Text style={styles.text}>
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever

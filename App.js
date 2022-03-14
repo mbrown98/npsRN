@@ -72,7 +72,11 @@ const queryClient = new QueryClient();
 export default function App() {
   const {onboardComplete} = useGlobal();
 
-  if (!onboardComplete) {
+  if (onboardComplete === null) {
+    return null;
+  }
+
+  if (onboardComplete === 'NOT_COMPLETE') {
     return <Onboard />;
   }
   return (

@@ -16,15 +16,13 @@ const GlobalProvider = ({...props}) => {
 
   useEffect(() => {
     AsyncStorage.getItem('ONBOARD_COMPLETE').then(value => {
-      setOnboardComplete(!!value);
+      if (!value) {
+        setOnboardComplete('NOT_COMPLETE');
+      } else {
+        setOnboardComplete('COMPLETE');
+      }
     });
   }, []);
-
-  useEffect(() => {
-    AsyncStorage.getItem('ONBOARD_COMPLETE').then(value => {
-      setOnboardComplete(!!value);
-    });
-  }, [onboardComplete]);
 
   useEffect(() => {
     if (onboardComplete) {
