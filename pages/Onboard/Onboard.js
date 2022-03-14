@@ -1,18 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Image, Dimensions, Text, View} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Swiper from 'react-native-swiper';
 import colors from '../../assets/colors/colors';
 import {IMAGES} from '../../assets/images';
+import {useGlobal} from '../../context/global-context';
 // import AppLoading from "expo-app-loading";
 
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
+const {zion, olympic, bryce, yosemite} = IMAGES.onboard;
 
 Entypo.loadFont();
 
 export default function Onboard() {
-  const {zion, olympic, bryce, yosemite} = IMAGES.onboard;
+  const {name, setOnboardComplete} = useGlobal();
   return (
     <Swiper
       buttonWrapperStyle={buttonWrapperStyle}
@@ -64,7 +66,7 @@ export default function Onboard() {
       </View>
       <View style={styles.slide}>
         <Image source={yosemite} style={styles.img} />
-        <Text style={styles.title}>Welcome</Text>
+        <Text style={styles.title}>Welcome {index}</Text>
         <Text style={styles.text}>
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever

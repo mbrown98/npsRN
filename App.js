@@ -17,6 +17,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import colors from './assets/colors/colors';
 import {Profile, Favorites, Home, Park, Onboard} from './pages';
+import {GlobalProvider, useGlobal} from './context/global-context';
 
 Entypo.loadFont();
 MaterialCommunityIcons.loadFont();
@@ -69,7 +70,13 @@ const TabNavigator = () => {
 const queryClient = new QueryClient();
 
 export default function App() {
-  if (true) {
+  const {onboardComplete} = useGlobal();
+
+  if (onboardComplete === null) {
+    return null;
+  }
+
+  if (onboardComplete === 'NOT_COMPLETE') {
     return <Onboard />;
   }
   return (
