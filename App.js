@@ -16,7 +16,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import colors from './assets/colors/colors';
-import {Profile, Favorites, Home, Park} from './pages';
+import {Profile, Favorites, Home, Park, Onboard} from './pages';
 
 Entypo.loadFont();
 MaterialCommunityIcons.loadFont();
@@ -69,6 +69,9 @@ const TabNavigator = () => {
 const queryClient = new QueryClient();
 
 export default function App() {
+  if (true) {
+    return <Onboard />;
+  }
   return (
     <NavigationContainer>
       <QueryClientProvider client={queryClient}>
@@ -81,6 +84,11 @@ export default function App() {
           <Stack.Screen
             name="Park"
             component={Park}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Onboard"
+            component={Onboard}
             options={{headerShown: false}}
           />
         </Stack.Navigator>
