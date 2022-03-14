@@ -6,6 +6,7 @@ import {
   ImageBackground,
   Dimensions,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import colors from '../../assets/colors/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -22,13 +23,18 @@ export default function Park({
   },
 }) {
   const {data, isLoading, isSuccess} = useParkByID(code);
-  if (!data) return null;
+  if (isLoading)
+    return (
+      <View>
+        <Text>Loading</Text>
+      </View>
+    );
 
   const {images, fullName, name, addresses, description} = data;
   const {city, stateCode} = addresses[0];
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <ImageBackground
         source={{uri: images[0].url}}
         style={styles.backgroundImage}>
@@ -42,7 +48,6 @@ export default function Park({
           <View style={styles.locationWrapper}>
             <Entypo name="location-pin" color={colors.white} size={24} />
             <Text style={styles.locationText}>
-              {' '}
               {city}, {stateCode}
             </Text>
           </View>
@@ -57,7 +62,7 @@ export default function Park({
           <Text style={styles.descriptionText}>{description}</Text>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

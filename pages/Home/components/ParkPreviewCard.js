@@ -27,8 +27,6 @@ export default function ParkPreviewCard({item}) {
 
   const {data, isLoading, isSuccess} = useParkByID(code);
 
-  index === 0 && console.log(data);
-
   if (!data) {
     return null;
   }
@@ -36,7 +34,6 @@ export default function ParkPreviewCard({item}) {
 
   const {city, stateCode} = addresses[0];
 
-  console.log('iamgesss', images[0].url);
   return (
     <TouchableOpacity onPress={() => navigation.navigate('Park', {code})}>
       <ImageBackground

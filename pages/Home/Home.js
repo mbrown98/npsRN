@@ -79,7 +79,6 @@ export default function Home({navigation}) {
             <FlatList
               data={parkCodes}
               renderItem={item => {
-                console.log('DDDDD', item);
                 return <ParkPreviewCard item={item} />;
               }}
               keyExtractor={item => item.code}
