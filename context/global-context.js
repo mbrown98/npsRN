@@ -15,18 +15,12 @@ const GlobalProvider = ({...props}) => {
   const [onboardComplete, setOnboardComplete] = useState(false);
 
   useEffect(() => {
-    console.log('runbnonggg');
     AsyncStorage.getItem('ONBOARD_COMPLETE').then(value => {
       setOnboardComplete(!!value);
     });
   }, []);
 
-  return (
-    <GlobalContext.Provider
-      value={{name: 'matt', onboardComplete}}
-      {...props}
-    />
-  );
+  return <GlobalContext.Provider value={{onboardComplete}} {...props} />;
 };
 
 export {GlobalProvider, useGlobal};

@@ -17,7 +17,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import colors from './assets/colors/colors';
 import {Profile, Favorites, Home, Park, Onboard} from './pages';
-import {GlobalProvider} from './context/global-context';
+import {GlobalProvider, useGlobal} from './context/global-context';
 
 Entypo.loadFont();
 MaterialCommunityIcons.loadFont();
@@ -70,30 +70,33 @@ const TabNavigator = () => {
 const queryClient = new QueryClient();
 
 export default function App() {
+  const {onboardComplete} = useGlobal();
+
+  if (!onboardComplete) {
+    return <Onboard />;
+  }
   return (
-    <GlobalProvider>
-      <NavigationContainer>
-        <QueryClientProvider client={queryClient}>
-          <Stack.Navigator>
-            <Stack.Screen
-              name="TabNavigator"
-              component={TabNavigator}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="Park"
-              component={Park}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="Onboard"
-              component={Onboard}
-              options={{headerShown: false}}
-            />
-          </Stack.Navigator>
-        </QueryClientProvider>
-      </NavigationContainer>
-    </GlobalProvider>
+    <NavigationContainer>
+      <QueryClientProvider client={queryClient}>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="TabNavigator"
+            component={TabNavigator}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Park"
+            component={Park}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Onboard"
+            component={Onboard}
+            options={{headerShown: false}}
+          />
+        </Stack.Navigator>
+      </QueryClientProvider>
+    </NavigationContainer>
   );
 }
 
