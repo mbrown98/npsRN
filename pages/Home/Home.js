@@ -20,11 +20,13 @@ import learnMoreData from '../../assets/data/learnMoreData';
 import parkCodes from '../../assets/data/parkCodes';
 import colors from '../../assets/colors/colors';
 import ParkPreviewCard from './components/ParkPreviewCard';
+import {useGlobal} from '../../context/global-context';
 
 Feather.loadFont();
 Entypo.loadFont();
 
 export default function Home({navigation}) {
+  const {name} = useGlobal();
   const renderActivityItem = ({item}) => (
     <View
       style={[
@@ -64,7 +66,7 @@ export default function Home({navigation}) {
         </SafeAreaView>
         {/* Discover */}
         <View style={styles.discoverWrapper}>
-          <Text style={styles.discoverTitle}>Discover</Text>
+          <Text style={styles.discoverTitle}>Discover {name}</Text>
           <View style={styles.discoverCategoriesWrapper}>
             <Text
               style={[styles.discoverCategoriesText, {color: colors.orange}]}>

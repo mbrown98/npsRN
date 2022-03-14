@@ -1,4 +1,5 @@
-import React, {useState, createContext, useContext} from 'react';
+import React, {useState, createContext, useContext, useEffect} from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const GlobalContext = createContext(undefined);
 
@@ -10,9 +11,18 @@ function useGlobal() {
   return context;
 }
 
-const AuthProvider = ({children, ...props}) => {
-  const [user, setUser] = useState(null);
-  return <GlobalContext.Provider value={{user, setUser}} {...props} />;
+const GlobalProvider = ({...props}) => {
+  const [onboardComplete, setOnboardComplete] = useState(false);
+
+  useEffect(() => {
+    AsyncStorage.getItem('DEMO_APP::COUNT_VALUE').then(value => {
+      if (value) {
+        console.log('valueeee', value);
+      }
+    });
+  }, []);
+
+  return <GlobalContext.Provider value={{name: 'matt'}} {...props} />;
 };
 
-export {AuthProvider, useGlobal};
+export {GlobalProvider, useGlobal};

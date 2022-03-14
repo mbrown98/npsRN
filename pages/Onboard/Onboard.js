@@ -4,6 +4,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Swiper from 'react-native-swiper';
 import colors from '../../assets/colors/colors';
 import {IMAGES} from '../../assets/images';
+import {useGlobal} from '../../context/global-context';
 // import AppLoading from "expo-app-loading";
 
 const w = Dimensions.get('window').width;
@@ -13,6 +14,7 @@ Entypo.loadFont();
 
 export default function Onboard() {
   const {zion, olympic, bryce, yosemite} = IMAGES.onboard;
+  const {name} = useGlobal();
   return (
     <Swiper
       buttonWrapperStyle={buttonWrapperStyle}
@@ -38,9 +40,9 @@ export default function Onboard() {
         <Image source={bryce} style={styles.img} />
         <Text style={styles.title}>Travel</Text>
         <Text style={styles.text}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s.
+          {name} Lorem Ipsum is simply dummy text of the printing and
+          typesetting industry. Lorem Ipsum has been the industry's standard
+          dummy text ever since the 1500s.
         </Text>
       </View>
       <View style={styles.slide}>
