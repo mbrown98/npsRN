@@ -76,9 +76,9 @@ export default function App() {
     return null;
   }
 
-  if (onboardComplete === 'NOT_COMPLETE') {
-    return <Onboard />;
-  }
+  // if (onboardComplete === 'NOT_COMPLETE') {
+  //   return <Onboard />;
+  // }
   return (
     <NavigationContainer>
       <QueryClientProvider client={queryClient}>
