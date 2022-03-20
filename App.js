@@ -18,7 +18,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import colors from './assets/colors/colors';
-import {Profile, Favorites, Home, Park, Onboard} from './pages';
+import {Profile, Favorites, Home, Park, Onboard, Login} from './pages';
 import {GlobalProvider, useGlobal} from './context/global-context';
 
 Entypo.loadFont();
@@ -85,29 +85,31 @@ export default function App() {
   if (onboardComplete === 'NOT_COMPLETE') {
     return <Onboard />;
   }
-  return (
-    <NavigationContainer>
-      <QueryClientProvider client={queryClient}>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="TabNavigator"
-            component={TabNavigator}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Park"
-            component={Park}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Onboard"
-            component={Onboard}
-            options={{headerShown: false}}
-          />
-        </Stack.Navigator>
-      </QueryClientProvider>
-    </NavigationContainer>
-  );
+
+  return <Login />;
+  // return (
+  //   <NavigationContainer>
+  //     <QueryClientProvider client={queryClient}>
+  //       <Stack.Navigator>
+  //         <Stack.Screen
+  //           name="TabNavigator"
+  //           component={TabNavigator}
+  //           options={{headerShown: false}}
+  //         />
+  //         <Stack.Screen
+  //           name="Park"
+  //           component={Park}
+  //           options={{headerShown: false}}
+  //         />
+  //         <Stack.Screen
+  //           name="Onboard"
+  //           component={Onboard}
+  //           options={{headerShown: false}}
+  //         />
+  //       </Stack.Navigator>
+  //     </QueryClientProvider>
+  //   </NavigationContainer>
+  // );
 }
 
 const styles = StyleSheet.create({
