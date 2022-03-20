@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {
   useQuery,
@@ -7,6 +7,8 @@ import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
+
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -70,15 +72,19 @@ const TabNavigator = () => {
 const queryClient = new QueryClient();
 
 export default function App() {
+  GoogleSignin.configure({
+    webClientId:
+      '12398867805-3t8ijtejc7dibs5rmorc3u1umqsnth3i.apps.googleusercontent.com',
+  });
   const {onboardComplete} = useGlobal();
 
   if (onboardComplete === null) {
     return null;
   }
 
-  // if (onboardComplete === 'NOT_COMPLETE') {
-  //   return <Onboard />;
-  // }
+  if (onboardComplete === 'NOT_COMPLETE') {
+    return <Onboard />;
+  }
   return (
     <NavigationContainer>
       <QueryClientProvider client={queryClient}>
