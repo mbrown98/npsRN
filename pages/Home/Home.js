@@ -21,11 +21,13 @@ import parkCodes from '../../assets/data/parkCodes';
 import colors from '../../assets/colors/colors';
 import ParkPreviewCard from './components/ParkPreviewCard';
 import {useGlobal} from '../../context/global-context';
+import {useAuth} from '../../context/auth-context';
 
 Feather.loadFont();
 Entypo.loadFont();
 
 export default function Home({navigation}) {
+  const {user} = useAuth();
   const {name, onboardComplete} = useGlobal();
   const renderActivityItem = ({item}) => (
     <View
@@ -61,14 +63,12 @@ export default function Home({navigation}) {
               color={colors.black}
               style={styles.menuIcon}
             />
-            <Image source={profile} style={styles.profileImage} />
+            <Image source={{uri: user.photoURL}} style={styles.profileImage} />
           </View>
         </SafeAreaView>
         {/* Discover */}
         <View style={styles.discoverWrapper}>
-          <Text style={styles.discoverTitle}>
-            Discover {onboardComplete ? 'T' : 'F'}
-          </Text>
+          <Text style={styles.discoverTitle}>Discover</Text>
           <View style={styles.discoverCategoriesWrapper}>
             <Text
               style={[styles.discoverCategoriesText, {color: colors.orange}]}>

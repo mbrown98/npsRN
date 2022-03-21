@@ -66,7 +66,7 @@ export default function Onboard() {
       </View>
       <View style={styles.slide}>
         <Image source={yosemite} style={styles.img} />
-        <Text style={styles.title}>Welcome {index}</Text>
+        <Text style={styles.title}>Welcome</Text>
         <Text style={styles.text}>
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
