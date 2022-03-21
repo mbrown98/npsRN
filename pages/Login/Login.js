@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, SafeAreaView, Button} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {useAuth} from '../../context/auth-context';
 
 async function onGoogleButtonPress() {
   // Get the users ID token
@@ -19,6 +20,7 @@ async function onGoogleButtonPress() {
 }
 
 export default function Login() {
+  const {user} = useAuth();
   return (
     <SafeAreaView>
       <Button
@@ -29,6 +31,7 @@ export default function Login() {
           )
         }
       />
+      <Text>{JSON.stringify(user)}</Text>
     </SafeAreaView>
   );
 }
