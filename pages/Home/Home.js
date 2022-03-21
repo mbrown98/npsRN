@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -22,6 +22,7 @@ import colors from '../../assets/colors/colors';
 import ParkPreviewCard from './components/ParkPreviewCard';
 import {useGlobal} from '../../context/global-context';
 import {useAuth} from '../../context/auth-context';
+import {getFeaturedParks} from '../../api/firebase/parks';
 
 Feather.loadFont();
 Entypo.loadFont();
@@ -29,28 +30,18 @@ Entypo.loadFont();
 export default function Home({navigation}) {
   const {user} = useAuth();
   const {name, onboardComplete} = useGlobal();
-  const renderActivityItem = ({item}) => (
-    <View
-      style={[
-        styles.activityItemWrapper,
-        {marginLeft: item.id === 'activities-1' ? 20 : 0},
-      ]}>
-      <Image source={item.image} style={styles.activityItemImage} />
-      <Text style={styles.activityItemText}>{item.title}</Text>
-    </View>
-  );
 
-  const renderLearnMoreItem = ({item}) => (
-    <ImageBackground
-      source={item.image}
-      style={[
-        styles.learnMoreItem,
-        {marginLeft: item.id === 'learnMore-1' ? 20 : 0},
-      ]}
-      imageStyle={styles.learnMoreItemImage}>
-      <Text style={styles.learnMoreItemText}>{item.title}</Text>
-    </ImageBackground>
-  );
+  const [parkData, setParkData] = useState(null);
+  const [selectedCat, setSelectedCat] = useState('featured');
+  useEffect(() => {
+    const asyncFetch = async () => {
+      return await getFeaturedParks();
+    };
+    asyncFetch().then(res => {
+      setParkData(res);
+    });
+  }, []);
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -67,33 +58,45 @@ export default function Home({navigation}) {
           </View>
         </SafeAreaView>
         {/* Discover */}
-        <View style={styles.discoverWrapper}>
-          <Text style={styles.discoverTitle}>Discover</Text>
-          <View style={styles.discoverCategoriesWrapper}>
-            <Text
-              style={[styles.discoverCategoriesText, {color: colors.orange}]}>
-              All
-            </Text>
-            <Text style={styles.discoverCategoriesText}>Destinations</Text>
-            <Text style={styles.discoverCategoriesText}>Cities</Text>
-            <Text style={styles.discoverCategoriesText}>Experiences</Text>
-          </View>
+        {parkData && (
+          <>
+            <View style={styles.discoverWrapper}>
+              <Text style={styles.discoverTitle}>Discover</Text>
+              <View style={styles.discoverCategoriesWrapper}>
+                {Object.keys(parkData)
+                  .reverse()
+                  .map(opt => (
+                    <Text
+                      onPress={() => setSelectedCat(opt)}
+                      key={opt}
+                      style={[
+                        styles.discoverCategoriesText,
+                        opt.toLowerCase() === selectedCat && {
+                          color: colors.orange,
+                        },
+                      ]}>
+                      {opt.toUpperCase()}
+                    </Text>
+                  ))}
+              </View>
 
-          <View style={styles.discoverItemsWrapper}>
-            <FlatList
-              data={parkCodes}
-              renderItem={item => {
-                return <ParkPreviewCard item={item} />;
-              }}
-              keyExtractor={item => item.code}
-              horizontal
-              showScroll={false}
-            />
-          </View>
-        </View>
+              <View style={styles.discoverItemsWrapper}>
+                <FlatList
+                  data={parkData[selectedCat]}
+                  renderItem={item => {
+                    return <ParkPreviewCard item={item} />;
+                  }}
+                  keyExtractor={item => item}
+                  horizontal
+                  showScroll={false}
+                />
+              </View>
+            </View>
+          </>
+        )}
 
         {/* Activities */}
-        <View style={styles.activitiesWrapper}>
+        {/* <View style={styles.activitiesWrapper}>
           <Text style={styles.activitiesTitle}>Activities </Text>
           <View style={styles.activitiesItemsWrapper}>
             <FlatList
@@ -104,10 +107,10 @@ export default function Home({navigation}) {
               showScroll={false}
             />
           </View>
-        </View>
+        </View> */}
 
         {/* Learn More */}
-        <View style={styles.learnMoreWrapper}>
+        {/* <View style={styles.learnMoreWrapper}>
           <Text style={styles.learnMoreTitle}>Learn More</Text>
           <View style={styles.learnMoreItemsWrapper}>
             <FlatList
@@ -118,7 +121,7 @@ export default function Home({navigation}) {
               showScroll={false}
             />
           </View>
-        </View>
+        </View> */}
       </ScrollView>
     </View>
   );
@@ -245,3 +248,26 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
 });
+
+// const renderActivityItem = ({item}) => (
+//   <View
+//     style={[
+//       styles.activityItemWrapper,
+//       {marginLeft: item.id === 'activities-1' ? 20 : 0},
+//     ]}>
+//     <Image source={item.image} style={styles.activityItemImage} />
+//     <Text style={styles.activityItemText}>{item.title}</Text>
+//   </View>
+// );
+
+// const renderLearnMoreItem = ({item}) => (
+//   <ImageBackground
+//     source={item.image}
+//     style={[
+//       styles.learnMoreItem,
+//       {marginLeft: item.id === 'learnMore-1' ? 20 : 0},
+//     ]}
+//     imageStyle={styles.learnMoreItemImage}>
+//     <Text style={styles.learnMoreItemText}>{item.title}</Text>
+//   </ImageBackground>
+// );

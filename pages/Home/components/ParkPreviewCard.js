@@ -20,10 +20,7 @@ Entypo.loadFont();
 
 export default function ParkPreviewCard({item}) {
   const navigation = useNavigation();
-  const {
-    index,
-    item: {code},
-  } = item;
+  const {index, item: code} = item;
 
   const {data, isLoading, isSuccess} = useParkByID(code);
 
