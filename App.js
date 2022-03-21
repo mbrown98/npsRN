@@ -20,6 +20,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import colors from './assets/colors/colors';
 import {Profile, Favorites, Home, Park, Onboard, Login} from './pages';
 import {GlobalProvider, useGlobal} from './context/global-context';
+import {useAuth} from './context/auth-context';
 
 Entypo.loadFont();
 MaterialCommunityIcons.loadFont();
@@ -72,6 +73,7 @@ const TabNavigator = () => {
 const queryClient = new QueryClient();
 
 export default function App() {
+  const {user} = useAuth();
   GoogleSignin.configure({
     webClientId:
       '12398867805-3t8ijtejc7dibs5rmorc3u1umqsnth3i.apps.googleusercontent.com',
@@ -86,30 +88,33 @@ export default function App() {
     return <Onboard />;
   }
 
-  return <Login />;
-  // return (
-  //   <NavigationContainer>
-  //     <QueryClientProvider client={queryClient}>
-  //       <Stack.Navigator>
-  //         <Stack.Screen
-  //           name="TabNavigator"
-  //           component={TabNavigator}
-  //           options={{headerShown: false}}
-  //         />
-  //         <Stack.Screen
-  //           name="Park"
-  //           component={Park}
-  //           options={{headerShown: false}}
-  //         />
-  //         <Stack.Screen
-  //           name="Onboard"
-  //           component={Onboard}
-  //           options={{headerShown: false}}
-  //         />
-  //       </Stack.Navigator>
-  //     </QueryClientProvider>
-  //   </NavigationContainer>
-  // );
+  if (!user) {
+    return <Login />;
+  }
+
+  return (
+    <NavigationContainer>
+      <QueryClientProvider client={queryClient}>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="TabNavigator"
+            component={TabNavigator}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Park"
+            component={Park}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Onboard"
+            component={Onboard}
+            options={{headerShown: false}}
+          />
+        </Stack.Navigator>
+      </QueryClientProvider>
+    </NavigationContainer>
+  );
 }
 
 const styles = StyleSheet.create({

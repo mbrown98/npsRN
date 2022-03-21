@@ -29,14 +29,7 @@ export default function Login() {
           googleSignIn().then(() => console.log('Signed in with Google!'))
         }
       />
-      <Button
-        title="Google Sign-Out"
-        onPress={() =>
-          auth()
-            .signOut()
-            .then(() => console.log('User signed out!'))
-        }
-      />
+
       <Text>{JSON.stringify(user)}</Text>
     </SafeAreaView>
   );
