@@ -22,12 +22,9 @@ export const getFeaturedParks = async () => {
 
 export const getFavoriteParks = async () => {
   try {
-    const res = await firebase
-      .firestore()
-      .collection('userData')
-      .doc('8TH0cNGWRPcndsgc5zpslKcZu6F2')
-      .get();
-    return res._data;
+    const {uid} = isAuth();
+    const res = await firestore().collection('userData').doc(uid).get();
+    return res._data.favorites;
   } catch (error) {
     console.log(error);
     return null;
