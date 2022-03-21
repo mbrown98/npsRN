@@ -5,4 +5,7 @@ export const IMAGES = {
     yosemite: require('../images/onboard/yosemite.jpg'),
     zion: require('../images/onboard/zion.jpg'),
   },
+  login: {
+    tallTrees: require('../images/login/tallTrees.jpg'),
+  },
 };

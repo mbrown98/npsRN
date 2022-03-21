@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, Text, SafeAreaView, Button} from 'react-native';
+import {View, Text, SafeAreaView, Button, ImageBackground} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useAuth} from '../../context/auth-context';
+import {IMAGES} from '../../assets/images';
 
 async function googleSignIn() {
   // Get the users ID token
@@ -22,15 +23,16 @@ async function googleSignIn() {
 export default function Login() {
   const {user} = useAuth();
   return (
-    <SafeAreaView>
-      <Button
-        title="Google Sign-In"
-        onPress={() =>
-          googleSignIn().then(() => console.log('Signed in with Google!'))
-        }
-      />
-
-      <Text>{JSON.stringify(user)}</Text>
-    </SafeAreaView>
+    // <SafeAreaView>
+    <ImageBackground source={IMAGES.login.tallTrees} style={{flex: 1}}>
+      <SafeAreaView>
+        <Button
+          title="Google Sign-In"
+          onPress={() =>
+            googleSignIn().then(() => console.log('Signed in with Google!'))
+          }
+        />
+      </SafeAreaView>
+    </ImageBackground>
   );
 }

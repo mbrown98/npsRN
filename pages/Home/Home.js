@@ -68,9 +68,7 @@ export default function Home({navigation}) {
         </SafeAreaView>
         {/* Discover */}
         <View style={styles.discoverWrapper}>
-          <Text style={styles.discoverTitle}>
-            Discover {onboardComplete ? 'T' : 'F'}
-          </Text>
+          <Text style={styles.discoverTitle}>Discover</Text>
           <View style={styles.discoverCategoriesWrapper}>
             <Text
               style={[styles.discoverCategoriesText, {color: colors.orange}]}>
