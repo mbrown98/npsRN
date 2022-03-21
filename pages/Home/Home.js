@@ -32,6 +32,7 @@ export default function Home({navigation}) {
   const {name, onboardComplete} = useGlobal();
 
   const [parkData, setParkData] = useState(null);
+  const [selectedCat, setSelectedCat] = useState('featured');
   useEffect(() => {
     const asyncFetch = async () => {
       return await getFeaturedParks();
@@ -62,25 +63,30 @@ export default function Home({navigation}) {
             <View style={styles.discoverWrapper}>
               <Text style={styles.discoverTitle}>Discover</Text>
               <View style={styles.discoverCategoriesWrapper}>
-                <Text
-                  style={[
-                    styles.discoverCategoriesText,
-                    {color: colors.orange},
-                  ]}>
-                  All
-                </Text>
-                <Text style={styles.discoverCategoriesText}>Destinations</Text>
-                <Text style={styles.discoverCategoriesText}>Cities</Text>
-                <Text style={styles.discoverCategoriesText}>Experiences</Text>
+                {Object.keys(parkData)
+                  .reverse()
+                  .map(opt => (
+                    <Text
+                      onPress={() => setSelectedCat(opt)}
+                      key={opt}
+                      style={[
+                        styles.discoverCategoriesText,
+                        opt.toLowerCase() === selectedCat && {
+                          color: colors.orange,
+                        },
+                      ]}>
+                      {opt.toUpperCase()}
+                    </Text>
+                  ))}
               </View>
 
               <View style={styles.discoverItemsWrapper}>
                 <FlatList
-                  data={parkData.featured}
+                  data={parkData[selectedCat]}
                   renderItem={item => {
                     return <ParkPreviewCard item={item} />;
                   }}
-                  keyExtractor={item => item.code}
+                  keyExtractor={item => item}
                   horizontal
                   showScroll={false}
                 />
