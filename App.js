@@ -74,19 +74,20 @@ const queryClient = new QueryClient();
 
 export default function App() {
   const {user} = useAuth();
+
   GoogleSignin.configure({
     webClientId:
       '12398867805-3t8ijtejc7dibs5rmorc3u1umqsnth3i.apps.googleusercontent.com',
   });
   const {onboardComplete} = useGlobal();
 
-  if (onboardComplete === null) {
-    return null;
-  }
+  // if (onboardComplete === null) {
+  //   return null;
+  // }
 
-  if (onboardComplete === 'NOT_COMPLETE') {
-    return <Onboard />;
-  }
+  // if (onboardComplete === 'NOT_COMPLETE') {
+  //   return <Onboard />;
+  // }
 
   if (!user) {
     return <Login />;
