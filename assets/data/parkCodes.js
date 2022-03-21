@@ -632,4 +632,23 @@ const parkCodes = [
   {fullName: 'Zion National Park', parkCode: 'zion'},
 ];
 
+// const getAllParks = async () => {
+//   axios
+//     .get(
+//       'https://developer.nps.gov/api/v1/parks?limit=500&api_key=xVDrllRsZGSuU1sLpzu687U6R8bZG9NpU4W2wwSM',
+//     )
+//     .then(res => {
+//       // console.log(res.data);
+
+//       const data = res.data.data;
+//       if (data) console.log('data', typeof data);
+//       console.log(
+//         data.map(opt => ({
+//           parkCode: opt.parkCode,
+//           fullName: opt.fullName,
+//         })),
+//       );
+//     });
+// };
+
 export default parkCodes;
