@@ -49,7 +49,7 @@ export default function Home({navigation}) {
         <SafeAreaView>
           <View style={styles.menuWrapper}>
             <Feather
-              name="menu"
+              name="search"
               size={32}
               color={colors.black}
               style={styles.menuIcon}
