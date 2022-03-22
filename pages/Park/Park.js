@@ -15,6 +15,7 @@ import useParkByID from '../../api/hooks/useParkByID';
 
 Entypo.loadFont();
 const height = Dimensions.get('window').height;
+const width = Dimensions.get('window').width;
 
 export default function Park({
   navigation,
@@ -34,7 +35,7 @@ export default function Park({
   const {city, stateCode} = addresses[0];
 
   return (
-    <ScrollView style={styles.container}>
+    <>
       <ImageBackground
         source={{uri: images[0].url}}
         style={styles.backgroundImage}>
@@ -43,6 +44,9 @@ export default function Park({
           onPress={() => navigation.goBack()}>
           <Entypo name="chevron-left" color={colors.white} size={32} />
         </TouchableOpacity>
+      </ImageBackground>
+      <ScrollView style={{flex: 1, marginHorizontal: 5}}>
+        <View style={{height: height * 0.5}} />
         <View style={styles.titleWrapper}>
           <Text style={styles.itemTitle}>{fullName}</Text>
           <View style={styles.locationWrapper}>
@@ -52,17 +56,19 @@ export default function Park({
             </Text>
           </View>
         </View>
-      </ImageBackground>
-      <View style={styles.descriptionWrapper}>
-        <View style={styles.heartWrapper}>
-          <Entypo name="heart" color={colors.orange} size={32} />
+        <View style={styles.descriptionWrapper}>
+          <View style={styles.heartWrapper}>
+            <Entypo name="heart" color={colors.orange} size={32} />
+          </View>
+          {[1, 2, 3, 4, 5].map(opt => (
+            <View style={styles.descriptionTextWrapper}>
+              <Text style={styles.descriptionTitle}>Block {opt}</Text>
+              <Text style={styles.descriptionText}>{description}</Text>
+            </View>
+          ))}
         </View>
-        <View style={styles.descriptionTextWrapper}>
-          <Text style={styles.descriptionTitle}>Description</Text>
-          <Text style={styles.descriptionText}>{description}</Text>
-        </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </>
   );
 }
 
@@ -72,8 +78,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   backgroundImage: {
-    height: height * 0.6,
+    height: height,
+    width: width,
     justifyContent: 'space-between',
+    position: 'absolute',
   },
   descriptionWrapper: {
     backgroundColor: colors.white,
@@ -84,6 +92,7 @@ const styles = StyleSheet.create({
   backIcon: {
     marginLeft: 20,
     marginTop: 60,
+    zIndex: 30,
   },
   titleWrapper: {
     marginHorizontal: 20,
