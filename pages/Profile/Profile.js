@@ -23,7 +23,7 @@ export default function Profile() {
       />
       <Button title="Get Favs" onPress={() => getFavoriteParks()} />
       <Button title="Get All Parks" onPress={() => getAllParks()} />
-      <Button title="Get Yell" onPress={async () => ASYNC_STORE.read('yell')} />
+      <Button title="Get Yell" onPress={() => ASYNC_STORE.read('yell')} />
       <Text>{JSON.stringify(user.uid)}</Text>
     </SafeAreaView>
   );

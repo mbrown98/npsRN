@@ -16,7 +16,6 @@ export const ASYNC_STORE = {
     try {
       const jsonValue = await AsyncStorage.getItem(`@${key}`);
       const parsedVal = jsonValue != null ? JSON.parse(jsonValue) : null;
-      console.log('parsed val', parsedVal);
       return parsedVal;
     } catch (e) {
       // error reading value
