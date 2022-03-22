@@ -4,6 +4,8 @@ import auth from '@react-native-firebase/auth';
 import {useAuth} from '../../context/auth-context';
 import {getFavoriteParks} from '../../api/firebase/parks';
 import axios from 'axios';
+import {getAllParks} from '../../offline/downloadParkData';
+import {ASYNC_STORE} from '../../offline/storage';
 
 export default function Profile() {
   const {user} = useAuth();
@@ -20,7 +22,8 @@ export default function Profile() {
         }
       />
       <Button title="Get Favs" onPress={() => getFavoriteParks()} />
-      {/* <Button title="Get All Parks" onPress={() => getAllParks()} /> */}
+      <Button title="Get All Parks" onPress={() => getAllParks()} />
+      <Button title="Get Yell" onPress={async () => ASYNC_STORE.read('yell')} />
       <Text>{JSON.stringify(user.uid)}</Text>
     </SafeAreaView>
   );
