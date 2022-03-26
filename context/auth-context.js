@@ -12,7 +12,6 @@ function useAuth() {
 }
 
 const AuthProvider = ({...props}) => {
-  console.log('autttthh');
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
