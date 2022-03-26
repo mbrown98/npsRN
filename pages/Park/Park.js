@@ -24,12 +24,14 @@ export default function Park({
   },
 }) {
   const {data, isLoading, isSuccess} = useParkByID(code);
-  if (isLoading)
+
+  if (isLoading) {
     return (
       <View>
-        <Text>Loading</Text>
+        <Text>Loading...</Text>
       </View>
     );
+  }
 
   const {images, fullName, name, addresses, description} = data;
   const {city, stateCode} = addresses[0];
@@ -60,12 +62,11 @@ export default function Park({
           <View style={styles.heartWrapper}>
             <Entypo name="heart" color={colors.orange} size={32} />
           </View>
-          {[1, 2, 3, 4, 5].map(opt => (
-            <View style={styles.descriptionTextWrapper}>
-              <Text style={styles.descriptionTitle}>Block {opt}</Text>
-              <Text style={styles.descriptionText}>{description}</Text>
-            </View>
-          ))}
+
+          <View style={styles.descriptionTextWrapper}>
+            <Text style={styles.descriptionTitle}>Description</Text>
+            <Text style={styles.descriptionText}>{description}</Text>
+          </View>
         </View>
       </ScrollView>
     </>
