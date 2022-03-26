@@ -1,9 +1,19 @@
 import React from 'react';
-import {View, Text, SafeAreaView, Button, ImageBackground} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Button,
+  ImageBackground,
+  StatusBar,
+} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useAuth} from '../../context/auth-context';
 import {IMAGES} from '../../assets/images';
+
+const {zion, olympic, bryce, yosemite} = IMAGES.onboard;
 
 async function googleSignIn() {
   // Get the users ID token
@@ -20,19 +30,36 @@ async function googleSignIn() {
     .catch(e => console.log('e', e));
 }
 
-export default function Login() {
+export default function Login({navigation}) {
   const {user} = useAuth();
+  const renderHeader = () => {
+    return (
+      <View style={{height: '65%'}}>
+        <ImageBackground
+          source={zion}
+          style={{flex: 1, justifyContent: 'flex-end'}}
+          resize="cover"></ImageBackground>
+      </View>
+    );
+  };
   return (
-    // <SafeAreaView>
-    <ImageBackground source={IMAGES.login.tallTrees} style={{flex: 1}}>
-      <SafeAreaView>
-        <Button
-          title="Google Sign-In"
-          onPress={() =>
-            googleSignIn().then(() => console.log('Signed in with Google!'))
-          }
-        />
-      </SafeAreaView>
-    </ImageBackground>
+    <View style={{flex: 1, backgroundColor: 'black'}}>
+      <StatusBar barStyle="light-content" />
+      {/* Header */}
+      {renderHeader()}
+      {/* Details */}
+    </View>
   );
 }
+
+//#endregion    // // <SafeAreaView>
+// <ImageBackground source={IMAGES.login.tallTrees} style={{flex: 1}}>
+//   <SafeAreaView>
+//     <Button
+//       title="Google Sign-In"
+//       onPress={() =>
+//         googleSignIn().then(() => console.log('Signed in with Google!'))
+//       }
+//     />
+//   </SafeAreaView>
+// </ImageBackground>
