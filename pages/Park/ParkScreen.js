@@ -37,7 +37,12 @@ export default function ParkScreen({navigation}) {
           <Entypo name="chevron-left" color={colors.white} size={32} />
         </TouchableOpacity>
       </ImageBackground>
-      <ScrollView style={{flex: 1, marginHorizontal: 5}}>
+      <ScrollView
+        style={{
+          flex: 1,
+          marginHorizontal: 5,
+          marginBottom: 20,
+        }}>
         <View style={{height: height * 0.5}} />
         <View style={styles.titleWrapper}>
           <Text style={styles.itemTitle}>{fullName}</Text>
@@ -59,6 +64,7 @@ export default function ParkScreen({navigation}) {
           </View>
           <ParkMap />
           <ParkWeather />
+          <View style={{height: 20}} />
         </View>
       </ScrollView>
     </>
