@@ -14,6 +14,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import useParkByID from '../../api/hooks/useParkByID';
 import ParkMap from './components/ParkMap';
 import {usePark} from './park-context';
+import ParkWeather from './components/ParkWeather';
 
 Entypo.loadFont();
 const height = Dimensions.get('window').height;
@@ -57,6 +58,7 @@ export default function ParkScreen({navigation}) {
             <Text style={styles.descriptionText}>{description}</Text>
           </View>
           <ParkMap />
+          <ParkWeather />
         </View>
       </ScrollView>
     </>
