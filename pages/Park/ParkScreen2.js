@@ -8,6 +8,9 @@ import {
   Platform,
   StyleSheet,
 } from 'react-native';
+import Feather from 'react-native-vector-icons/Feather';
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 import {IMAGES} from '../../assets/images';
 
@@ -17,6 +20,9 @@ import {usePark} from './park-context';
 import ParkMap from './components/ParkMap';
 
 const HEADER_HEIGHT = 350;
+Feather.loadFont();
+Fontisto.loadFont();
+Ionicons.loadFont();
 
 const ParkScreen2 = ({route}) => {
   const navigation = useNavigation();
@@ -136,31 +142,19 @@ const ParkScreen2 = ({route}) => {
           <Text style={{color: COLORS.white2, ...FONTS.h3}}>{fullName}</Text>
         </Animated.View>
 
-        {/* Back button */}
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}>
-          {/* <Image
-            source={icons.back}
-            style={{
-              width: 15,
-              height: 15,
-              tintColor: COLORS.lightGray,
-            }}
-          /> */}
-        </TouchableOpacity>
+        <Ionicons
+          name="chevron-back"
+          size={35}
+          color="white"
+          onPress={() => navigation.goBack()}
+        />
 
-        {/* Bookmark */}
-        <TouchableOpacity
-          onPress={() => console.log('Bookmark')}
-          style={styles.favoriteButton}>
-          {/* <Image
-            source={
-             icons.bookmarkFilled
-            }
-            style={{width: 30, height: 30, tintColor: COLORS.darkGreen}}
-          /> */}
-        </TouchableOpacity>
+        <Fontisto
+          name="bookmark"
+          size={30}
+          color="white"
+          style={styles.favoriteButton}
+        />
       </View>
     </View>
   );
