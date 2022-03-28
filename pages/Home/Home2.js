@@ -18,7 +18,6 @@ import {useAuth} from '../../context/auth-context';
 import FeaturedParkCard from './components/FeaturedParkCard';
 import HomeHeader from './components/HomeHeader';
 import ParksRemainingCard from './components/ParksRemainingCard';
-// import {TrendingCard, CategoryCard} from '../components';
 
 Feather.loadFont();
 
@@ -80,7 +79,7 @@ const Home2 = ({navigation}) => {
                     marginLeft: index == 0 ? SIZES.padding : 0,
                   }}
                   parkId={item}
-                  onPress={() => navigation.navigate('Park', {item})}
+                  onPress={() => navigation.navigate('Park', {code: item})}
                 />
               );
             }}
@@ -141,7 +140,7 @@ const Home2 = ({navigation}) => {
             //     marginHorizontal: SIZES.padding,
             //   }}
             //   categoryItem={item}
-            //   onPress={() => navigation.navigate('Recipe', {recipe: item})}
+            //   onPress={() => navigation.navigate('Park', {recipe: item})}
             // />
           );
         }}

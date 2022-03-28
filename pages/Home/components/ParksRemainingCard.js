@@ -18,8 +18,8 @@ const ParksRemainingCard = () => {
 
         <TouchableOpacity
           style={styles.exploreMoreButton}
-          onPress={() => console.log('See Recipes')}>
-          <Text style={styles.exploreMoreText}>See Recipes</Text>
+          onPress={() => console.log('See Parks')}>
+          <Text style={styles.exploreMoreText}>See Parks</Text>
         </TouchableOpacity>
       </View>
     </View>
