@@ -7,17 +7,18 @@ import {
   ScrollView,
   FlatList,
 } from 'react-native';
+import FavCard from './components/FavCard';
 
 export default function Favorites() {
   return (
     <SafeAreaView style={styles.contain}>
       <FlatList
         contentContainerStyle={styles.flatlistContent}
-        data={[{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}]}
+        data={[{id: 'yell'}, {id: 'acad'}, {id: 'deso'}, {id: 'deva'}]}
         numColumns={2}
         renderItem={({item}) => (
           <View style={styles.favCardWrapper}>
-            <Text>{item.id}</Text>
+            <FavCard parkId={item.id} />
           </View>
         )}
         keyExtractor={item => item.id}
@@ -36,7 +37,6 @@ const styles = StyleSheet.create({
   favCardWrapper: {
     flex: 0.5,
     margin: 5,
-    backgroundColor: '#ddd',
-    height: 150,
+    height: 120,
   },
 });
