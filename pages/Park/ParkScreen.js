@@ -62,8 +62,8 @@ export default function ParkScreen({navigation}) {
             <Text style={styles.descriptionTitle}>Description</Text>
             <Text style={styles.descriptionText}>{description}</Text>
           </View>
-          <ParkMap />
-          <ParkWeather />
+          {/* <ParkMap />
+          <ParkWeather /> */}
           <View style={{height: 20}} />
         </View>
       </ScrollView>
