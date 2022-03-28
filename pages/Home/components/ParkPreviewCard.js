@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
+
 import {useNavigation} from '@react-navigation/native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import useParkByID from '../../../api/hooks/useParkByID';

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -7,101 +7,48 @@ import {
   TouchableOpacity,
   TextInput,
   FlatList,
+  StyleSheet,
 } from 'react-native';
+import Feather from 'react-native-vector-icons/Feather';
+import {getFeaturedParks} from '../../api/firebase/parks';
 import {IMAGES} from '../../assets/images';
 
 import {FONTS, COLORS, icons, images, SIZES} from '../../constants';
 import {useAuth} from '../../context/auth-context';
+import FeaturedParkCard from './components/FeaturedParkCard';
 import HomeHeader from './components/HomeHeader';
+import ParksRemainingCard from './components/ParksRemainingCard';
 // import {TrendingCard, CategoryCard} from '../components';
+
+Feather.loadFont();
 
 const Home2 = ({navigation}) => {
   const {user} = useAuth();
+  const [parkData, setParkData] = useState(null);
+
+  useEffect(() => {
+    const asyncFetch = async () => {
+      return await getFeaturedParks();
+    };
+    asyncFetch().then(res => {
+      setParkData(res.featured);
+    });
+  }, []);
 
   function renderSearchBar() {
     return (
-      <View
-        style={{
-          flexDirection: 'row',
-          height: 50,
-          alignItems: 'center',
-          marginHorizontal: SIZES.padding,
-          paddingHorizontal: SIZES.radius,
-          borderRadius: 10,
-          backgroundColor: COLORS.lightGray,
-        }}>
-        {/* <Image
-          style={{
-            width: 20,
-            height: 20,
-            tintColor: COLORS.gray,
-          }}
-          source={icons.search}
-        /> */}
+      <View style={styles.searchBarContain}>
+        <Feather
+          name="search"
+          size={20}
+          color={COLORS.black}
+          style={styles.menuIcon}
+        />
         <TextInput
-          style={{
-            marginLeft: SIZES.radius,
-            ...FONTS.body3,
-          }}
+          style={styles.searchBarText}
           placeholderTextColor={COLORS.gray}
           placeholder="Search Parks"
         />
-      </View>
-    );
-  }
-
-  function renderSeeRecipeCard() {
-    return (
-      <View
-        style={{
-          flexDirection: 'row',
-          marginTop: SIZES.padding,
-          marginHorizontal: SIZES.padding,
-          borderRadius: 10,
-          backgroundColor: COLORS.lightGreen,
-        }}>
-        {/* Image */}
-        <View
-          style={{
-            width: 100,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <Image
-            source={IMAGES.login.tallTrees}
-            style={{width: 80, height: 80}}
-          />
-        </View>
-
-        {/* Text */}
-        <View
-          style={{
-            flex: 1,
-            paddingVertical: SIZES.radius,
-          }}>
-          <Text
-            style={{
-              width: '70%',
-              ...FONTS.body4,
-            }}>
-            You have 12 parks that you haven't tried yet
-          </Text>
-
-          <TouchableOpacity
-            style={{
-              marginTop: 10,
-            }}
-            onPress={() => console.log('See Recipes')}>
-            <Text
-              style={{
-                color: COLORS.darkGreen,
-                textDecorationLine: 'underline',
-                ...FONTS.h4,
-              }}>
-              See Recipes
-            </Text>
-          </TouchableOpacity>
-        </View>
       </View>
     );
   }
@@ -117,27 +64,28 @@ const Home2 = ({navigation}) => {
             marginHorizontal: SIZES.padding,
             ...FONTS.h2,
           }}>
-          Trending Recipe
+          Featured Parks
         </Text>
 
-        <FlatList
-          data={[{id: 1}, {id: 2}, {id: 3}, {id: 4}]}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={item => `${item.id}`}
-          renderItem={({item, index}) => {
-            return (
-              <Text>Hi</Text>
-              //   <TrendingCard
-              //     containerStyle={{
-              //       marginLeft: index == 0 ? SIZES.padding : 0,
-              //     }}
-              //     recipeItem={item}
-              //     onPress={() => navigation.navigate('Recipe', {recipe: item})}
-              //   />
-            );
-          }}
-        />
+        {parkData && parkData.length && (
+          <FlatList
+            data={parkData}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={item => `${item}`}
+            renderItem={({item, index}) => {
+              return (
+                <FeaturedParkCard
+                  containerStyle={{
+                    marginLeft: index == 0 ? SIZES.padding : 0,
+                  }}
+                  parkId={item}
+                  onPress={() => navigation.navigate('Park', {item})}
+                />
+              );
+            }}
+          />
+        )}
       </View>
     );
   }
@@ -180,14 +128,14 @@ const Home2 = ({navigation}) => {
           <View>
             <HomeHeader />
             {renderSearchBar()}
-            {renderSeeRecipeCard()}
+            <ParksRemainingCard />
             {renderTrendingSection()}
-            {renderCategoryHeader()}
+            {/* {renderCategoryHeader()} */}
           </View>
         }
         renderItem={({item}) => {
           return (
-            <Text>Hi</Text>
+            <View />
             // <CategoryCard
             //   containerStyle={{
             //     marginHorizontal: SIZES.padding,
@@ -204,3 +152,20 @@ const Home2 = ({navigation}) => {
 };
 
 export default Home2;
+
+const styles = StyleSheet.create({
+  searchBarContain: {
+    flexDirection: 'row',
+    height: 50,
+    alignItems: 'center',
+    marginHorizontal: SIZES.padding,
+    paddingHorizontal: SIZES.radius,
+    borderRadius: 10,
+    backgroundColor: COLORS.lightGray,
+  },
+  menuIcon: {},
+  searchBarText: {
+    marginLeft: SIZES.radius,
+    ...FONTS.body3,
+  },
+});
