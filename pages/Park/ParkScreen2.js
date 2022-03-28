@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     bottom: 10,
     left: 30,
     right: 30,
-    height: 80,
+    minHeight: 80,
   },
 });
 

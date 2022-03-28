@@ -21,10 +21,6 @@ const ParkHeadInfo = () => {
   return (
     <BlurView style={styles.blurViewContain} blurType="dark">
       <View style={styles.blurFlexRow}>
-        <View style={styles.imgContain}>
-          <Image source={{uri: images[1].url}} style={styles.circleImg} />
-        </View>
-
         <View style={styles.textWrapper}>
           <Text style={styles.parkSubText}>
             {city}, {stateCode}
@@ -42,23 +38,20 @@ const styles = StyleSheet.create({
   blurViewContain: {
     flex: 1,
     borderRadius: SIZES.radius,
+    paddingVertical: 10,
   },
   blurFlexRow: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
   },
-  imgContain: {
-    width: 40,
-    height: 40,
-    marginLeft: 20,
+
+  textWrapper: {
+    flex: 1,
+    marginHorizontal: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  circleImg: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-  },
-  textWrapper: {flex: 1, marginHorizontal: 20},
-  parkSubText: {color: COLORS.lightGray2, ...FONTS.body4},
-  parkNameText: {color: COLORS.white2, ...FONTS.h3},
+  parkSubText: {color: COLORS.lightGray2, ...FONTS.body4, textAlign: 'center'},
+  parkNameText: {color: COLORS.white2, ...FONTS.h2, textAlign: 'center'},
 });
