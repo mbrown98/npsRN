@@ -21,6 +21,7 @@ import colors from './assets/colors/colors';
 import {Profile, Favorites, Home, Park, Onboard, Login} from './pages';
 import {GlobalProvider, useGlobal} from './context/global-context';
 import {useAuth} from './context/auth-context';
+import Home2 from './pages/Home/Home2';
 
 Entypo.loadFont();
 MaterialCommunityIcons.loadFont();
@@ -40,7 +41,7 @@ const TabNavigator = () => {
       }}>
       <Tab.Screen
         name="Home"
-        component={Home}
+        component={Home2}
         options={{
           tabBarIcon: ({color}) => (
             <Entypo name="home" size={32} color={color} />
@@ -107,11 +108,11 @@ export default function App() {
             component={Park}
             options={{headerShown: false}}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name="Onboard"
             component={Onboard}
             options={{headerShown: false}}
-          />
+          /> */}
         </Stack.Navigator>
       </QueryClientProvider>
     </NavigationContainer>
