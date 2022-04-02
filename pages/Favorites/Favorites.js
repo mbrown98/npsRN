@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -6,7 +6,9 @@ import {
   StyleSheet,
   ScrollView,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
+import {COLORS, FONTS, SIZES} from '../../constants';
 import FavCard from './components/FavCard';
 
 function randomIntFromInterval(min, max) {
@@ -15,75 +17,92 @@ function randomIntFromInterval(min, max) {
 }
 
 export default function Favorites() {
-  // sort parks alphabetically and then create three flatlists
+  const [activeList, setActiveList] = useState('favorites');
   return (
     <SafeAreaView style={styles.contain}>
-      <FlatList
-        contentContainerStyle={styles.flatlistContent}
-        data={[
-          {id: 'yell'},
-          {id: 'acad'},
-          {id: 'appa'},
-          {id: 'anti'},
-          {id: 'beol'},
-          {id: 'bawa'},
-        ]}
-        showsVerticalScrollIndicator={false}
-        renderItem={({item}) => (
-          <View
-            style={[
-              styles.favCardWrapper,
-              {height: randomIntFromInterval(100, 300)},
-            ]}>
-            <FavCard parkId={item.id} />
-          </View>
-        )}
-        keyExtractor={item => item.id}
-      />
-      <FlatList
-        contentContainerStyle={styles.flatlistContent}
-        data={[
-          {id: 'deso'},
-          {id: 'deva'},
-          {id: 'bith'},
-          {id: 'bibe'},
-          {id: 'cebr'},
-          {id: 'crla'},
-        ]}
-        showsVerticalScrollIndicator={false}
-        renderItem={({item}) => (
-          <View
-            style={[
-              styles.favCardWrapper,
-              {height: randomIntFromInterval(100, 300)},
-            ]}>
-            <FavCard parkId={item.id} />
-          </View>
-        )}
-        keyExtractor={item => item.id}
-      />
-      <FlatList
-        contentContainerStyle={styles.flatlistContent}
-        data={[
-          {id: 'frri'},
-          {id: 'gwca'},
-          {id: 'glca'},
-          {id: 'jame'},
-          {id: 'hocu'},
-          {id: 'lewi'},
-        ]}
-        showsVerticalScrollIndicator={false}
-        renderItem={({item}) => (
-          <View
-            style={[
-              styles.favCardWrapper,
-              {height: randomIntFromInterval(100, 300)},
-            ]}>
-            <FavCard parkId={item.id} />
-          </View>
-        )}
-        keyExtractor={item => item.id}
-      />
+      <View style={styles.listToggle}>
+        {['favorites', 'visited'].map((opt, i) => {
+          return (
+            <TouchableOpacity key={i} onPress={() => setActiveList(opt)}>
+              <Text
+                style={[
+                  {...FONTS.h4},
+                  activeList === opt && {color: COLORS.darkGreen},
+                ]}>
+                {opt.toLocaleUpperCase()}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+      <View style={styles.listContain}>
+        <FlatList
+          contentContainerStyle={styles.flatlistContent}
+          data={[
+            {id: 'yell'},
+            {id: 'acad'},
+            {id: 'appa'},
+            {id: 'anti'},
+            {id: 'beol'},
+            {id: 'bawa'},
+          ]}
+          showsVerticalScrollIndicator={false}
+          renderItem={({item}) => (
+            <View
+              style={[
+                styles.favCardWrapper,
+                {height: randomIntFromInterval(100, 300)},
+              ]}>
+              <FavCard parkId={item.id} />
+            </View>
+          )}
+          keyExtractor={item => item.id}
+        />
+        <FlatList
+          contentContainerStyle={styles.flatlistContent}
+          data={[
+            {id: 'deso'},
+            {id: 'deva'},
+            {id: 'bith'},
+            {id: 'bibe'},
+            {id: 'cebr'},
+            {id: 'crla'},
+          ]}
+          showsVerticalScrollIndicator={false}
+          renderItem={({item}) => (
+            <View
+              style={[
+                styles.favCardWrapper,
+                {height: randomIntFromInterval(100, 300)},
+              ]}>
+              <FavCard parkId={item.id} />
+            </View>
+          )}
+          keyExtractor={item => item.id}
+        />
+        <FlatList
+          contentContainerStyle={styles.flatlistContent}
+          data={[
+            {id: 'frri'},
+            {id: 'gwca'},
+            {id: 'glca'},
+            {id: 'jame'},
+            {id: 'hocu'},
+            {id: 'lewi'},
+          ]}
+          showsVerticalScrollIndicator={false}
+          renderItem={({item}) => (
+            <View
+              style={[
+                styles.favCardWrapper,
+                {height: randomIntFromInterval(100, 300)},
+              ]}>
+              <FavCard parkId={item.id} />
+            </View>
+          )}
+          keyExtractor={item => item.id}
+        />
+      </View>
     </SafeAreaView>
   );
 }
@@ -91,8 +110,14 @@ export default function Favorites() {
 const styles = StyleSheet.create({
   contain: {
     flex: 1,
-    flexDirection: 'row',
   },
+  listToggle: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    padding: 10,
+  },
+  listContain: {flex: 1, flexDirection: 'row'},
   flatlistContent: {
     flexGrow: 1,
   },
