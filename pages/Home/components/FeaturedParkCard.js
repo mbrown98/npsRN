@@ -9,7 +9,6 @@ import useParkByID from '../../../api/hooks/useParkByID';
 Fontisto.loadFont();
 
 const FeaturedParkCard = ({containerStyle, parkId, onPress}) => {
-  console.log('FP', parkId);
   const {data, isLoading, isSuccess} = useParkByID(parkId);
 
   if (!data) {

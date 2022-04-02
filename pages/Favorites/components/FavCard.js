@@ -11,7 +11,7 @@ import {FONTS} from '../../../constants';
 
 const FavCard = ({parkId}) => {
   const navigation = useNavigation();
-  console.log('FP', parkId);
+
   const {data, isLoading, isSuccess} = useParkByID(parkId);
 
   if (!data) {
@@ -40,7 +40,7 @@ export default FavCard;
 const styles = StyleSheet.create({
   contain: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: 'red',
     borderRadius: 5,
   },
   bgImg: {
