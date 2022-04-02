@@ -17,7 +17,6 @@ Feather.loadFont();
 const ParksSearchBar = () => {
   const navigation = useNavigation();
   const [textInput, setTextInput] = useState('');
-  const [parkList, setParkList] = useState([]);
 
   const searchResults = useCallback(() => {
     if (!textInput) return [];
@@ -49,24 +48,26 @@ const ParksSearchBar = () => {
           }}
         />
       </View>
-      <View style={styles.searchResultsContain}>
-        <FlatList
-          data={searchResults()}
-          keyExtractor={item => `${item.parkCode}`}
-          renderItem={({item}) => {
-            return (
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate('Park', {code: item.parkCode})
-                }>
-                <View style={styles.resultRow}>
-                  <Text style={styles.resultRowText}>{item.fullName}</Text>
-                </View>
-              </TouchableOpacity>
-            );
-          }}
-        />
-      </View>
+      {!!searchResults().length && (
+        <View style={styles.searchResultsContain}>
+          <FlatList
+            data={searchResults()}
+            keyExtractor={item => `${item.parkCode}`}
+            renderItem={({item}) => {
+              return (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('Park', {code: item.parkCode})
+                  }>
+                  <View style={styles.resultRow}>
+                    <Text style={styles.resultRowText}>{item.fullName}</Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            }}
+          />
+        </View>
+      )}
     </>
   );
 };

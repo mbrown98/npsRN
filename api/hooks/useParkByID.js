@@ -7,7 +7,7 @@ import {ASYNC_STORE} from '../../offline/storage';
 // const K = 'xVDrllRsZGSuU1sLpzu687U6R8bZG9NpU4W2wwSM';
 
 const fetchParkData = async parkId => {
-  console.log('fetchinf data');
+  console.log('fetchinf data', parkId);
   const storedVal = await ASYNC_STORE.read(parkId);
   return storedVal;
   // console.log('made it here');
