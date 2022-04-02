@@ -15,6 +15,7 @@ function randomIntFromInterval(min, max) {
 }
 
 export default function Favorites() {
+  // sort parks alphabetically and then create three flatlists
   return (
     <SafeAreaView style={styles.contain}>
       <FlatList
