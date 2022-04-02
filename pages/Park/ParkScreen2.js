@@ -86,7 +86,7 @@ const ParkScreen2 = ({route}) => {
         ListHeaderComponent={
           <View>
             {renderParkCardHeader()}
-            <ParkMap />
+            <Text>{description}</Text>
             <ParkMap />
           </View>
         }
