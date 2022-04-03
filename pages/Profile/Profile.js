@@ -37,14 +37,17 @@ export default function Profile() {
       <Text style={styles.userName}>{user.displayName}</Text>
       <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
         {[
-          {title: 'Visited', stats: {count: 45, total: ParkCodes.length}},
+          {
+            title: 'Visited',
+            stats: {count: 12},
+          },
           {
             title: 'Favorited',
-            stats: {count: 40, total: parkCodes.length},
+            stats: {count: 56},
           },
           {
             title: 'Unopened',
-            stats: {count: 257, total: parkCodes.length},
+            stats: {count: 256},
           },
         ].map((opt, i) => (
           <View style={styles.statSection} key={i}>
@@ -57,8 +60,15 @@ export default function Profile() {
               <Text style={styles.statSectionHeadText}>{opt.title}</Text>
             </View>
 
-            <Text style={styles.statSectionStat}>
-              {opt.stats.count}/{opt.stats.total}
+            <Text style={styles.statSectionStat}>{opt.stats.count}</Text>
+            <Text
+              style={{
+                fontSize: 12,
+                fontWeight: '400',
+                color: COLORS.gray,
+                marginTop: 5,
+              }}>
+              ({Math.round((opt.stats.count / parkCodes.length) * 100)}%)
             </Text>
           </View>
         ))}
@@ -121,6 +131,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '600',
     color: COLORS.darkGreen,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   map: {
     flex: 1,
