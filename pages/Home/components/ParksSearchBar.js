@@ -20,7 +20,7 @@ const ParksSearchBar = () => {
 
   const searchResults = useCallback(() => {
     if (!textInput) return [];
-    const filtered = ParkCodes.filter(
+    const filtered = parkCodes.filter(
       park =>
         park.parkCode.startsWith(textInput.toLowerCase()) ||
         park.fullName.startsWith(textInput.toLowerCase()),
