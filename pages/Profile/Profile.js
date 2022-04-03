@@ -15,6 +15,7 @@ import {ASYNC_STORE} from '../../offline/storage';
 import {getAllParks} from '../../api/requests/getAllParks';
 import {downloadAllParkDataToStore} from '../../offline/downloadAllParkDataToStore';
 import {COLORS, FONTS, parkCodes, SIZES} from '../../constants';
+import CustomButton from '../../components/CustomButton';
 
 export default function Profile() {
   const {user} = useAuth();
@@ -74,30 +75,22 @@ export default function Profile() {
         ))}
       </View>
       <MapView initialRegion={mapCoords} style={styles.map} />
-      <Button
-        title="Sign-Out"
-        onPress={() =>
-          auth()
-            .signOut()
-            .then(() => console.log('User signed out!'))
-        }
-      />
-      <Button title="Delete Account" onPress={() => {}} />
-      {/* <Button
-        title="Google Sign-Out"
-        onPress={() =>
-          auth()
-            .signOut()
-            .then(() => console.log('User signed out!'))
-        }
-      />
-      <Button title="Get Favs" onPress={() => getFavoriteParks()} />
-      <Button title="Get All Parks" onPress={() => getAllParks()} />
-      <Button
-        title="Download All"
-        onPress={() => downloadAllParkDataToStore()}
-      />
-      <Text>{JSON.stringify(user.uid)}</Text> */}
+      <View
+        style={{
+          flexDirection: 'row',
+          padding: 10,
+          justifyContent: 'space-around',
+        }}>
+        <Button
+          title="Sign-Out"
+          onPress={() =>
+            auth()
+              .signOut()
+              .then(() => console.log('User signed out!'))
+          }
+        />
+        <Button title="Delete Account" onPress={() => {}} />
+      </View>
     </SafeAreaView>
   );
 }
