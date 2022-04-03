@@ -18,7 +18,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import colors from './assets/colors/colors';
-import {Profile, Favorites, Home, Park, Onboard, Login} from './pages';
+import {Profile, Favorites, Home, Park, Onboard, Login, FullMap} from './pages';
 import {GlobalProvider, useGlobal} from './context/global-context';
 import {useAuth} from './context/auth-context';
 import Home2 from './pages/Home/Home2';
@@ -74,7 +74,7 @@ const TabNavigator = () => {
 const queryClient = new QueryClient();
 
 export default function App() {
-  const {user} = useAuth();
+  const {user, initializing} = useAuth();
 
   GoogleSignin.configure({
     webClientId:
@@ -94,6 +94,13 @@ export default function App() {
     return <Login />;
   }
 
+  if (initializing)
+    return (
+      <View style={{flex: 1}}>
+        <Text>Loading</Text>
+      </View>
+    );
+
   return (
     <NavigationContainer>
       <QueryClientProvider client={queryClient}>
@@ -106,6 +113,11 @@ export default function App() {
           <Stack.Screen
             name="Park"
             component={Park}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="FullMap"
+            component={FullMap}
             options={{headerShown: false}}
           />
           {/* <Stack.Screen

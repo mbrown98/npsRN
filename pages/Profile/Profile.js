@@ -15,8 +15,10 @@ import {ASYNC_STORE} from '../../offline/storage';
 import {getAllParks} from '../../api/requests/getAllParks';
 import {downloadAllParkDataToStore} from '../../offline/downloadAllParkDataToStore';
 import {COLORS, FONTS, parkCodes, SIZES} from '../../constants';
+import CustomButton from '../../components/CustomButton';
+import {DEV_filterParkKeys} from '../../utils/data/DEV_filterParkKeys';
 
-export default function Profile() {
+export default function Profile({navigation}) {
   const {user} = useAuth();
   console.log(user);
 
@@ -37,14 +39,17 @@ export default function Profile() {
       <Text style={styles.userName}>{user.displayName}</Text>
       <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
         {[
-          {title: 'Visited', stats: {count: 45, total: ParkCodes.length}},
+          {
+            title: 'Visited',
+            stats: {count: 12},
+          },
           {
             title: 'Favorited',
-            stats: {count: 40, total: parkCodes.length},
+            stats: {count: 56},
           },
           {
             title: 'Unopened',
-            stats: {count: 257, total: parkCodes.length},
+            stats: {count: 256},
           },
         ].map((opt, i) => (
           <View style={styles.statSection} key={i}>
@@ -57,37 +62,40 @@ export default function Profile() {
               <Text style={styles.statSectionHeadText}>{opt.title}</Text>
             </View>
 
-            <Text style={styles.statSectionStat}>
-              {opt.stats.count}/{opt.stats.total}
+            <Text style={styles.statSectionStat}>{opt.stats.count}</Text>
+            <Text
+              style={{
+                fontSize: 12,
+                fontWeight: '400',
+                color: COLORS.gray,
+                marginTop: 5,
+              }}>
+              ({Math.round((opt.stats.count / parkCodes.length) * 100)}%)
             </Text>
           </View>
         ))}
       </View>
-      <MapView initialRegion={mapCoords} style={styles.map} />
-      <Button
-        title="Sign-Out"
-        onPress={() =>
-          auth()
-            .signOut()
-            .then(() => console.log('User signed out!'))
-        }
+      <MapView
+        initialRegion={mapCoords}
+        style={styles.map}
+        onPress={() => navigation.navigate('FullMap')}
       />
-      <Button title="Delete Account" onPress={() => {}} />
-      {/* <Button
-        title="Google Sign-Out"
-        onPress={() =>
-          auth()
-            .signOut()
-            .then(() => console.log('User signed out!'))
-        }
-      />
-      <Button title="Get Favs" onPress={() => getFavoriteParks()} />
-      <Button title="Get All Parks" onPress={() => getAllParks()} />
-      <Button
-        title="Download All"
-        onPress={() => downloadAllParkDataToStore()}
-      />
-      <Text>{JSON.stringify(user.uid)}</Text> */}
+      <View
+        style={{
+          flexDirection: 'row',
+          padding: 10,
+          justifyContent: 'space-around',
+        }}>
+        <Button
+          title="Sign-Out"
+          onPress={() =>
+            auth()
+              .signOut()
+              .then(() => console.log('User signed out!'))
+          }
+        />
+        <Button title="DEV" onPress={DEV_filterParkKeys} />
+      </View>
     </SafeAreaView>
   );
 }
@@ -121,6 +129,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '600',
     color: COLORS.darkGreen,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   map: {
     flex: 1,
