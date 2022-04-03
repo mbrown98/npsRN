@@ -18,7 +18,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import colors from './assets/colors/colors';
-import {Profile, Favorites, Home, Park, Onboard, Login} from './pages';
+import {Profile, Favorites, Home, Park, Onboard, Login, FullMap} from './pages';
 import {GlobalProvider, useGlobal} from './context/global-context';
 import {useAuth} from './context/auth-context';
 import Home2 from './pages/Home/Home2';
@@ -106,6 +106,11 @@ export default function App() {
           <Stack.Screen
             name="Park"
             component={Park}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="FullMap"
+            component={FullMap}
             options={{headerShown: false}}
           />
           {/* <Stack.Screen

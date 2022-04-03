@@ -17,7 +17,7 @@ import {downloadAllParkDataToStore} from '../../offline/downloadAllParkDataToSto
 import {COLORS, FONTS, parkCodes, SIZES} from '../../constants';
 import CustomButton from '../../components/CustomButton';
 
-export default function Profile() {
+export default function Profile({navigation}) {
   const {user} = useAuth();
   console.log(user);
 
@@ -74,7 +74,11 @@ export default function Profile() {
           </View>
         ))}
       </View>
-      <MapView initialRegion={mapCoords} style={styles.map} />
+      <MapView
+        initialRegion={mapCoords}
+        style={styles.map}
+        onPress={() => navigation.navigate('FullMap')}
+      />
       <View
         style={{
           flexDirection: 'row',
