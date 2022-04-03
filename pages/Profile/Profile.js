@@ -16,6 +16,7 @@ import {getAllParks} from '../../api/requests/getAllParks';
 import {downloadAllParkDataToStore} from '../../offline/downloadAllParkDataToStore';
 import {COLORS, FONTS, parkCodes, SIZES} from '../../constants';
 import CustomButton from '../../components/CustomButton';
+import {DEV_filterParkKeys} from '../../utils/data/DEV_filterParkKeys';
 
 export default function Profile({navigation}) {
   const {user} = useAuth();
@@ -93,7 +94,7 @@ export default function Profile({navigation}) {
               .then(() => console.log('User signed out!'))
           }
         />
-        <Button title="Delete Account" onPress={() => {}} />
+        <Button title="DEV" onPress={DEV_filterParkKeys} />
       </View>
     </SafeAreaView>
   );
