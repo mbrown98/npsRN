@@ -15,9 +15,7 @@ import {
 import profile from '../../assets/images/person.png';
 import Feather from 'react-native-vector-icons/Feather';
 import Entypo from 'react-native-vector-icons/Entypo';
-import activitiesData from '../../assets/data/activitiesData';
-import learnMoreData from '../../assets/data/learnMoreData';
-import parkCodes from '../../assets/data/parkCodes';
+
 import colors from '../../assets/colors/colors';
 import ParkPreviewCard from './components/ParkPreviewCard';
 import {useGlobal} from '../../context/global-context';

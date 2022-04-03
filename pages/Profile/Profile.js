@@ -14,8 +14,7 @@ import {getFavoriteParks} from '../../api/firebase/parks';
 import {ASYNC_STORE} from '../../offline/storage';
 import {getAllParks} from '../../api/requests/getAllParks';
 import {downloadAllParkDataToStore} from '../../offline/downloadAllParkDataToStore';
-import {COLORS, FONTS, SIZES} from '../../constants';
-import parkCodes from '../../assets/data/parkCodes';
+import {COLORS, FONTS, parkCodes, SIZES} from '../../constants';
 
 export default function Profile() {
   const {user} = useAuth();
@@ -38,7 +37,7 @@ export default function Profile() {
       <Text style={styles.userName}>{user.displayName}</Text>
       <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
         {[
-          {title: 'Visited', stats: {count: 45, total: parkCodes.length}},
+          {title: 'Visited', stats: {count: 45, total: ParkCodes.length}},
           {
             title: 'Favorited',
             stats: {count: 40, total: parkCodes.length},

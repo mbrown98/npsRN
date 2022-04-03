@@ -9,8 +9,8 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Feather from 'react-native-vector-icons/Feather';
-import parkCodes from '../../../assets/data/parkCodes';
-import {COLORS, SIZES, FONTS} from '../../../constants';
+
+import {COLORS, SIZES, FONTS, parkCodes} from '../../../constants';
 
 Feather.loadFont();
 
@@ -20,7 +20,7 @@ const ParksSearchBar = () => {
 
   const searchResults = useCallback(() => {
     if (!textInput) return [];
-    const filtered = parkCodes.filter(
+    const filtered = ParkCodes.filter(
       park =>
         park.parkCode.startsWith(textInput.toLowerCase()) ||
         park.fullName.startsWith(textInput.toLowerCase()),
