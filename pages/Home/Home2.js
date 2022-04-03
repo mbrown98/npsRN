@@ -5,7 +5,6 @@ import {
   Image,
   SafeAreaView,
   TouchableOpacity,
-  TextInput,
   FlatList,
   StyleSheet,
 } from 'react-native';
@@ -18,6 +17,7 @@ import {useAuth} from '../../context/auth-context';
 import FeaturedParkCard from './components/FeaturedParkCard';
 import HomeHeader from './components/HomeHeader';
 import ParksRemainingCard from './components/ParksRemainingCard';
+import ParksSearchBar from './components/ParksSearchBar';
 
 Feather.loadFont();
 
@@ -33,24 +33,6 @@ const Home2 = ({navigation}) => {
       setParkData(res.featured);
     });
   }, []);
-
-  function renderSearchBar() {
-    return (
-      <View style={styles.searchBarContain}>
-        <Feather
-          name="search"
-          size={20}
-          color={COLORS.black}
-          style={styles.menuIcon}
-        />
-        <TextInput
-          style={styles.searchBarText}
-          placeholderTextColor={COLORS.gray}
-          placeholder="Search Parks"
-        />
-      </View>
-    );
-  }
 
   function renderTrendingSection() {
     return (
@@ -126,7 +108,7 @@ const Home2 = ({navigation}) => {
         ListHeaderComponent={
           <View>
             <HomeHeader />
-            {renderSearchBar()}
+            <ParksSearchBar />
             <ParksRemainingCard />
             {renderTrendingSection()}
             {/* {renderCategoryHeader()} */}
@@ -152,19 +134,4 @@ const Home2 = ({navigation}) => {
 
 export default Home2;
 
-const styles = StyleSheet.create({
-  searchBarContain: {
-    flexDirection: 'row',
-    height: 50,
-    alignItems: 'center',
-    marginHorizontal: SIZES.padding,
-    paddingHorizontal: SIZES.radius,
-    borderRadius: 10,
-    backgroundColor: COLORS.lightGray,
-  },
-  menuIcon: {},
-  searchBarText: {
-    marginLeft: SIZES.radius,
-    ...FONTS.body3,
-  },
-});
+const styles = StyleSheet.create({});

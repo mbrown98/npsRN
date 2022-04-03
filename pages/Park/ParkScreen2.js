@@ -27,10 +27,19 @@ Ionicons.loadFont();
 const ParkScreen2 = ({route}) => {
   const navigation = useNavigation();
   const {data} = usePark();
+  const scrollY = useRef(new Animated.Value(0)).current;
+
+  console.log('data', data);
+  if (!data) {
+    return (
+      <View>
+        <Text>No Data</Text>
+      </View>
+    );
+  }
 
   const {images, fullName, name, addresses, description} = data;
   const {city, stateCode} = addresses[0];
-  const scrollY = useRef(new Animated.Value(0)).current;
 
   function renderParkCardHeader() {
     return (
@@ -86,7 +95,7 @@ const ParkScreen2 = ({route}) => {
         ListHeaderComponent={
           <View>
             {renderParkCardHeader()}
-            <ParkMap />
+            <Text>{description}</Text>
             <ParkMap />
           </View>
         }

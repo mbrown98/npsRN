@@ -11,6 +11,7 @@ export default function ParkMap() {
   }
 
   const {latitude, longitude} = data;
+  console.log({latitude, longitude});
 
   const mapCoords = {
     latitude,
