@@ -1,10 +1,9 @@
-import axios from 'axios';
 import {getAllParks} from '../api/requests/getAllParks';
 import {ASYNC_STORE} from './storage';
 
 export const downloadAllParkDataToStore = async () => {
   // move get all parks to api folder, and use react-query
-  getAllParks()
+  return getAllParks()
     .then(async data => {
       const PROMISES = [];
       data.forEach(park => {
@@ -12,8 +11,9 @@ export const downloadAllParkDataToStore = async () => {
       });
 
       await Promise.all(PROMISES);
+      return true;
     })
     .catch(e => {
-      console.log('ee', e);
+      return false;
     });
 };

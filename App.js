@@ -74,7 +74,7 @@ const TabNavigator = () => {
 const queryClient = new QueryClient();
 
 export default function App() {
-  const {user} = useAuth();
+  const {user, initializing} = useAuth();
 
   GoogleSignin.configure({
     webClientId:
@@ -93,6 +93,13 @@ export default function App() {
   if (!user) {
     return <Login />;
   }
+
+  if (initializing)
+    return (
+      <View style={{flex: 1}}>
+        <Text>Loading</Text>
+      </View>
+    );
 
   return (
     <NavigationContainer>
