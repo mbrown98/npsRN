@@ -15,6 +15,7 @@ import {DEV_favorites, DEV_visited} from '../../constants/devConstants';
 import FavCard from './components/FavCard';
 import {useAuth} from '../../context/auth-context';
 import {FIRESTORE} from '../../api/firebase/firestore';
+import {useFirebase} from '../../context/firebase-content';
 
 function randomIntFromInterval(min, max) {
   // min and max included
@@ -23,15 +24,19 @@ function randomIntFromInterval(min, max) {
 
 export default function Favorites() {
   const {user} = useAuth();
+  const {
+    userData: {favorites},
+  } = useFirebase();
+
   const [activeList, setActiveList] = useState('favorites');
 
   const displayList = useCallback(() => {
     console.log('running');
-    let arr = activeList === 'favorites' ? DEV_favorites : DEV_visited;
+    let arr = activeList === 'favorites' ? favorites : DEV_visited;
     let targetArr = 0;
     const threeArr = [[], [], []];
     arr
-      .sort((a, b) => a.id.localeCompare(b.id))
+      .sort((a, b) => a.localeCompare(b))
       .forEach(park => {
         threeArr[targetArr].push(park);
         targetArr += 1;
@@ -41,7 +46,7 @@ export default function Favorites() {
       });
 
     return threeArr;
-  }, [activeList]);
+  }, [activeList, favorites]);
 
   return (
     <SafeAreaView style={styles.contain}>
@@ -78,10 +83,10 @@ export default function Favorites() {
                   styles.favCardWrapper,
                   {height: randomIntFromInterval(100, 300)},
                 ]}>
-                <FavCard parkId={item.id} />
+                <FavCard parkId={item} />
               </View>
             )}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item}
           />
         ))}
       </View>
