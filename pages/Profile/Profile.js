@@ -94,7 +94,12 @@ export default function Profile({navigation}) {
               .then(() => console.log('User signed out!'))
           }
         />
-        <Button title="DEV" onPress={DEV_filterParkKeys} />
+        <Button
+          title="DEV"
+          onPress={() => {
+            console.log('dev clicked');
+          }}
+        />
       </View>
     </SafeAreaView>
   );

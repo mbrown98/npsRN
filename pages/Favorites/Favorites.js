@@ -8,10 +8,13 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
+  Button,
 } from 'react-native';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import {DEV_favorites, DEV_visited} from '../../constants/devConstants';
 import FavCard from './components/FavCard';
+import {useAuth} from '../../context/auth-context';
+import {FIRESTORE} from '../../api/firebase/firestore';
 
 function randomIntFromInterval(min, max) {
   // min and max included
@@ -19,6 +22,7 @@ function randomIntFromInterval(min, max) {
 }
 
 export default function Favorites() {
+  const {user} = useAuth();
   const [activeList, setActiveList] = useState('favorites');
 
   const displayList = useCallback(() => {
@@ -41,6 +45,12 @@ export default function Favorites() {
 
   return (
     <SafeAreaView style={styles.contain}>
+      <Button
+        title="DEV"
+        onPress={async () => {
+          FIRESTORE.updateUserFavorites(user.uid, ['yell', 'acad']);
+        }}
+      />
       <View style={styles.listToggle}>
         {['favorites', 'visited'].map((opt, i) => {
           return (
