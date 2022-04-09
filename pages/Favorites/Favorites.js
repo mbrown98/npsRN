@@ -25,14 +25,14 @@ function randomIntFromInterval(min, max) {
 export default function Favorites() {
   const {user} = useAuth();
   const {
-    userData: {favorites},
+    userData: {favorites, visited},
   } = useFirebase();
 
   const [activeList, setActiveList] = useState('favorites');
 
   const displayList = useCallback(() => {
     console.log('running');
-    let arr = activeList === 'favorites' ? favorites : DEV_visited;
+    let arr = activeList === 'favorites' ? favorites : visited;
     let targetArr = 0;
     const threeArr = [[], [], []];
     arr
@@ -46,14 +46,14 @@ export default function Favorites() {
       });
 
     return threeArr;
-  }, [activeList, favorites]);
+  }, [activeList, visited, favorites]);
 
   return (
     <SafeAreaView style={styles.contain}>
       <Button
         title="DEV"
         onPress={async () => {
-          FIRESTORE.updateUserFavorites(user.uid, ['yell', 'acad']);
+          FIRESTORE.updateUserVisited(user.uid, ['timu']);
         }}
       />
       <View style={styles.listToggle}>
