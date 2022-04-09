@@ -18,6 +18,9 @@ import {SIZES, FONTS, icons, COLORS} from '../../constants';
 import ParkHeadInfo from './components/ParkHeadInfo';
 import {usePark} from './park-context';
 import ParkMap from './components/ParkMap';
+import {FIRESTORE} from '../../api/firebase/firestore';
+import {useAuth} from '../../context/auth-context';
+import {useFirebase} from '../../context/firebase-content';
 
 const HEADER_HEIGHT = 350;
 Feather.loadFont();
@@ -26,10 +29,13 @@ Ionicons.loadFont();
 
 const ParkScreen2 = ({route}) => {
   const navigation = useNavigation();
+  const {user} = useAuth();
+  const {
+    userData: {favorites, visited},
+  } = useFirebase();
   const {data} = usePark();
   const scrollY = useRef(new Animated.Value(0)).current;
 
-  console.log('data', data);
   if (!data) {
     return (
       <View>
@@ -157,13 +163,28 @@ const ParkScreen2 = ({route}) => {
           color="white"
           onPress={() => navigation.goBack()}
         />
-
-        <Fontisto
-          name="bookmark"
-          size={30}
-          color="white"
-          style={styles.favoriteButton}
-        />
+        <View
+          style={{
+            flexDirection: 'row',
+          }}>
+          <Fontisto
+            name="passport-alt"
+            size={32}
+            style={{marginRight: 20}}
+            color={visited[data.parkCode] ? COLORS.lime : COLORS.lightGray2}
+            onPress={async () => {
+              FIRESTORE.toggleUserPark(user.uid, 'visited', data.parkCode);
+            }}
+          />
+          <Fontisto
+            name={favorites[data.parkCode] ? 'bookmark-alt' : 'bookmark'}
+            size={30}
+            color="white"
+            onPress={async () => {
+              FIRESTORE.toggleUserPark(user.uid, 'favorites', data.parkCode);
+            }}
+          />
+        </View>
       </View>
     </View>
   );

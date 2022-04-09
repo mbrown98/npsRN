@@ -13,7 +13,7 @@ export const FIRESTORE = {
           .collection('users')
           .doc(uid)
           .update({
-            [`favorites.${park}`]: exists
+            [`${key}.${park}`]: exists
               ? firestore.FieldValue.delete()
               : Date.now(),
           });

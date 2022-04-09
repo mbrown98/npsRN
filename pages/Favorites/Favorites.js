@@ -53,12 +53,6 @@ export default function Favorites() {
 
   return (
     <SafeAreaView style={styles.contain}>
-      <Button
-        title="DEV"
-        onPress={async () => {
-          FIRESTORE.toggleUserPark(user.uid, 'favorites', 'jame');
-        }}
-      />
       <View style={styles.listToggle}>
         {['favorites', 'visited'].map((opt, i) => {
           return (
