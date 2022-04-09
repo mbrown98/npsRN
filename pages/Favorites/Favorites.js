@@ -32,7 +32,10 @@ export default function Favorites() {
 
   const displayList = useCallback(() => {
     console.log('running');
-    let arr = activeList === 'favorites' ? favorites : visited;
+    let arr =
+      activeList === 'favorites'
+        ? Object.keys(favorites)
+        : Object.keys(visited);
     let targetArr = 0;
     const threeArr = [[], [], []];
     arr
@@ -53,7 +56,7 @@ export default function Favorites() {
       <Button
         title="DEV"
         onPress={async () => {
-          FIRESTORE.updateUserVisited(user.uid, ['timu']);
+          FIRESTORE.toggleUserPark(user.uid, 'favorites', 'jame');
         }}
       />
       <View style={styles.listToggle}>
