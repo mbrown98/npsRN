@@ -7,7 +7,9 @@ import {
   View,
 } from 'react-native';
 import MapView, {Marker, Overlay} from 'react-native-maps';
-import {parkCodes} from '../../constants';
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import {COLORS, parkCodes} from '../../constants';
+import {useFirebase} from '../../context/firebase-content';
 
 const mapCoords = {
   latitude: '38.88927229',
@@ -16,7 +18,36 @@ const mapCoords = {
   longitudeDelta: 0.1,
 };
 
+Fontisto.loadFont();
+
 const FullMap = ({navigation}) => {
+  const {
+    userData: {favorites, visited},
+  } = useFirebase();
+
+  const determineMarker = code => {
+    if (visited[code]) {
+      return (
+        <Fontisto
+          name="passport"
+          size={50}
+          style={{marginRight: 20}}
+          color={COLORS.darkGreen}
+        />
+      );
+    }
+    if (favorites[code]) {
+      return (
+        <Fontisto
+          name="heart"
+          size={50}
+          style={{marginRight: 20}}
+          color="red"
+        />
+      );
+    }
+    return null;
+  };
   return (
     <MapView initialRegion={mapCoords} style={styles.map}>
       <TouchableOpacity
@@ -36,12 +67,14 @@ const FullMap = ({navigation}) => {
       {parkCodes.map((park, index) => {
         const {latitude, longitude, fullName} = park;
         return (
-          <Marker
+          <MapView.Marker
             key={index}
             coordinate={{latitude, longitude}}
             title={fullName}
-            description={park.description}
-          />
+            onPress={() => console.log('pressed')}
+            description={park.description}>
+            {determineMarker(park.parkCode)}
+          </MapView.Marker>
         );
       })}
     </MapView>
@@ -53,5 +86,12 @@ export default FullMap;
 const styles = StyleSheet.create({
   map: {
     flex: 1,
+  },
+  baseMarker: {
+    height: 30,
+    width: 30,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
