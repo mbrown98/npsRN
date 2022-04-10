@@ -29,28 +29,17 @@ const FullMap = ({navigation}) => {
   } = useFirebase();
   const [selectedPark, setSelectedPark] = useState('');
 
-  const determineMarker = code => {
+  const determinePinColor = code => {
+    if (code === selectedPark) {
+      return 'white';
+    }
     if (visited[code]) {
-      return (
-        <Fontisto
-          name="passport"
-          size={50}
-          style={{marginRight: 20}}
-          color={COLORS.darkGreen}
-        />
-      );
+      return 'blue';
     }
     if (favorites[code]) {
-      return (
-        <Fontisto
-          name="heart"
-          size={50}
-          style={{marginRight: 20}}
-          color="red"
-        />
-      );
+      return COLORS.darkLime;
     }
-    return null;
+    return 'red';
   };
   return (
     <MapView initialRegion={mapCoords} style={styles.map}>
@@ -74,10 +63,10 @@ const FullMap = ({navigation}) => {
           <MapView.Marker
             key={index}
             coordinate={{latitude, longitude}}
-            title={fullName}
-            onPress={() => setSelectedPark(park.parkCode)}>
-            {determineMarker(park.parkCode)}
-          </MapView.Marker>
+            // title={fullName}
+            onPress={() => setSelectedPark(park.parkCode)}
+            pinColor={determinePinColor(park.parkCode)}
+          />
         );
       })}
       {selectedPark ? (

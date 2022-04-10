@@ -124,12 +124,6 @@ export default function App() {
             component={Park}
             options={{headerShown: false}}
           />
-
-          {/* <Stack.Screen
-            name="Onboard"
-            component={Onboard}
-            options={{headerShown: false}}
-          /> */}
         </Stack.Navigator>
       </QueryClientProvider>
     </NavigationContainer>
