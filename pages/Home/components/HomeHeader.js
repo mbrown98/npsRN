@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
 import {COLORS, FONTS, SIZES} from '../../../constants';
@@ -5,13 +6,14 @@ import {useAuth} from '../../../context/auth-context';
 
 const HomeHeader = () => {
   const {user} = useAuth();
+  const navigation = useNavigation();
   return (
     <View style={styles.contain}>
       <View style={styles.userInfoWrapper}>
         <Text style={styles.userName}>Hello {user.displayName},</Text>
         <Text style={styles.subText}>What do you want to explore today?</Text>
       </View>
-      <TouchableOpacity onPress={() => console.log('Profile')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
         <Image source={{uri: user.photoURL}} style={styles.userProfileImg} />
       </TouchableOpacity>
     </View>

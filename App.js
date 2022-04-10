@@ -49,15 +49,6 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Favorites"
-        component={Favorites}
-        options={{
-          tabBarIcon: ({color}) => (
-            <Entypo name="heart" size={32} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
         name="FullMap"
         component={FullMap}
         options={{
@@ -67,6 +58,16 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
+        name="Favorites"
+        component={Favorites}
+        options={{
+          tabBarIcon: ({color}) => (
+            <Entypo name="heart" size={32} color={color} />
+          ),
+        }}
+      />
+
+      {/* <Tab.Screen
         name="Profile"
         component={Profile}
         options={{
@@ -74,7 +75,7 @@ const TabNavigator = () => {
             <MaterialCommunityIcons name="account" size={32} color={color} />
           ),
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 };
@@ -122,6 +123,11 @@ export default function App() {
           <Stack.Screen
             name="Park"
             component={Park}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Profile"
+            component={Profile}
             options={{headerShown: false}}
           />
         </Stack.Navigator>
