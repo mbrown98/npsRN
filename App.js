@@ -20,7 +20,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Profile, Favorites, Home, Park, Onboard, Login, FullMap} from './pages';
 import {GlobalProvider, useGlobal} from './context/global-context';
 import {useAuth} from './context/auth-context';
-import Home2 from './pages/Home/Home2';
+
 import {COLORS} from './constants';
 
 Entypo.loadFont();
@@ -41,7 +41,7 @@ const TabNavigator = () => {
       }}>
       <Tab.Screen
         name="Home"
-        component={Home2}
+        component={Home}
         options={{
           tabBarIcon: ({color}) => (
             <Entypo name="home" size={32} color={color} />
@@ -138,7 +138,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   tabBar: {
-    backgroundColor: colors.white,
+    backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },

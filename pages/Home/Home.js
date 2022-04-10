@@ -21,7 +21,7 @@ import ParksSearchBar from './components/ParksSearchBar';
 
 Feather.loadFont();
 
-const Home2 = ({navigation}) => {
+const Home = ({navigation}) => {
   const {user} = useAuth();
   const [parkData, setParkData] = useState(null);
 
@@ -132,6 +132,6 @@ const Home2 = ({navigation}) => {
   );
 };
 
-export default Home2;
+export default Home;
 
 const styles = StyleSheet.create({});
