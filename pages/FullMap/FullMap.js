@@ -54,7 +54,7 @@ const FullMap = ({navigation}) => {
   };
   return (
     <MapView initialRegion={mapCoords} style={styles.map}>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={() => {
           navigation.goBack();
         }}
@@ -67,7 +67,7 @@ const FullMap = ({navigation}) => {
           left: 20,
           zIndex: 300,
         }}
-      />
+      /> */}
       {Object.values(parkCodes).map((park, index) => {
         const {latitude, longitude, fullName} = park;
         return (
