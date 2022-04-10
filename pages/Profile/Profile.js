@@ -17,17 +17,14 @@ import {downloadAllParkDataToStore} from '../../offline/downloadAllParkDataToSto
 import {COLORS, FONTS, parkCodes, SIZES} from '../../constants';
 import CustomButton from '../../components/CustomButton';
 import {DEV_filterParkKeys} from '../../utils/data/DEV_filterParkKeys';
+import {useFirebase} from '../../context/firebase-content';
 
 export default function Profile({navigation}) {
   const {user} = useAuth();
+  const {
+    userData: {favorites, visited},
+  } = useFirebase();
   console.log(user);
-
-  const mapCoords = {
-    latitude: '38.88927229',
-    longitude: '-77.05017778',
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
-  };
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -41,11 +38,11 @@ export default function Profile({navigation}) {
         {[
           {
             title: 'Visited',
-            stats: {count: 12},
+            stats: {count: Object.keys(visited).length},
           },
           {
             title: 'Favorited',
-            stats: {count: 56},
+            stats: {count: Object.keys(favorites).length},
           },
           {
             title: 'Unopened',
@@ -70,16 +67,16 @@ export default function Profile({navigation}) {
                 color: COLORS.gray,
                 marginTop: 5,
               }}>
-              ({Math.round((opt.stats.count / parkCodes.length) * 100)}%)
+              (
+              {Math.round(
+                (opt.stats.count / Object.keys(parkCodes).length) * 100,
+              )}
+              %)
             </Text>
           </View>
         ))}
       </View>
-      <MapView
-        initialRegion={mapCoords}
-        style={styles.map}
-        onPress={() => navigation.navigate('FullMap')}
-      />
+
       <View
         style={{
           flexDirection: 'row',
@@ -94,7 +91,12 @@ export default function Profile({navigation}) {
               .then(() => console.log('User signed out!'))
           }
         />
-        <Button title="DEV" onPress={DEV_filterParkKeys} />
+        <Button
+          title="DEV"
+          onPress={() => {
+            DEV_filterParkKeys();
+          }}
+        />
       </View>
     </SafeAreaView>
   );

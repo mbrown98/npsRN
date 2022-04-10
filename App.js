@@ -58,6 +58,15 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
+        name="FullMap"
+        component={FullMap}
+        options={{
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="map" size={32} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
         name="Profile"
         component={Profile}
         options={{
@@ -115,16 +124,6 @@ export default function App() {
             component={Park}
             options={{headerShown: false}}
           />
-          <Stack.Screen
-            name="FullMap"
-            component={FullMap}
-            options={{headerShown: false}}
-          />
-          {/* <Stack.Screen
-            name="Onboard"
-            component={Onboard}
-            options={{headerShown: false}}
-          /> */}
         </Stack.Navigator>
       </QueryClientProvider>
     </NavigationContainer>

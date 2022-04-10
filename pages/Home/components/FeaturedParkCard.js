@@ -5,10 +5,18 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 
 import {SIZES, COLORS, FONTS} from '../../../constants';
 import useParkByID from '../../../api/hooks/useParkByID';
+import {FIRESTORE} from '../../../api/firebase/firestore';
+import {useAuth} from '../../../context/auth-context';
+import {useFirebase} from '../../../context/firebase-content';
+import colors from '../../../assets/colors/colors';
 
 Fontisto.loadFont();
 
 const FeaturedParkCard = ({containerStyle, parkId, onPress}) => {
+  const {user} = useAuth();
+  const {
+    userData: {favorites, visited},
+  } = useFirebase();
   const {data, isLoading, isSuccess} = useParkByID(parkId);
 
   if (!data) {
@@ -39,11 +47,30 @@ const FeaturedParkCard = ({containerStyle, parkId, onPress}) => {
         <View style={styles.detailsWrapper}>
           <View style={styles.detailsTextWrapper}>
             <Text style={styles.detailsText}>{fullName}</Text>
-            {/* <Image
-          source={recipeItem.isBookmark ? icons.bookmarkFilled : icons.bookmark}
-          style={styles.favoritesIcon}
-        /> */}
-            <Fontisto name="bookmark" size={20} color="white" />
+            {/* make this reusable */}
+            <View>
+              <Fontisto
+                name="passport-alt"
+                size={20}
+                style={{marginBottom: 10}}
+                color={visited[data.parkCode] ? COLORS.lime : 'grey'}
+                onPress={async () => {
+                  FIRESTORE.toggleUserPark(user.uid, 'visited', data.parkCode);
+                }}
+              />
+              <Fontisto
+                name={favorites[data.parkCode] ? 'bookmark-alt' : 'bookmark'}
+                size={20}
+                color="white"
+                onPress={async () => {
+                  FIRESTORE.toggleUserPark(
+                    user.uid,
+                    'favorites',
+                    data.parkCode,
+                  );
+                }}
+              />
+            </View>
           </View>
 
           <Text style={styles.detailsSubText}>
