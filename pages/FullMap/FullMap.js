@@ -46,7 +46,10 @@ const FullMap = ({navigation}) => {
     return plusPin;
   };
   return (
-    <MapView initialRegion={mapCoords} style={styles.map}>
+    <MapView
+      initialRegion={mapCoords}
+      userInterfaceStyle={'dark'}
+      style={styles.map}>
       {/* <TouchableOpacity
         onPress={() => {
           navigation.goBack();
@@ -71,7 +74,7 @@ const FullMap = ({navigation}) => {
             onPress={() => setSelectedPark(parkCode)}>
             <Image
               source={determinePin(parkCode)}
-              style={{height: 40, width: 40}}
+              style={{height: 30, width: 30}}
             />
           </MapView.Marker>
         );
