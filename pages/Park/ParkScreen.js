@@ -1,147 +1,258 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {
   View,
   Text,
-  StyleSheet,
-  ImageBackground,
-  Dimensions,
+  Image,
   TouchableOpacity,
-  ScrollView,
+  Animated,
+  Platform,
+  StyleSheet,
 } from 'react-native';
-import colors from '../../assets/colors/colors';
-import Entypo from 'react-native-vector-icons/Entypo';
+import Feather from 'react-native-vector-icons/Feather';
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
+import {IMAGES} from '../../assets/images';
 
-import useParkByID from '../../api/hooks/useParkByID';
-import ParkMap from './components/ParkMap';
+import {SIZES, FONTS, icons, COLORS} from '../../constants';
+import ParkHeadInfo from './components/ParkHeadInfo';
 import {usePark} from './park-context';
-import ParkWeather from './components/ParkWeather';
+import ParkMap from './components/ParkMap';
+import {FIRESTORE} from '../../api/firebase/firestore';
+import {useAuth} from '../../context/auth-context';
+import {useFirebase} from '../../context/firebase-content';
+import ParkInfoContent from './ParkInfoContent';
 
-Entypo.loadFont();
-const height = Dimensions.get('window').height;
-const width = Dimensions.get('window').width;
+const HEADER_HEIGHT = 400;
+Feather.loadFont();
+Fontisto.loadFont();
+Ionicons.loadFont();
 
-export default function ParkScreen({navigation}) {
-  const {data} = usePark();
+const ParkScreen = ({route}) => {
+  const navigation = useNavigation();
+  const {user} = useAuth();
+  const {
+    userData: {favorites, visited},
+  } = useFirebase();
+  const {data, imgIndex} = usePark();
+  const scrollY = useRef(new Animated.Value(0)).current;
+
+  if (!data) {
+    return (
+      <View>
+        <Text>No Data</Text>
+      </View>
+    );
+  }
 
   const {images, fullName, name, addresses, description} = data;
   const {city, stateCode} = addresses[0];
 
+  function renderParkCardHeader() {
+    return (
+      <View style={styles.parkCardHeader}>
+        <Animated.Image
+          source={{uri: images[imgIndex].url}}
+          resizeMode="cover"
+          style={{
+            ...styles.animatedHeaderImg,
+            transform: [
+              {
+                translateY: scrollY.interpolate({
+                  inputRange: [-HEADER_HEIGHT, 0, HEADER_HEIGHT],
+                  outputRange: [-HEADER_HEIGHT / 2, 0, HEADER_HEIGHT * 0.75],
+                }),
+              },
+              {
+                scale: scrollY.interpolate({
+                  inputRange: [-HEADER_HEIGHT, 0, HEADER_HEIGHT],
+                  outputRange: [2, 1, 0.75],
+                }),
+              },
+            ],
+          }}
+        />
+
+        {/* Park Info card */}
+        <Animated.View
+          style={{
+            ...styles.animatedParkInfoCard,
+            transform: [
+              {
+                translateY: scrollY.interpolate({
+                  inputRange: [0, 170, 250],
+                  outputRange: [0, 0, 100],
+                  extrapolate: 'clamp',
+                }),
+              },
+            ],
+          }}>
+          <ParkHeadInfo />
+        </Animated.View>
+      </View>
+    );
+  }
+
   return (
-    <>
-      <ImageBackground
-        source={{uri: images[0].url}}
-        style={styles.backgroundImage}>
-        <TouchableOpacity
-          style={styles.backIcon}
-          onPress={() => navigation.goBack()}>
-          <Entypo name="chevron-left" color={colors.white} size={32} />
-        </TouchableOpacity>
-      </ImageBackground>
-      <ScrollView
-        style={{
-          flex: 1,
-          marginHorizontal: 5,
-          marginBottom: 20,
-        }}>
-        <View style={{height: height * 0.5}} />
-        <View style={styles.titleWrapper}>
-          <Text style={styles.itemTitle}>{fullName}</Text>
-          <View style={styles.locationWrapper}>
-            <Entypo name="location-pin" color={colors.white} size={24} />
-            <Text style={styles.locationText}>
-              {city}, {stateCode}
-            </Text>
+    <View style={styles.pageContain}>
+      <Animated.FlatList
+        data={[{id: 1}, {id: 2}]}
+        keyExtractor={item => `${item.id}`}
+        showsVerticalScrollIndicator={false}
+        ListHeaderComponent={
+          <View>
+            {renderParkCardHeader()}
+            <ParkInfoContent />
           </View>
-        </View>
-        <View style={styles.descriptionWrapper}>
-          <View style={styles.heartWrapper}>
-            <Entypo name="heart" color={colors.orange} size={32} />
-          </View>
+        }
+        scrollEventThrottle={16}
+        onScroll={Animated.event(
+          [{nativeEvent: {contentOffset: {y: scrollY}}}],
+          {useNativeDriver: true},
+        )}
+        renderItem={({item}) => <View />}
+        ListFooterComponent={
+          <View
+            style={{
+              marginBottom: 100,
+            }}
+          />
+        }
+      />
 
-          <View style={styles.descriptionTextWrapper}>
-            <Text style={styles.descriptionTitle}>Description</Text>
-            <Text style={styles.descriptionText}>{description}</Text>
-          </View>
-          {/* <ParkMap />
-          <ParkWeather /> */}
-          <View style={{height: 20}} />
+      {/* Header Bar */}
+      <View style={styles.headerBarContain}>
+        {/* Screen Overlay */}
+        <Animated.View
+          style={{
+            ...styles.animatedScreenOverlay,
+            opacity: scrollY.interpolate({
+              inputRange: [HEADER_HEIGHT - 100, HEADER_HEIGHT - 70],
+              outputRange: [0, 1],
+            }),
+          }}
+        />
+
+        {/* Header Bar Title */}
+        <Animated.View
+          style={{
+            ...styles.animatedHeaderBarTitle,
+            opacity: scrollY.interpolate({
+              inputRange: [HEADER_HEIGHT - 100, HEADER_HEIGHT - 50],
+              outputRange: [0, 1],
+            }),
+            transform: [
+              {
+                translateY: scrollY.interpolate({
+                  inputRange: [HEADER_HEIGHT - 100, HEADER_HEIGHT - 50],
+                  outputRange: [50, 0],
+                  extrapolate: 'clamp',
+                }),
+              },
+            ],
+          }}>
+          <Text style={{color: COLORS.lightGray2, ...FONTS.body4}}>
+            {city}, {stateCode}
+          </Text>
+          <Text style={{color: COLORS.white2, ...FONTS.h3}}>{fullName}</Text>
+        </Animated.View>
+
+        <Ionicons
+          name="chevron-back"
+          size={35}
+          color="white"
+          onPress={() => navigation.goBack()}
+        />
+        <View
+          style={{
+            flexDirection: 'row',
+          }}>
+          <Fontisto
+            name="passport-alt"
+            size={32}
+            style={{marginRight: 20}}
+            color={visited[data.parkCode] ? COLORS.lime : COLORS.lightGray2}
+            onPress={async () => {
+              FIRESTORE.toggleUserPark(user.uid, 'visited', data.parkCode);
+            }}
+          />
+          <Fontisto
+            name={favorites[data.parkCode] ? 'bookmark-alt' : 'bookmark'}
+            size={30}
+            color="white"
+            onPress={async () => {
+              FIRESTORE.toggleUserPark(user.uid, 'favorites', data.parkCode);
+            }}
+          />
         </View>
-      </ScrollView>
-    </>
+      </View>
+    </View>
   );
-}
+};
 
+// styles
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.white,
-  },
-  backgroundImage: {
-    height: height,
-    width: width,
-    justifyContent: 'space-between',
-    position: 'absolute',
-  },
-  descriptionWrapper: {
-    backgroundColor: colors.white,
-    flex: 1,
-    marginTop: -20,
-    borderRadius: 25,
-  },
-  backIcon: {
-    marginLeft: 20,
-    marginTop: 60,
-    zIndex: 30,
-  },
-  titleWrapper: {
-    marginHorizontal: 20,
-    marginBottom: 40,
-  },
-  itemTitle: {
-    fontFamily: 'Lato-Bold',
-    fontSize: 32,
-    color: colors.white,
-  },
-  locationWrapper: {
-    flexDirection: 'row',
+  pageContain: {flex: 1, backgroundColor: COLORS.white},
+  backButton: {
     alignItems: 'center',
-    marginTop: 5,
-  },
-  locationText: {
-    fontFamily: 'Lato-Bold',
-    fontSize: 16,
-    color: colors.white,
-  },
-  heartWrapper: {
-    position: 'absolute',
-    right: 40,
-    top: -30,
-    width: 64,
-    height: 64,
-    backgroundColor: colors.white,
-    borderRadius: 64,
     justifyContent: 'center',
+    height: 35,
+    width: 35,
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: COLORS.lightGray,
+    backgroundColor: COLORS.transparentBlack5,
+  },
+  favoriteButton: {
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation: 5,
+    justifyContent: 'center',
+    height: 35,
+    width: 35,
   },
-  descriptionTextWrapper: {marginTop: 30, marginHorizontal: 20},
-  descriptionTitle: {
-    fontFamily: 'Lato-Bold',
-    fontSize: 24,
-    color: colors.black,
+  headerBarContain: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 90,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+    paddingHorizontal: SIZES.padding,
+    paddingBottom: 10,
   },
-  descriptionText: {
-    marginTop: 20,
-    fontFamily: 'Lato-Regular',
-    fontSize: 16,
-    color: colors.darkGray,
+  animatedScreenOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: COLORS.black,
+  },
+  animatedHeaderBarTitle: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    paddingBottom: 10,
+  },
+  parkCardHeader: {
+    marginTop: -1000, // To make sure header image doesn't scroll
+    paddingTop: 1000, // To make sure header image doesn't scroll
+    alignItems: 'center',
+    overflow: 'hidden',
+  },
+  animatedHeaderImg: {height: HEADER_HEIGHT, width: '200%'},
+  animatedParkInfoCard: {
+    position: 'absolute',
+    bottom: 10,
+    left: 30,
+    right: 30,
+    minHeight: 80,
   },
 });
+
+export default ParkScreen;

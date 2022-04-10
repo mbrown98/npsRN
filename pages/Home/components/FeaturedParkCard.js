@@ -53,15 +53,15 @@ const FeaturedParkCard = ({containerStyle, parkId, onPress}) => {
                 name="passport-alt"
                 size={20}
                 style={{marginBottom: 10}}
-                color={visited[data.parkCode] ? COLORS.lime : 'grey'}
+                color={visited[data.parkCode] ? 'white' : COLORS.lightGray2}
                 onPress={async () => {
                   FIRESTORE.toggleUserPark(user.uid, 'visited', data.parkCode);
                 }}
               />
               <Fontisto
-                name={favorites[data.parkCode] ? 'bookmark-alt' : 'bookmark'}
+                name="bookmark-alt"
                 size={20}
-                color="white"
+                color={favorites[data.parkCode] ? 'white' : COLORS.lightGray2}
                 onPress={async () => {
                   FIRESTORE.toggleUserPark(
                     user.uid,

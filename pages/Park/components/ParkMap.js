@@ -11,7 +11,6 @@ export default function ParkMap() {
   }
 
   const {latitude, longitude} = data;
-  console.log({latitude, longitude});
 
   const mapCoords = {
     latitude,
@@ -32,7 +31,6 @@ const styles = StyleSheet.create({
   map: {
     height: 400,
     borderRadius: 5,
-    marginHorizontal: 20,
     marginVertical: 20,
   },
 });

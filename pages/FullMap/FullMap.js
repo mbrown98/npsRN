@@ -13,6 +13,10 @@ import MapView, {Marker, Overlay} from 'react-native-maps';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import {COLORS, FONTS, parkCodes} from '../../constants';
 import {useFirebase} from '../../context/firebase-content';
+import plusPin from '../../assets/icons/pins/plus.png';
+import lovePin from '../../assets/icons/pins/love.png';
+import verifiedPin from '../../assets/icons/pins/verified.png';
+import currentPin from '../../assets/icons/pins/pin.png';
 
 const mapCoords = {
   latitude: '38.88927229',
@@ -29,20 +33,23 @@ const FullMap = ({navigation}) => {
   } = useFirebase();
   const [selectedPark, setSelectedPark] = useState('');
 
-  const determinePinColor = code => {
+  const determinePin = code => {
     if (code === selectedPark) {
-      return 'white';
+      return currentPin;
     }
     if (visited[code]) {
-      return 'blue';
+      return verifiedPin;
     }
     if (favorites[code]) {
-      return COLORS.darkLime;
+      return lovePin;
     }
-    return 'red';
+    return plusPin;
   };
   return (
-    <MapView initialRegion={mapCoords} style={styles.map}>
+    <MapView
+      initialRegion={mapCoords}
+      userInterfaceStyle={'dark'}
+      style={styles.map}>
       {/* <TouchableOpacity
         onPress={() => {
           navigation.goBack();
@@ -58,34 +65,42 @@ const FullMap = ({navigation}) => {
         }}
       /> */}
       {Object.values(parkCodes).map((park, index) => {
-        const {latitude, longitude, fullName} = park;
+        const {latitude, longitude, fullName, parkCode} = park;
         return (
           <MapView.Marker
             key={index}
             coordinate={{latitude, longitude}}
             // title={fullName}
-            onPress={() => setSelectedPark(park.parkCode)}
-            pinColor={determinePinColor(park.parkCode)}
-          />
+            onPress={() => setSelectedPark(parkCode)}>
+            <Image
+              source={determinePin(parkCode)}
+              style={{height: 30, width: 30}}
+            />
+          </MapView.Marker>
         );
       })}
-      {selectedPark ? (
+      {!!selectedPark && (
         <View style={styles.selectedOverlay}>
           <Text style={{...FONTS.h3, marginBottom: 5}}>
             {parkCodes[selectedPark].fullName}
           </Text>
-          <View style={{flexDirection: 'row', flex: 1}}>
-            <Text style={{fontWeight: '400', fontSize: 13, lineHeight: 17}}>
-              {parkCodes[selectedPark].description}
-            </Text>
-          </View>
-          <Button
+
+          <Text
+            style={{
+              fontWeight: '400',
+              fontSize: 13,
+              lineHeight: 17,
+            }}>
+            {parkCodes[selectedPark].description}
+          </Text>
+
+          {/* <Button
             title="Explore"
             style={{color: 'blue'}}
             onPress={() => navigation.navigate('Park', {code: selectedPark})}
-          />
+          /> */}
         </View>
-      ) : null}
+      )}
     </MapView>
   );
 };
@@ -94,7 +109,6 @@ export default FullMap;
 
 const styles = StyleSheet.create({
   map: {
-    position: 'relative',
     flex: 1,
   },
   baseMarker: {
@@ -113,7 +127,5 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     color: 'black',
-    zIndex: 100,
-    minHeight: 30,
   },
 });

@@ -22,6 +22,7 @@ import {Profile, Favorites, Home, Park, Onboard, Login, FullMap} from './pages';
 import {GlobalProvider, useGlobal} from './context/global-context';
 import {useAuth} from './context/auth-context';
 import Home2 from './pages/Home/Home2';
+import {COLORS} from './constants';
 
 Entypo.loadFont();
 MaterialCommunityIcons.loadFont();
@@ -34,7 +35,7 @@ const TabNavigator = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: styles.tabBar,
-        tabBarActiveTintColor: colors.orange,
+        tabBarActiveTintColor: COLORS.darkGreen,
         tabBarInactiveTintColor: colors.grey,
         tabBarShowLabel: false,
         headerShown: false,
@@ -49,15 +50,6 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Favorites"
-        component={Favorites}
-        options={{
-          tabBarIcon: ({color}) => (
-            <Entypo name="heart" size={32} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
         name="FullMap"
         component={FullMap}
         options={{
@@ -67,6 +59,16 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
+        name="Favorites"
+        component={Favorites}
+        options={{
+          tabBarIcon: ({color}) => (
+            <Entypo name="heart" size={32} color={color} />
+          ),
+        }}
+      />
+
+      {/* <Tab.Screen
         name="Profile"
         component={Profile}
         options={{
@@ -74,7 +76,7 @@ const TabNavigator = () => {
             <MaterialCommunityIcons name="account" size={32} color={color} />
           ),
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 };
@@ -122,6 +124,11 @@ export default function App() {
           <Stack.Screen
             name="Park"
             component={Park}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Profile"
+            component={Profile}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

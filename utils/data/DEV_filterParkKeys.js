@@ -1,4 +1,4 @@
-import {getAllParks} from '../../api/requests/getAllParks';
+import {getAllParks} from '../../api/nps/getAllParks';
 
 export const DEV_filterParkKeys = () => {
   const parksObj = {};

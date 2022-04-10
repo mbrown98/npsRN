@@ -7,15 +7,9 @@ import {
   Image,
   StyleSheet,
 } from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
 import auth from '@react-native-firebase/auth';
 import {useAuth} from '../../context/auth-context';
-import {getFavoriteParks} from '../../api/firebase/parks';
-import {ASYNC_STORE} from '../../offline/storage';
-import {getAllParks} from '../../api/requests/getAllParks';
-import {downloadAllParkDataToStore} from '../../offline/downloadAllParkDataToStore';
 import {COLORS, FONTS, parkCodes, SIZES} from '../../constants';
-import CustomButton from '../../components/CustomButton';
 import {DEV_filterParkKeys} from '../../utils/data/DEV_filterParkKeys';
 import {useFirebase} from '../../context/firebase-content';
 

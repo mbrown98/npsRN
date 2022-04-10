@@ -1,5 +1,6 @@
 import React, {useState, createContext, useContext, useEffect} from 'react';
 import useParkByID from '../../api/hooks/useParkByID';
+import useFullParkData from '../../api/nps/getFullParkData';
 
 const ParkContext = createContext(undefined);
 
@@ -14,8 +15,14 @@ function usePark() {
 
 const ParkProvider = ({...props}) => {
   const {data, isLoading, isSuccess} = useParkByID(props.code);
-  console.log('this is runnign');
-  return <ParkContext.Provider value={{data, isSuccess}} {...props} />;
+
+  const [imgIndex, setImgIndex] = useState(0);
+  return (
+    <ParkContext.Provider
+      value={{data, isSuccess, imgIndex, setImgIndex}}
+      {...props}
+    />
+  );
 };
 
 export {ParkProvider, usePark};
