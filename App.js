@@ -22,6 +22,7 @@ import {Profile, Favorites, Home, Park, Onboard, Login, FullMap} from './pages';
 import {GlobalProvider, useGlobal} from './context/global-context';
 import {useAuth} from './context/auth-context';
 import Home2 from './pages/Home/Home2';
+import {COLORS} from './constants';
 
 Entypo.loadFont();
 MaterialCommunityIcons.loadFont();
@@ -34,7 +35,7 @@ const TabNavigator = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: styles.tabBar,
-        tabBarActiveTintColor: colors.orange,
+        tabBarActiveTintColor: COLORS.darkGreen,
         tabBarInactiveTintColor: colors.grey,
         tabBarShowLabel: false,
         headerShown: false,

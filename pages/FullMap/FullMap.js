@@ -79,23 +79,28 @@ const FullMap = ({navigation}) => {
           </MapView.Marker>
         );
       })}
-      {selectedPark ? (
+      {!!selectedPark && (
         <View style={styles.selectedOverlay}>
           <Text style={{...FONTS.h3, marginBottom: 5}}>
             {parkCodes[selectedPark].fullName}
           </Text>
-          <View style={{flexDirection: 'row', flex: 1}}>
-            <Text style={{fontWeight: '400', fontSize: 13, lineHeight: 17}}>
-              {parkCodes[selectedPark].description}
-            </Text>
-          </View>
-          <Button
+
+          <Text
+            style={{
+              fontWeight: '400',
+              fontSize: 13,
+              lineHeight: 17,
+            }}>
+            {parkCodes[selectedPark].description}
+          </Text>
+
+          {/* <Button
             title="Explore"
             style={{color: 'blue'}}
             onPress={() => navigation.navigate('Park', {code: selectedPark})}
-          />
+          /> */}
         </View>
-      ) : null}
+      )}
     </MapView>
   );
 };
@@ -104,7 +109,6 @@ export default FullMap;
 
 const styles = StyleSheet.create({
   map: {
-    position: 'relative',
     flex: 1,
   },
   baseMarker: {
@@ -123,7 +127,5 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     color: 'black',
-    zIndex: 100,
-    minHeight: 30,
   },
 });
