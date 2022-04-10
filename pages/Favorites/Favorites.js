@@ -11,45 +11,15 @@ import {
   Button,
 } from 'react-native';
 import {COLORS, FONTS, SIZES} from '../../constants';
-import {DEV_favorites, DEV_visited} from '../../constants/devConstants';
 import FavCard from './components/FavCard';
-import {useAuth} from '../../context/auth-context';
-import {FIRESTORE} from '../../api/firebase/firestore';
 import {useFirebase} from '../../context/firebase-content';
 
-function randomIntFromInterval(min, max) {
-  // min and max included
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
 export default function Favorites() {
-  const {user} = useAuth();
   const {
     userData: {favorites, visited},
   } = useFirebase();
 
   const [activeList, setActiveList] = useState('favorites');
-
-  const displayList = useCallback(() => {
-    console.log('running');
-    let arr =
-      activeList === 'favorites'
-        ? Object.keys(favorites)
-        : Object.keys(visited);
-    let targetArr = 0;
-    const threeArr = [[], [], []];
-    arr
-      .sort((a, b) => a.localeCompare(b))
-      .forEach(park => {
-        threeArr[targetArr].push(park);
-        targetArr += 1;
-        if (targetArr === 3) {
-          targetArr = 0;
-        }
-      });
-
-    return threeArr;
-  }, [activeList, visited, favorites]);
 
   return (
     <SafeAreaView style={styles.contain}>
@@ -68,25 +38,15 @@ export default function Favorites() {
           );
         })}
       </View>
-      <View style={styles.listContain}>
-        {displayList().map((subArr, i) => (
-          <FlatList
-            contentContainerStyle={styles.flatlistContent}
-            data={subArr}
-            showsVerticalScrollIndicator={false}
-            renderItem={({item}) => (
-              <View
-                style={[
-                  styles.favCardWrapper,
-                  {height: randomIntFromInterval(100, 300)},
-                ]}>
-                <FavCard parkId={item} />
-              </View>
-            )}
-            keyExtractor={item => item}
-          />
-        ))}
-      </View>
+      <FlatList
+        numColumns={2}
+        contentContainerStyle={styles.flatlistContent}
+        style={{paddingHorizontal: 5}}
+        data={Object.keys(activeList === 'favorites' ? favorites : visited)}
+        showsVerticalScrollIndicator={false}
+        renderItem={({item}) => <FavCard parkId={item} />}
+        keyExtractor={item => item}
+      />
     </SafeAreaView>
   );
 }

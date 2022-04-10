@@ -41,8 +41,11 @@ export default FavCard;
 const styles = StyleSheet.create({
   contain: {
     flex: 1,
+    height: 90,
     backgroundColor: 'grey',
-    borderRadius: 5,
+    borderRadius: 10,
+    marginBottom: 10,
+    marginHorizontal: 5,
   },
   bgImg: {
     flex: 1,
