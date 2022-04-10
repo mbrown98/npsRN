@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
   map: {
     height: 400,
     borderRadius: 5,
-    marginHorizontal: 20,
     marginVertical: 20,
   },
 });
