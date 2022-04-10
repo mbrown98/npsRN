@@ -1,4 +1,4 @@
-import {getAllParks} from '../api/requests/getAllParks';
+import {getAllParks} from '../api/nps/getAllParks';
 import {ASYNC_STORE} from './storage';
 
 export const downloadAllParkDataToStore = async () => {
