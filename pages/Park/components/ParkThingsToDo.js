@@ -28,6 +28,7 @@ const ParkThingsToDo = () => {
           return (
             <View style={styles.optBox}>
               <Text style={{fontWeight: '700'}}>{opt.title}</Text>
+
               <Text style={{fontWeight: '300', marginVertical: 5}}>
                 {opt.shortDescription}
               </Text>

@@ -4,19 +4,19 @@ import axios from 'axios';
 export const getFullParkData = async parkId => {
   console.log('pulling full info for: ', parkId);
   const BASE_START = 'https://developer.nps.gov/api/v1/';
-  const BASE_END = `?id=${parkId}&api_key=xVDrllRsZGSuU1sLpzu687U6R8bZG9NpU4W2wwSM`;
+  const BASE_END = `?parkCode=${parkId}&api_key=xVDrllRsZGSuU1sLpzu687U6R8bZG9NpU4W2wwSM`;
 
   const dataArr = [
-    'activities',
-    'topics',
     'alerts',
-    'amenities',
+    // 'amenities/parksplaces',
     'articles',
+    'campgrounds',
     'events',
     'newsreleases',
-    // 'people',
+    'people',
+    'places',
     'thingstodo',
-    'topics',
+    'webcams',
   ];
 
   const mappedUrls = dataArr.map(opt => `${BASE_START}${opt}${BASE_END}`);

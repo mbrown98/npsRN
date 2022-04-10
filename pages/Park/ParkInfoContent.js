@@ -60,7 +60,7 @@ const ParkInfoContent = () => {
           {/* <ParkAlerts /> */}
           <ParkThingsToDo />
           <BoxListSection title="Topics" data={fullData.topics} />
-          <BoxListSection title="Activities" data={fullData.activities} />
+          {/* <BoxListSection title="Activities" data={fullData.activities} /> */}
         </>
       )}
 
