@@ -57,10 +57,10 @@ const ParkInfoContent = () => {
 
       {fullData && (
         <>
-          <ParkAlerts />
+          {/* <ParkAlerts /> */}
+          <ParkThingsToDo />
           <BoxListSection title="Topics" data={fullData.topics} />
           <BoxListSection title="Activities" data={fullData.activities} />
-          <ParkThingsToDo />
         </>
       )}
 
