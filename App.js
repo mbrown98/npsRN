@@ -17,7 +17,6 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import colors from './assets/colors/colors';
 import {Profile, Favorites, Home, Park, Onboard, Login, FullMap} from './pages';
 import {GlobalProvider, useGlobal} from './context/global-context';
 import {useAuth} from './context/auth-context';
@@ -36,7 +35,7 @@ const TabNavigator = () => {
       screenOptions={{
         tabBarStyle: styles.tabBar,
         tabBarActiveTintColor: COLORS.darkGreen,
-        tabBarInactiveTintColor: colors.grey,
+        tabBarInactiveTintColor: 'grey',
         tabBarShowLabel: false,
         headerShown: false,
       }}>

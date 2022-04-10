@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import colors from '../../../assets/colors/colors';
+
 import {usePark} from '../park-context';
 
 export default function ParkWeather() {
@@ -24,12 +24,12 @@ const styles = StyleSheet.create({
   descriptionTitle: {
     fontFamily: 'Lato-Bold',
     fontSize: 24,
-    color: colors.black,
+    color: 'black',
   },
   descriptionText: {
     marginTop: 20,
     fontFamily: 'Lato-Regular',
     fontSize: 16,
-    color: colors.darkGray,
+    color: 'grey',
   },
 });

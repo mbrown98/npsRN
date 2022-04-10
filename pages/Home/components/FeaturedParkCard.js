@@ -8,7 +8,6 @@ import useParkByID from '../../../api/hooks/useParkByID';
 import {FIRESTORE} from '../../../api/firebase/firestore';
 import {useAuth} from '../../../context/auth-context';
 import {useFirebase} from '../../../context/firebase-content';
-import colors from '../../../assets/colors/colors';
 
 Fontisto.loadFont();
 

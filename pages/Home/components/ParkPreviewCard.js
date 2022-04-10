@@ -15,7 +15,6 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import useParkByID from '../../../api/hooks/useParkByID';
-import colors from '../../../assets/colors/colors';
 
 Entypo.loadFont();
 
@@ -40,7 +39,7 @@ export default function ParkPreviewCard({item}) {
         imageStyle={styles.discoverItemImage}>
         <Text style={styles.discoverItemTitle}>{name}</Text>
         <View style={styles.discoverItemLocationWrapper}>
-          <Entypo name="location-pin" size={18} color={colors.white} />
+          <Entypo name="location-pin" size={18} color="white" />
           <Text style={styles.discoverItemLocationText}>
             {city}, {stateCode}
           </Text>

@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import {StyleSheet, Image, Dimensions, Text, View} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Swiper from 'react-native-swiper';
-import colors from '../../assets/colors/colors';
 import {IMAGES} from '../../assets/images';
 import {useGlobal} from '../../context/global-context';
+import {COLORS} from '../../constants';
 // import AppLoading from "expo-app-loading";
 
 const w = Dimensions.get('window').width;
@@ -24,16 +24,16 @@ export default function Onboard() {
         marginRight: w * 0.7,
         marginBottom: h * 0.02,
       }}
-      activeDotColor={colors.orange}
+      activeDotColor={COLORS.darkGreen}
       dotColor="#e6f0e6"
       nextButton={
         <View style={styles.nextButtonContain}>
-          <Entypo name="chevron-right" size={18} color={colors.white} />
+          <Entypo name="chevron-right" size={18} color="white" />
         </View>
       }
       prevButton={
         <View style={styles.prevButtonContain}>
-          <Entypo name="chevron-left" size={18} color={colors.white} />
+          <Entypo name="chevron-left" size={18} color="white" />
         </View>
       }>
       <View style={styles.slide}>
