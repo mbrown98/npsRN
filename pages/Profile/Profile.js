@@ -70,7 +70,11 @@ export default function Profile({navigation}) {
                 color: COLORS.gray,
                 marginTop: 5,
               }}>
-              ({Math.round((opt.stats.count / parkCodes.length) * 100)}%)
+              (
+              {Math.round(
+                (opt.stats.count / Object.keys(parkCodes).length) * 100,
+              )}
+              %)
             </Text>
           </View>
         ))}
@@ -97,7 +101,7 @@ export default function Profile({navigation}) {
         <Button
           title="DEV"
           onPress={() => {
-            console.log('dev clicked');
+            DEV_filterParkKeys();
           }}
         />
       </View>

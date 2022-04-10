@@ -1,15 +1,22 @@
 import {getAllParks} from '../../api/requests/getAllParks';
 
 export const DEV_filterParkKeys = () => {
+  const parksObj = {};
   getAllParks()
     .then(parks =>
-      parks.map(park => ({
-        fullName: park.fullName,
-        parkCode: park.parkCode,
-        latitude: park.latitude,
-        longitude: park.longitude,
-        // description: park.description,
-      })),
+      parks.forEach(park => {
+        parksObj[park.parkCode] = {
+          fullName: park.fullName,
+          parkCode: park.parkCode,
+          latitude: park.latitude,
+          longitude: park.longitude,
+          description: park.description,
+          image: {
+            url: park.images[0].url,
+            credit: park.images[0].credit,
+          },
+        };
+      }),
     )
-    .then(parksData => console.log(parksData));
+    .then(res => console.log(parksObj));
 };
