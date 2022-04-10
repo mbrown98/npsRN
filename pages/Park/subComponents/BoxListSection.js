@@ -22,7 +22,7 @@ const BoxListSection = ({title, data}) => {
         <FlatList
           style={{}}
           data={data}
-          numColumns={3}
+          numColumns={2}
           renderItem={item => {
             return (
               <View style={styles.optBox}>
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     padding: 7,
     marginRight: 5,
     borderRadius: 5,
-    width: '33%',
+    width: '50%',
     overflow: 'hidden',
     marginVertical: 5,
     justifyContent: 'center',

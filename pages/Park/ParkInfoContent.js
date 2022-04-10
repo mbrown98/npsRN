@@ -12,6 +12,7 @@ import {FONTS, SIZES} from '../../constants';
 import ParkActivities from './components/ParkActivities';
 import ParkAlerts from './components/ParkAlerts';
 import ParkMap from './components/ParkMap';
+import ParkPeople from './components/ParkPeople';
 import ParkThingsToDo from './components/ParkThingsToDo';
 import ParkTopics from './components/ParkTopics';
 import {usePark} from './park-context';
@@ -59,11 +60,11 @@ const ParkInfoContent = () => {
         <>
           {/* <ParkAlerts /> */}
           <ParkThingsToDo />
-          <BoxListSection title="Topics" data={fullData.topics} />
-          {/* <BoxListSection title="Activities" data={fullData.activities} /> */}
+          <ParkPeople />
         </>
       )}
-
+      <BoxListSection title="Topics" data={data.topics} />
+      <BoxListSection title="Activities" data={data.activities} />
       <ParkMap />
     </View>
   );
