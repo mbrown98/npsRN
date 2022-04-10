@@ -15,9 +15,11 @@ import ParkMap from './components/ParkMap';
 import ParkThingsToDo from './components/ParkThingsToDo';
 import ParkTopics from './components/ParkTopics';
 import {usePark} from './park-context';
+import BoxListSection from './subComponents/BoxListSection';
 
 const ParkInfoContent = () => {
   const {data, setImgIndex} = usePark();
+  const {data: fullData} = useFullParkData(data.parkCode);
 
   if (!data) {
     return null;
@@ -52,10 +54,16 @@ const ParkInfoContent = () => {
         keyExtractor={item => item.url}
         showsHorizontalScrollIndicator={false}
       />
-      <ParkActivities />
-      <ParkTopics />
-      <ParkAlerts />
-      <ParkThingsToDo />
+
+      {fullData && (
+        <>
+          <ParkAlerts />
+          <BoxListSection title="Topics" data={fullData.topics} />
+          <BoxListSection title="Activities" data={fullData.activities} />
+          <ParkThingsToDo />
+        </>
+      )}
+
       <ParkMap />
     </View>
   );

@@ -28,10 +28,13 @@ export const getFullParkData = async parkId => {
       data.forEach((field, index) => {
         FULL[dataArr[index]] = field.data.data;
       });
+      console.log('populated full:', parkId);
       return FULL;
     });
 };
 
 const useFullParkData = parkId =>
-  useQuery(['fullPark', parkId], () => getFullParkData(parkId));
+  useQuery(['fullPark', parkId], () => getFullParkData(parkId), {
+    refetchOnMount: false,
+  });
 export default useFullParkData;

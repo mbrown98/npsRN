@@ -1,16 +1,20 @@
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import useFullParkData from '../../../api/nps/getFullParkData';
+import {COLORS, FONTS} from '../../../constants';
 import {usePark} from '../park-context';
 
 const ParkTopics = () => {
   const {data, setImgIndex} = usePark();
   const {data: fullData} = useFullParkData(data.parkCode);
-  return (
-    <View>
-      <Text>P Topics</Text>
-    </View>
-  );
+
+  if (!fullData) {
+    return null;
+  }
+
+  const {topics} = fullData;
+
+  return <View></View>;
 };
 
 export default ParkTopics;
