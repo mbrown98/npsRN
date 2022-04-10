@@ -13,6 +13,10 @@ import MapView, {Marker, Overlay} from 'react-native-maps';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import {COLORS, FONTS, parkCodes} from '../../constants';
 import {useFirebase} from '../../context/firebase-content';
+import plusPin from '../../assets/icons/pins/plus.png';
+import lovePin from '../../assets/icons/pins/love.png';
+import verifiedPin from '../../assets/icons/pins/verified.png';
+import currentPin from '../../assets/icons/pins/pin.png';
 
 const mapCoords = {
   latitude: '38.88927229',
@@ -29,17 +33,17 @@ const FullMap = ({navigation}) => {
   } = useFirebase();
   const [selectedPark, setSelectedPark] = useState('');
 
-  const determinePinColor = code => {
+  const determinePin = code => {
     if (code === selectedPark) {
-      return 'white';
+      return currentPin;
     }
     if (visited[code]) {
-      return 'blue';
+      return verifiedPin;
     }
     if (favorites[code]) {
-      return COLORS.darkLime;
+      return lovePin;
     }
-    return 'red';
+    return plusPin;
   };
   return (
     <MapView initialRegion={mapCoords} style={styles.map}>
@@ -58,15 +62,18 @@ const FullMap = ({navigation}) => {
         }}
       /> */}
       {Object.values(parkCodes).map((park, index) => {
-        const {latitude, longitude, fullName} = park;
+        const {latitude, longitude, fullName, parkCode} = park;
         return (
           <MapView.Marker
             key={index}
             coordinate={{latitude, longitude}}
             // title={fullName}
-            onPress={() => setSelectedPark(park.parkCode)}
-            pinColor={determinePinColor(park.parkCode)}
-          />
+            onPress={() => setSelectedPark(parkCode)}>
+            <Image
+              source={determinePin(parkCode)}
+              style={{height: 40, width: 40}}
+            />
+          </MapView.Marker>
         );
       })}
       {selectedPark ? (
