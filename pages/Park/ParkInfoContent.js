@@ -12,7 +12,7 @@ import ParkMap from './components/ParkMap';
 import {usePark} from './park-context';
 
 const ParkInfoContent = () => {
-  const {data} = usePark();
+  const {data, setImgIndex} = usePark();
   if (!data) {
     return null;
   }
@@ -29,12 +29,14 @@ const ParkInfoContent = () => {
         renderItem={item => {
           const uri = item.item.url;
           return (
-            <TouchableOpacity style={{marginRight: 10}}>
+            <TouchableOpacity
+              style={{marginRight: 10}}
+              onPress={() => setImgIndex(item.index)}>
               <Image
                 source={{uri}}
                 style={{
-                  height: 150,
-                  width: 150,
+                  height: 120,
+                  width: 120,
                   borderRadius: 10,
                 }}
               />

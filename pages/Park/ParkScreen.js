@@ -23,7 +23,7 @@ import {useAuth} from '../../context/auth-context';
 import {useFirebase} from '../../context/firebase-content';
 import ParkInfoContent from './ParkInfoContent';
 
-const HEADER_HEIGHT = 350;
+const HEADER_HEIGHT = 400;
 Feather.loadFont();
 Fontisto.loadFont();
 Ionicons.loadFont();
@@ -34,7 +34,7 @@ const ParkScreen = ({route}) => {
   const {
     userData: {favorites, visited},
   } = useFirebase();
-  const {data} = usePark();
+  const {data, imgIndex} = usePark();
   const scrollY = useRef(new Animated.Value(0)).current;
 
   if (!data) {
@@ -52,7 +52,7 @@ const ParkScreen = ({route}) => {
     return (
       <View style={styles.parkCardHeader}>
         <Animated.Image
-          source={{uri: images[0].url}}
+          source={{uri: images[imgIndex].url}}
           resizeMode="cover"
           style={{
             ...styles.animatedHeaderImg,
