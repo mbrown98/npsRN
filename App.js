@@ -96,7 +96,7 @@ export default function App() {
   //   return null;
   // }
 
-  // if (onboardComplete === 'NOT_COMPLETE') {
+  // if (true) {
   //   return <Onboard />;
   // }
 
@@ -104,12 +104,13 @@ export default function App() {
     return <Login />;
   }
 
-  if (initializing)
+  if (initializing) {
     return (
       <View style={{flex: 1}}>
         <Text>Loading</Text>
       </View>
     );
+  }
 
   return (
     <NavigationContainer>

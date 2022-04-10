@@ -46,11 +46,12 @@ const FullMap = ({navigation}) => {
     return plusPin;
   };
   return (
-    <MapView
-      initialRegion={mapCoords}
-      userInterfaceStyle={'dark'}
-      style={styles.map}>
-      {/* <TouchableOpacity
+    <>
+      <MapView
+        initialRegion={mapCoords}
+        userInterfaceStyle={'dark'}
+        style={styles.map}>
+        {/* <TouchableOpacity
         onPress={() => {
           navigation.goBack();
         }}
@@ -64,23 +65,26 @@ const FullMap = ({navigation}) => {
           zIndex: 300,
         }}
       /> */}
-      {Object.values(parkCodes).map((park, index) => {
-        const {latitude, longitude, fullName, parkCode} = park;
-        return (
-          <MapView.Marker
-            key={index}
-            coordinate={{latitude, longitude}}
-            // title={fullName}
-            onPress={() => setSelectedPark(parkCode)}>
-            <Image
-              source={determinePin(parkCode)}
-              style={{height: 30, width: 30}}
-            />
-          </MapView.Marker>
-        );
-      })}
+        {Object.values(parkCodes).map((park, index) => {
+          const {latitude, longitude, fullName, parkCode} = park;
+          return (
+            <MapView.Marker
+              key={index}
+              coordinate={{latitude, longitude}}
+              // title={fullName}
+              onPress={() => setSelectedPark(parkCode)}>
+              <Image
+                source={determinePin(parkCode)}
+                style={{height: 30, width: 30}}
+              />
+            </MapView.Marker>
+          );
+        })}
+      </MapView>
       {!!selectedPark && (
-        <View style={styles.selectedOverlay}>
+        <TouchableOpacity
+          style={styles.selectedOverlay}
+          onPress={() => navigation.navigate('Park', {code: selectedPark})}>
           <Text style={{...FONTS.h3, marginBottom: 5}}>
             {parkCodes[selectedPark].fullName}
           </Text>
@@ -90,18 +94,13 @@ const FullMap = ({navigation}) => {
               fontWeight: '400',
               fontSize: 13,
               lineHeight: 17,
+              position: 'relative',
             }}>
             {parkCodes[selectedPark].description}
           </Text>
-
-          {/* <Button
-            title="Explore"
-            style={{color: 'blue'}}
-            onPress={() => navigation.navigate('Park', {code: selectedPark})}
-          /> */}
-        </View>
+        </TouchableOpacity>
       )}
-    </MapView>
+    </>
   );
 };
 
@@ -124,8 +123,7 @@ const styles = StyleSheet.create({
     left: 15,
     right: 15,
     backgroundColor: 'white',
-    padding: 10,
+    padding: 20,
     borderRadius: 10,
-    color: 'black',
   },
 });
