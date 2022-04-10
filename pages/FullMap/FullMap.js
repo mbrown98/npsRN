@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -24,6 +24,7 @@ const FullMap = ({navigation}) => {
   const {
     userData: {favorites, visited},
   } = useFirebase();
+  const [selectedPark, setSelectedPark] = useState('');
 
   const determineMarker = code => {
     if (visited[code]) {
@@ -70,13 +71,21 @@ const FullMap = ({navigation}) => {
           <MapView.Marker
             key={index}
             coordinate={{latitude, longitude}}
-            title={fullName}
-            onPress={() => console.log('pressed')}
-            description={park.description}>
+            onPress={() => setSelectedPark(park.parkCode)}>
             {determineMarker(park.parkCode)}
           </MapView.Marker>
         );
       })}
+      {!!selectedPark && (
+        <TouchableOpacity
+          style={styles.selectedOverlay}
+          onPress={() => {
+            console.log('pressed');
+            navigation.navigate('Park', {code: selectedPark});
+          }}>
+          <Text>{selectedPark}</Text>
+        </TouchableOpacity>
+      )}
     </MapView>
   );
 };
@@ -93,5 +102,16 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  selectedOverlay: {
+    position: 'absolute',
+    bottom: 30,
+    left: 15,
+    right: 15,
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 10,
+    color: 'black',
+    zIndex: 2000,
   },
 });
