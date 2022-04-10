@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     height: 80,
   },
   userInfoWrapper: {flex: 1},
-  userName: {color: COLORS.darkGreen, ...FONTS.h2},
+  userName: {...FONTS.h2},
   subText: {
     marginTop: 3,
     color: COLORS.gray,
