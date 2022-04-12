@@ -26,6 +26,7 @@ import ParksRemainingCard from './components/ParksRemainingCard';
 import ParksSearchBar from './components/ParksSearchBar';
 import useGroupParkData from '../../api/nps/getGroupParkData';
 import {BlurView} from '@react-native-community/blur';
+import {UTILS} from '../../utils';
 
 Feather.loadFont();
 
@@ -173,7 +174,7 @@ const Home = ({navigation}) => {
               }
               return (
                 <TouchableOpacity
-                  onPress={() => Linking.openURL(infoUrl)}
+                  onPress={() => UTILS.browser.openBrowser(infoUrl)}
                   style={{
                     flexDirection: 'row',
                     marginBottom: 20,
