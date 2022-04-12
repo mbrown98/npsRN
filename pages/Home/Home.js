@@ -132,12 +132,31 @@ const Home = ({navigation}) => {
             flexDirection: 'row',
             justifyContent: 'space-around',
             margin: 10,
+            backgroundColor: COLORS.lightGreen,
+            paddingVertical: 5,
+            borderRadius: 5,
           }}>
-          {['News', 'Alerts', 'Events'].map(opt => (
-            <TouchableOpacity onPress={() => setInfoList(opt)}>
-              <Text>{opt}</Text>
-            </TouchableOpacity>
-          ))}
+          {['News', 'Alerts', 'Events'].map(opt => {
+            const active = opt === infoList;
+            return (
+              <TouchableOpacity
+                onPress={() => setInfoList(opt)}
+                style={[
+                  {paddingVertical: 5, paddingHorizontal: 20, borderRadius: 5},
+                  active && {
+                    backgroundColor: COLORS.darkGreen,
+                  },
+                ]}>
+                <Text
+                  style={{
+                    fontWeight: '800',
+                    color: active ? 'white' : COLORS.darkGreen,
+                  }}>
+                  {opt}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
         </View>
         <View style={{margin: SIZES.padding}}>
           {/* <Text>News</Text> */}
