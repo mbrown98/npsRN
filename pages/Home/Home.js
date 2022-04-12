@@ -124,6 +124,7 @@ const Home = ({navigation}) => {
             ...FONTS.h2,
             color: COLORS.darkGreen,
             marginVertical: 10,
+            marginTop: 20,
           }}>
           Just For You
         </Text>
@@ -135,6 +136,7 @@ const Home = ({navigation}) => {
             backgroundColor: COLORS.lightGreen,
             paddingVertical: 5,
             borderRadius: 5,
+            marginHorizontal: SIZES.padding,
           }}>
           {['News', 'Alerts', 'Events'].map(opt => {
             const active = opt === infoList;
