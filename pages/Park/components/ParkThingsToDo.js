@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -8,6 +9,7 @@ import {usePark} from '../park-context';
 Entypo.loadFont();
 
 const ParkThingsToDo = () => {
+  const navigation = useNavigation();
   const {data, setImgIndex} = usePark();
   const {data: fullData} = useFullParkData(data.parkCode);
 
@@ -38,15 +40,17 @@ const ParkThingsToDo = () => {
           style={{}}
           data={TTD}
           renderItem={item => {
-            const opt = item.item;
+            const TTD = item.item;
             return (
-              <View style={styles.optBox}>
-                <Text style={{fontWeight: '700'}}>{opt.title}</Text>
+              <TouchableOpacity
+                style={styles.optBox}
+                onPress={() => navigation.navigate('ThingToDo', {TTD})}>
+                <Text style={{fontWeight: '700'}}>{TTD.title}</Text>
 
                 <Text style={{fontWeight: '300', marginVertical: 5}}>
-                  {opt.shortDescription}
+                  {TTD.shortDescription}
                 </Text>
-              </View>
+              </TouchableOpacity>
             );
           }}
           keyExtractor={item => item.id}

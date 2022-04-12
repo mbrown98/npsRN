@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: 60,
-    backgroundColor: colors.orange,
+    backgroundColor: COLORS.darkGreen,
   },
   prevButtonContain: {
     height: 60,
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: 60,
-    backgroundColor: colors.orange,
+    backgroundColor: COLORS.darkGreen,
     marginHorizontal: 20,
   },
 });

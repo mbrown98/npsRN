@@ -5,3 +5,5 @@ export {default as Home} from './Home/Home';
 export {default as Onboard} from './Onboard/Onboard';
 export {default as Login} from './Login/Login';
 export {default as FullMap} from './FullMap/FullMap';
+export {default as HistoricPerson} from './HistoricPerson/HistoricPerson';
+export {default as ThingToDo} from './ThingToDo/ThingToDo';

@@ -17,10 +17,19 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import {Profile, Favorites, Home, Park, Onboard, Login, FullMap} from './pages';
+import {
+  Profile,
+  Favorites,
+  Home,
+  Park,
+  Onboard,
+  Login,
+  FullMap,
+  ThingToDo,
+  HistoricPerson,
+} from './pages';
 import {GlobalProvider, useGlobal} from './context/global-context';
 import {useAuth} from './context/auth-context';
-import Home2 from './pages/Home/Home2';
 import {COLORS} from './constants';
 
 Entypo.loadFont();
@@ -41,7 +50,7 @@ const TabNavigator = () => {
       }}>
       <Tab.Screen
         name="Home"
-        component={Home2}
+        component={Home}
         options={{
           tabBarIcon: ({color}) => (
             <Entypo name="home" size={32} color={color} />
@@ -96,7 +105,7 @@ export default function App() {
   //   return null;
   // }
 
-  // if (onboardComplete === 'NOT_COMPLETE') {
+  // if (true) {
   //   return <Onboard />;
   // }
 
@@ -104,12 +113,13 @@ export default function App() {
     return <Login />;
   }
 
-  if (initializing)
+  if (initializing) {
     return (
       <View style={{flex: 1}}>
         <Text>Loading</Text>
       </View>
     );
+  }
 
   return (
     <NavigationContainer>
@@ -126,6 +136,16 @@ export default function App() {
             options={{headerShown: false}}
           />
           <Stack.Screen
+            name="HistoricPerson"
+            component={HistoricPerson}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="ThingToDo"
+            component={ThingToDo}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
             name="Profile"
             component={Profile}
             options={{headerShown: false}}
@@ -138,7 +158,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   tabBar: {
-    backgroundColor: colors.white,
+    backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
