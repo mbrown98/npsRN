@@ -83,7 +83,7 @@ const FeaturedParkCard = ({containerStyle, parkId, onPress}) => {
 
 const styles = StyleSheet.create({
   contain: {
-    height: 350,
+    height: 275,
     width: 250,
     marginTop: SIZES.radius,
     marginRight: 20,
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   bgImg: {
     width: 250,
-    height: 350,
+    height: 275,
     borderRadius: SIZES.radius,
   },
   parkCategoryWrapper: {

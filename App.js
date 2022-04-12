@@ -22,6 +22,7 @@ import {GlobalProvider, useGlobal} from './context/global-context';
 import {useAuth} from './context/auth-context';
 
 import {COLORS} from './constants';
+import HistoricPerson from './pages/HistoricPerson/HistoricPerson';
 
 Entypo.loadFont();
 MaterialCommunityIcons.loadFont();
@@ -124,6 +125,11 @@ export default function App() {
           <Stack.Screen
             name="Park"
             component={Park}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="HistoricPerson"
+            component={HistoricPerson}
             options={{headerShown: false}}
           />
           <Stack.Screen
