@@ -22,6 +22,7 @@ import {FIRESTORE} from '../../api/firebase/firestore';
 import {useAuth} from '../../context/auth-context';
 import {useFirebase} from '../../context/firebase-content';
 import ParkInfoContent from './ParkInfoContent';
+import VisitFavIcon from '../../components/VisitFavIcon';
 
 const HEADER_HEIGHT = 400;
 Feather.loadFont();
@@ -45,7 +46,7 @@ const ParkScreen = ({route}) => {
     );
   }
 
-  const {images, fullName, name, addresses, description} = data;
+  const {images, fullName, name, addresses, description, parkCode} = data;
   const {city, stateCode} = addresses[0];
 
   function renderParkCardHeader() {
@@ -151,10 +152,18 @@ const ParkScreen = ({route}) => {
               },
             ],
           }}>
-          <Text style={{color: COLORS.lightGray2, ...FONTS.body4}}>
+          <Text
+            style={{color: COLORS.lightGray2, ...FONTS.body4, maxWidth: 100}}
+            numberOfLines={1}
+            ellipsizeMode="tail">
             {city}, {stateCode}
           </Text>
-          <Text style={{color: COLORS.white2, ...FONTS.h3}}>{fullName}</Text>
+          <Text
+            style={{color: COLORS.white2, ...FONTS.h3, maxWidth: 100}}
+            numberOfLines={1}
+            ellipsizeMode="tail">
+            {fullName}
+          </Text>
         </Animated.View>
 
         <Ionicons
@@ -167,23 +176,8 @@ const ParkScreen = ({route}) => {
           style={{
             flexDirection: 'row',
           }}>
-          <Fontisto
-            name="passport-alt"
-            size={32}
-            style={{marginRight: 20}}
-            color={visited[data.parkCode] ? COLORS.lime : COLORS.lightGray2}
-            onPress={async () => {
-              FIRESTORE.toggleUserPark(user.uid, 'visited', data.parkCode);
-            }}
-          />
-          <Fontisto
-            name={favorites[data.parkCode] ? 'bookmark-alt' : 'bookmark'}
-            size={30}
-            color="white"
-            onPress={async () => {
-              FIRESTORE.toggleUserPark(user.uid, 'favorites', data.parkCode);
-            }}
-          />
+          <VisitFavIcon park={parkCode} list="favorites" size={50} />
+          <VisitFavIcon park={parkCode} list="visited" size={50} />
         </View>
       </View>
     </View>
