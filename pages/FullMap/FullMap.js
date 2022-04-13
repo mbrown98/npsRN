@@ -17,6 +17,10 @@ import plusPin from '../../assets/icons/pins/plus.png';
 import lovePin from '../../assets/icons/pins/love.png';
 import verifiedPin from '../../assets/icons/pins/verified.png';
 import currentPin from '../../assets/icons/pins/pin.png';
+import ASSETS from '../../assets';
+import {FIRESTORE} from '../../api/firebase/firestore';
+import {useAuth} from '../../context/auth-context';
+import VisitFavIcon from '../../components/VisitFavIcon';
 
 const mapCoords = {
   latitude: '38.88927229',
@@ -28,22 +32,29 @@ const mapCoords = {
 Fontisto.loadFont();
 
 const FullMap = ({navigation}) => {
+  const {user} = useAuth();
   const {
     userData: {favorites, visited},
   } = useFirebase();
+
+  const {
+    favorites: {FavPng, FavSvg, NoFavSvg},
+    visited: {VisitedPng, VisitedSvg, NoVisitedSvg},
+    map: {BinoSvg},
+  } = ASSETS;
   const [selectedPark, setSelectedPark] = useState('');
 
   const determinePin = code => {
     if (code === selectedPark) {
-      return currentPin;
+      return <Image source={currentPin} style={{height: 40, width: 40}} />;
     }
     if (visited[code]) {
-      return verifiedPin;
+      return <Image source={VisitedPng} style={{height: 40, width: 40}} />;
     }
     if (favorites[code]) {
-      return lovePin;
+      return <Image source={FavPng} style={{height: 40, width: 40}} />;
     }
-    return plusPin;
+    return <BinoSvg height={20} width={20} />;
   };
   return (
     <>
@@ -51,20 +62,6 @@ const FullMap = ({navigation}) => {
         initialRegion={mapCoords}
         userInterfaceStyle={'dark'}
         style={styles.map}>
-        {/* <TouchableOpacity
-        onPress={() => {
-          navigation.goBack();
-        }}
-        style={{
-          position: 'absolute',
-          height: 20,
-          width: 20,
-          backgroundColor: 'red',
-          top: 50,
-          left: 20,
-          zIndex: 300,
-        }}
-      /> */}
         {Object.values(parkCodes).map((park, index) => {
           const {latitude, longitude, fullName, parkCode} = park;
           return (
@@ -73,10 +70,7 @@ const FullMap = ({navigation}) => {
               coordinate={{latitude, longitude}}
               // title={fullName}
               onPress={() => setSelectedPark(parkCode)}>
-              <Image
-                source={determinePin(parkCode)}
-                style={{height: 30, width: 30}}
-              />
+              {determinePin(parkCode)}
             </MapView.Marker>
           );
         })}
@@ -98,6 +92,15 @@ const FullMap = ({navigation}) => {
             }}>
             {parkCodes[selectedPark].description}
           </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginTop: 10,
+              justifyContent: 'space-around',
+            }}>
+            <VisitFavIcon park={selectedPark} list="favorites" size={50} />
+            <VisitFavIcon park={selectedPark} list="visited" size={50} />
+          </View>
         </TouchableOpacity>
       )}
     </>

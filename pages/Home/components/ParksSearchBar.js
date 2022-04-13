@@ -19,12 +19,12 @@ const ParksSearchBar = () => {
   const [textInput, setTextInput] = useState('');
 
   const searchResults = useCallback(() => {
-    if (!textInput) return [];
-    const filtered = Object.values(parkCodes).filter(
-      park =>
-        park.parkCode.startsWith(textInput.toLowerCase()) ||
-        park.fullName.startsWith(textInput.toLowerCase()),
-    );
+    if (!textInput) {
+      return [];
+    }
+    const filtered = Object.values(parkCodes).filter(park => {
+      return park.fullName.toLowerCase().startsWith(textInput.toLowerCase());
+    });
 
     return filtered;
   }, [textInput]);

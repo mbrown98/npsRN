@@ -1,10 +1,19 @@
 import React, {useState} from 'react';
-import {StyleSheet, Image, Dimensions, Text, View} from 'react-native';
+import {
+  StyleSheet,
+  Image,
+  Dimensions,
+  Text,
+  View,
+  ScrollView,
+  SafeAreaView,
+  TouchableOpacity,
+} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Swiper from 'react-native-swiper';
 import {IMAGES} from '../../assets/images';
 import {useGlobal} from '../../context/global-context';
-import {COLORS} from '../../constants';
+import {COLORS, SIZES} from '../../constants';
 // import AppLoading from "expo-app-loading";
 
 const w = Dimensions.get('window').width;
@@ -15,86 +24,84 @@ Entypo.loadFont();
 
 export default function Onboard() {
   const {name, setOnboardComplete} = useGlobal();
+  const slideData = [
+    {
+      img: bryce,
+      title: 'Welcome',
+      sub: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+    },
+    {
+      img: zion,
+      title: 'Discover',
+      sub: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+    },
+    {
+      img: yosemite,
+      title: 'Travel',
+      sub: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+    },
+    {
+      img: olympic,
+      title: 'Get Started',
+      sub: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+    },
+  ];
   return (
-    <Swiper
-      buttonWrapperStyle={buttonWrapperStyle}
-      style={styles.wrapper}
-      showsButtons={true}
-      paginationStyle={{
-        marginRight: w * 0.7,
-        marginBottom: h * 0.02,
-      }}
-      activeDotColor={COLORS.darkGreen}
-      dotColor="#e6f0e6"
-      nextButton={
-        <View style={styles.nextButtonContain}>
-          <Entypo name="chevron-right" size={18} color="white" />
-        </View>
-      }
-      prevButton={
-        <View style={styles.prevButtonContain}>
-          <Entypo name="chevron-left" size={18} color="white" />
-        </View>
-      }>
-      <View style={styles.slide}>
-        <Image source={bryce} style={styles.img} />
-        <Text style={styles.title}>Travel</Text>
-        <Text style={styles.text}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s.
-        </Text>
-      </View>
-      <View style={styles.slide}>
-        <Image source={zion} style={styles.img} />
-        <Text style={styles.title}>Discover</Text>
-        <Text style={styles.text}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s.
-        </Text>
-      </View>
-
-      <View style={styles.slide}>
-        <Image source={olympic} style={styles.img} />
-        <Text style={styles.title}>Get Started</Text>
-        <Text style={styles.text}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s.
-        </Text>
-      </View>
-      <View style={styles.slide}>
-        <Image source={yosemite} style={styles.img} />
-        <Text style={styles.title}>Welcome</Text>
-        <Text style={styles.text}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s.
-        </Text>
-      </View>
-    </Swiper>
+    <SafeAreaView style={styles.sa}>
+      <ScrollView
+        horizontal={true}
+        pagingEnabled={true}
+        showsHorizontalScrollIndicator={false}
+        style={styles.sv}>
+        {slideData.map((sl, i) => {
+          return (
+            <View style={styles.slide} key={i}>
+              <Image source={sl.img} style={styles.img} />
+              <View style={styles.textContain}>
+                <Text style={styles.title}>{sl.title}</Text>
+                <Text style={styles.text}>{sl.sub}</Text>
+                {i === slideData.length - 1 && (
+                  <TouchableOpacity onPress={() => setOnboardComplete(true)}>
+                    <Entypo
+                      name="chevron-right"
+                      size={36}
+                      color={COLORS.darkGreen}
+                      style={{alignSelf: 'flex-end', marginVertical: 5}}
+                    />
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
+          );
+        })}
+      </ScrollView>
+    </SafeAreaView>
   );
   // }
 }
 
 const styles = StyleSheet.create({
+  sa: {
+    flex: 1,
+  },
+  sv: {flex: 1},
   slide: {
+    width: w,
     flex: 1,
     paddingTop: 80,
-    marginHorizontal: 30,
+    paddingHorizontal: SIZES.padding,
   },
   img: {
     alignSelf: 'center',
     borderTopRightRadius: 80,
     borderBottomLeftRadius: 80,
-    height: h * 0.5,
-    width: w * 0.9,
+    height: h * 0.4,
+    width: w * 0.8,
   },
+  textContain: {paddingHorizontal: 30},
   title: {
     // fontFamily: 'Montserrat_700Bold',
     marginTop: 60,
-    marginHorizontal: 10,
     fontSize: 32,
   },
   text: {
@@ -103,24 +110,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 16,
     lineHeight: 25,
-    marginLeft: 10,
   },
-  nextButtonContain: {
-    height: 60,
-    borderRadius: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 60,
-    backgroundColor: COLORS.darkGreen,
-  },
-  prevButtonContain: {
-    height: 60,
-    borderRadius: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 60,
-    backgroundColor: COLORS.darkGreen,
-    marginHorizontal: 20,
+  getStart: {
+    marginVertical: 10,
+    fontSize: 16,
+    fontWeight: '600',
+    color: COLORS.darkGreen,
+    alignSelf: 'flex-end',
   },
 });
 

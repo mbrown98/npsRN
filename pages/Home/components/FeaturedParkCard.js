@@ -8,6 +8,8 @@ import useParkByID from '../../../api/hooks/useParkByID';
 import {FIRESTORE} from '../../../api/firebase/firestore';
 import {useAuth} from '../../../context/auth-context';
 import {useFirebase} from '../../../context/firebase-content';
+import ASSETS from '../../../assets';
+import VisitFavIcon from '../../../components/VisitFavIcon';
 
 Fontisto.loadFont();
 
@@ -24,6 +26,11 @@ const FeaturedParkCard = ({containerStyle, parkId, onPress}) => {
   const {images, fullName, name, addresses, parkCode} = data;
 
   const {city, stateCode} = addresses[0];
+
+  const {
+    favorites: {FavSvg, NoFavSvg},
+    visited: {VisitedSvg, NoVisitedSvg},
+  } = ASSETS;
 
   return (
     <TouchableOpacity
@@ -45,36 +52,26 @@ const FeaturedParkCard = ({containerStyle, parkId, onPress}) => {
       <BlurView style={styles.parkDetailsBlur} blurType="dark">
         <View style={styles.detailsWrapper}>
           <View style={styles.detailsTextWrapper}>
-            <Text style={styles.detailsText}>{fullName}</Text>
-            {/* make this reusable */}
-            <View>
-              <Fontisto
-                name="passport-alt"
-                size={20}
-                style={{marginBottom: 10}}
-                color={visited[data.parkCode] ? 'white' : COLORS.lightGray2}
-                onPress={async () => {
-                  FIRESTORE.toggleUserPark(user.uid, 'visited', data.parkCode);
-                }}
-              />
-              <Fontisto
-                name="bookmark-alt"
-                size={20}
-                color={favorites[data.parkCode] ? 'white' : COLORS.lightGray2}
-                onPress={async () => {
-                  FIRESTORE.toggleUserPark(
-                    user.uid,
-                    'favorites',
-                    data.parkCode,
-                  );
-                }}
-              />
-            </View>
+            <Text
+              style={styles.detailsText}
+              numberOfLines={2}
+              ellipsizeMode="tail">
+              {fullName}
+            </Text>
+            <Text
+              style={styles.detailsSubText}
+              numberOfLines={1}
+              ellipsizeMode="tail">
+              {city}, {stateCode}
+            </Text>
           </View>
 
-          <Text style={styles.detailsSubText}>
-            {city}, {stateCode}
-          </Text>
+          {/* make this reusable */}
+          <View>
+            <VisitFavIcon park={parkCode} list="favorites" size={30} />
+            <View style={{flex: 1}} />
+            <VisitFavIcon park={parkCode} list="visited" size={30} />
+          </View>
         </View>
       </BlurView>
     </TouchableOpacity>
@@ -111,26 +108,27 @@ const styles = StyleSheet.create({
     right: 10,
     height: 100,
     paddingVertical: SIZES.radius,
-    paddingHorizontal: SIZES.base,
+
     borderRadius: SIZES.radius,
   },
   detailsWrapper: {
     flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
   },
   detailsTextWrapper: {
     flex: 1,
-    flexDirection: 'row',
     justifyContent: 'space-between',
   },
   detailsText: {
-    width: '70%',
     color: COLORS.white,
     ...FONTS.h3,
     fontSize: 18,
   },
   detailsSubText: {
     color: COLORS.lightGray,
-    ...FONTS.body4,
+    ...FONTS.body5,
   },
 });
 

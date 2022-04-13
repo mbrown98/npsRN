@@ -6,12 +6,12 @@ import {FirebaseProvider} from './context/firebase-content';
 
 export default function AppDataWrapper() {
   return (
-    <GlobalProvider>
-      <AuthProvider>
+    <AuthProvider>
+      <GlobalProvider>
         <FirebaseProvider>
           <App />
         </FirebaseProvider>
-      </AuthProvider>
-    </GlobalProvider>
+      </GlobalProvider>
+    </AuthProvider>
   );
 }
