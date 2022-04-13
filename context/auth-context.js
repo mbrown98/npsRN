@@ -34,7 +34,6 @@ const AuthProvider = ({...props}) => {
       if (!yellParkData) {
         console.log('no yell park data');
         downloadAllParkDataToStore().then(parks => {
-          console.log('downaloded parks', parks && 'TTT');
           if (parks) {
             setInitializing(false);
           } else {

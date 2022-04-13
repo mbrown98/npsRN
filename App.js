@@ -101,16 +101,16 @@ export default function App() {
   });
   const {onboardComplete} = useGlobal();
 
-  // if (onboardComplete === null) {
-  //   return null;
-  // }
-
-  // if (true) {
-  //   return <Onboard />;
-  // }
+  if (onboardComplete === null) {
+    return null;
+  }
 
   if (!user) {
     return <Login />;
+  }
+
+  if (onboardComplete === 'NOT_COMPLETE') {
+    return <Onboard />;
   }
 
   if (initializing) {

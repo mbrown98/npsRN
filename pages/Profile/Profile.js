@@ -12,6 +12,7 @@ import {useAuth} from '../../context/auth-context';
 import {COLORS, FONTS, parkCodes, SIZES} from '../../constants';
 import {DEV_filterParkKeys} from '../../utils/data/DEV_filterParkKeys';
 import {useFirebase} from '../../context/firebase-content';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function Profile({navigation}) {
   const {user} = useAuth();
@@ -82,7 +83,8 @@ export default function Profile({navigation}) {
           onPress={() =>
             auth()
               .signOut()
-              .then(() => console.log('User signed out!'))
+              .then(() => AsyncStorage.removeItem('ONBOARD_COMPLETE'))
+              .catch(e => console.log('e'))
           }
         />
         <Button

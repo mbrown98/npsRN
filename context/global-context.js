@@ -1,5 +1,6 @@
 import React, {useState, createContext, useContext, useEffect} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
+import {useAuth} from './auth-context';
 
 const GlobalContext = createContext(undefined);
 
@@ -12,23 +13,25 @@ function useGlobal() {
 }
 
 const GlobalProvider = ({...props}) => {
+  const {user} = useAuth();
   const [onboardComplete, setOnboardComplete] = useState(false);
 
   useEffect(() => {
     AsyncStorage.getItem('ONBOARD_COMPLETE').then(value => {
+      console.log('onbard value::::', value);
       if (!value) {
         setOnboardComplete('NOT_COMPLETE');
       } else {
         setOnboardComplete('COMPLETE');
       }
     });
-  }, []);
+  }, [user]);
 
   useEffect(() => {
-    if (onboardComplete) {
+    if (onboardComplete && user) {
       AsyncStorage.setItem('ONBOARD_COMPLETE', 'COMPLETE');
     }
-  }, [onboardComplete]);
+  }, [onboardComplete, user]);
 
   return (
     <GlobalContext.Provider
