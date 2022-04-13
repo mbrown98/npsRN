@@ -26,12 +26,11 @@ import {
   FullMap,
   HistoricPerson,
 } from './pages';
-import Fav from './assets/favorites/favorite.svg';
-import NoFav from './assets/favorites/noFavorite.svg';
 
 import {GlobalProvider, useGlobal} from './context/global-context';
 import {useAuth} from './context/auth-context';
 import {COLORS} from './constants';
+import ASSETS from './assets';
 
 Entypo.loadFont();
 MaterialCommunityIcons.loadFont();
@@ -40,6 +39,9 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
+  const {
+    favorites: {FavSvg, NoFavSvg},
+  } = ASSETS;
   return (
     <Tab.Navigator
       screenOptions={{
@@ -73,9 +75,9 @@ const TabNavigator = () => {
         options={{
           tabBarIcon: opt =>
             opt.focused ? (
-              <Fav height={32} width={32} />
+              <FavSvg height={32} width={32} />
             ) : (
-              <NoFav height={32} width={32} />
+              <NoFavSvg height={32} width={32} />
             ),
         }}
       />
