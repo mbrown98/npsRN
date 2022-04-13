@@ -26,6 +26,8 @@ import {
   FullMap,
   HistoricPerson,
 } from './pages';
+import Fav from './assets/favorites/favorite.svg';
+import NoFav from './assets/favorites/noFavorite.svg';
 
 import {GlobalProvider, useGlobal} from './context/global-context';
 import {useAuth} from './context/auth-context';
@@ -69,9 +71,12 @@ const TabNavigator = () => {
         name="Favorites"
         component={Favorites}
         options={{
-          tabBarIcon: ({color}) => (
-            <Entypo name="heart" size={32} color={color} />
-          ),
+          tabBarIcon: opt =>
+            opt.focused ? (
+              <Fav height={32} width={32} />
+            ) : (
+              <NoFav height={32} width={32} />
+            ),
         }}
       />
 
