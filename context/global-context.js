@@ -18,7 +18,6 @@ const GlobalProvider = ({...props}) => {
 
   useEffect(() => {
     AsyncStorage.getItem('ONBOARD_COMPLETE').then(value => {
-      console.log('onbard value::::', value);
       if (!value) {
         setOnboardComplete('NOT_COMPLETE');
       } else {

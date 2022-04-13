@@ -27,6 +27,8 @@ import ParksSearchBar from './components/ParksSearchBar';
 import useGroupParkData from '../../api/nps/getGroupParkData';
 import {BlurView} from '@react-native-community/blur';
 import {UTILS} from '../../utils';
+import Favorite from '../../assets/favorites/favorite.svg';
+import NoFavorite from '../../assets/favorites/noFavorite.svg';
 
 Feather.loadFont();
 
@@ -88,7 +90,9 @@ const Home = ({navigation}) => {
       <ScrollView>
         <HomeHeader />
         <ParksSearchBar />
-
+        <Text>Hi</Text>
+        <Favorite width={100} height={100} color="red" />
+        <NoFavorite width={100} height={100} color="red" />
         <View style={{marginTop: 10}}>
           <Text
             style={{

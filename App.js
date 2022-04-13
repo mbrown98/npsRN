@@ -18,16 +18,15 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import {
-  Profile,
   Favorites,
   Home,
   Park,
   Onboard,
   Login,
   FullMap,
-  ThingToDo,
   HistoricPerson,
 } from './pages';
+
 import {GlobalProvider, useGlobal} from './context/global-context';
 import {useAuth} from './context/auth-context';
 import {COLORS} from './constants';
@@ -140,16 +139,12 @@ export default function App() {
             component={HistoricPerson}
             options={{headerShown: false}}
           />
-          <Stack.Screen
-            name="ThingToDo"
-            component={ThingToDo}
-            options={{headerShown: false}}
-          />
+          {/*   
           <Stack.Screen
             name="Profile"
             component={Profile}
             options={{headerShown: false}}
-          />
+          /> */}
         </Stack.Navigator>
       </QueryClientProvider>
     </NavigationContainer>
