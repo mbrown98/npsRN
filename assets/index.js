@@ -1,7 +1,17 @@
+import FavSvg from './favorites/favorite.svg';
+import NoFavSvg from './favorites/noFavorite.svg';
+
+import VisitedSvg from './visited/visited.svg';
+import NoVisitedSvg from './visited/noVisited.svg';
+
 const ASSETS = {
   favorites: {
-    NoFavSvg: require('./favorites/noFavorite.svg'),
-    FavSvg: require('./favorites/favorite.svg'),
+    NoFavSvg,
+    FavSvg,
+  },
+  visited: {
+    VisitedSvg,
+    NoVisitedSvg,
   },
 };
 

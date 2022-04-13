@@ -8,10 +8,7 @@ import useParkByID from '../../../api/hooks/useParkByID';
 import {FIRESTORE} from '../../../api/firebase/firestore';
 import {useAuth} from '../../../context/auth-context';
 import {useFirebase} from '../../../context/firebase-content';
-import Fav from '../../../assets/favorites/favorite.svg';
-import NoFav from '../../../assets/favorites/noFavorite.svg';
-import Visited from '../../../assets/visited/visited.svg';
-import NoVisited from '../../../assets/visited/noVisited.svg';
+import ASSETS from '../../../assets';
 
 Fontisto.loadFont();
 
@@ -28,6 +25,11 @@ const FeaturedParkCard = ({containerStyle, parkId, onPress}) => {
   const {images, fullName, name, addresses, parkCode} = data;
 
   const {city, stateCode} = addresses[0];
+
+  const {
+    favorites: {FavSvg, NoFavSvg},
+    visited: {VisitedSvg, NoVisitedSvg},
+  } = ASSETS;
 
   return (
     <TouchableOpacity
@@ -71,9 +73,9 @@ const FeaturedParkCard = ({containerStyle, parkId, onPress}) => {
                 FIRESTORE.toggleUserPark(user.uid, 'favorites', data.parkCode);
               }}>
               {favorites[data.parkCode] ? (
-                <Fav height={30} width={30} />
+                <FavSvg height={30} width={30} />
               ) : (
-                <NoFav height={30} width={30} />
+                <NoFavSvg height={30} width={30} />
               )}
             </TouchableOpacity>
             <TouchableOpacity
@@ -81,9 +83,9 @@ const FeaturedParkCard = ({containerStyle, parkId, onPress}) => {
                 FIRESTORE.toggleUserPark(user.uid, 'visited', data.parkCode);
               }}>
               {visited[data.parkCode] ? (
-                <Visited height={30} width={30} />
+                <VisitedSvg height={30} width={30} />
               ) : (
-                <NoVisited height={30} width={30} />
+                <NoVisitedSvg height={30} width={30} />
               )}
             </TouchableOpacity>
           </View>
