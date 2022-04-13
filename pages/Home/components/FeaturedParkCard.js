@@ -8,6 +8,8 @@ import useParkByID from '../../../api/hooks/useParkByID';
 import {FIRESTORE} from '../../../api/firebase/firestore';
 import {useAuth} from '../../../context/auth-context';
 import {useFirebase} from '../../../context/firebase-content';
+import Fav from '../../../assets/favorites/favorite.svg';
+import NoFav from '../../../assets/favorites/noFavorite.svg';
 
 Fontisto.loadFont();
 
@@ -48,27 +50,21 @@ const FeaturedParkCard = ({containerStyle, parkId, onPress}) => {
             <Text style={styles.detailsText}>{fullName}</Text>
             {/* make this reusable */}
             <View>
-              <Fontisto
-                name="passport-alt"
-                size={20}
+              <TouchableOpacity
                 style={{marginBottom: 10}}
-                color={visited[data.parkCode] ? 'white' : COLORS.lightGray2}
-                onPress={async () => {
-                  FIRESTORE.toggleUserPark(user.uid, 'visited', data.parkCode);
-                }}
-              />
-              <Fontisto
-                name="bookmark-alt"
-                size={20}
-                color={favorites[data.parkCode] ? 'white' : COLORS.lightGray2}
                 onPress={async () => {
                   FIRESTORE.toggleUserPark(
                     user.uid,
                     'favorites',
                     data.parkCode,
                   );
-                }}
-              />
+                }}>
+                {favorites[data.parkCode] ? (
+                  <Fav height={35} width={35} />
+                ) : (
+                  <NoFav height={35} width={35} />
+                )}
+              </TouchableOpacity>
             </View>
           </View>
 
