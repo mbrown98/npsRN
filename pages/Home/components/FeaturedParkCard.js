@@ -10,6 +10,8 @@ import {useAuth} from '../../../context/auth-context';
 import {useFirebase} from '../../../context/firebase-content';
 import Fav from '../../../assets/favorites/favorite.svg';
 import NoFav from '../../../assets/favorites/noFavorite.svg';
+import Visited from '../../../assets/visited/visited.svg';
+import NoVisited from '../../../assets/visited/noVisited.svg';
 
 Fontisto.loadFont();
 
@@ -47,30 +49,44 @@ const FeaturedParkCard = ({containerStyle, parkId, onPress}) => {
       <BlurView style={styles.parkDetailsBlur} blurType="dark">
         <View style={styles.detailsWrapper}>
           <View style={styles.detailsTextWrapper}>
-            <Text style={styles.detailsText}>{fullName}</Text>
-            {/* make this reusable */}
-            <View>
-              <TouchableOpacity
-                style={{marginBottom: 10}}
-                onPress={async () => {
-                  FIRESTORE.toggleUserPark(
-                    user.uid,
-                    'favorites',
-                    data.parkCode,
-                  );
-                }}>
-                {favorites[data.parkCode] ? (
-                  <Fav height={35} width={35} />
-                ) : (
-                  <NoFav height={35} width={35} />
-                )}
-              </TouchableOpacity>
-            </View>
+            <Text
+              style={styles.detailsText}
+              numberOfLines={2}
+              ellipsizeMode="tail">
+              {fullName}
+            </Text>
+            <Text
+              style={styles.detailsSubText}
+              numberOfLines={1}
+              ellipsizeMode="tail">
+              {city}, {stateCode}
+            </Text>
           </View>
 
-          <Text style={styles.detailsSubText}>
-            {city}, {stateCode}
-          </Text>
+          {/* make this reusable */}
+          <View>
+            <TouchableOpacity
+              style={{marginBottom: 10}}
+              onPress={async () => {
+                FIRESTORE.toggleUserPark(user.uid, 'favorites', data.parkCode);
+              }}>
+              {favorites[data.parkCode] ? (
+                <Fav height={30} width={30} />
+              ) : (
+                <NoFav height={30} width={30} />
+              )}
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={async () => {
+                FIRESTORE.toggleUserPark(user.uid, 'visited', data.parkCode);
+              }}>
+              {visited[data.parkCode] ? (
+                <Visited height={30} width={30} />
+              ) : (
+                <NoVisited height={30} width={30} />
+              )}
+            </TouchableOpacity>
+          </View>
         </View>
       </BlurView>
     </TouchableOpacity>
@@ -107,26 +123,27 @@ const styles = StyleSheet.create({
     right: 10,
     height: 100,
     paddingVertical: SIZES.radius,
-    paddingHorizontal: SIZES.base,
+
     borderRadius: SIZES.radius,
   },
   detailsWrapper: {
     flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
   },
   detailsTextWrapper: {
     flex: 1,
-    flexDirection: 'row',
     justifyContent: 'space-between',
   },
   detailsText: {
-    width: '70%',
     color: COLORS.white,
     ...FONTS.h3,
     fontSize: 18,
   },
   detailsSubText: {
     color: COLORS.lightGray,
-    ...FONTS.body4,
+    ...FONTS.body5,
   },
 });
 
