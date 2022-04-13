@@ -9,6 +9,7 @@ import {FIRESTORE} from '../../../api/firebase/firestore';
 import {useAuth} from '../../../context/auth-context';
 import {useFirebase} from '../../../context/firebase-content';
 import ASSETS from '../../../assets';
+import VisitFavIcon from '../../../components/VisitFavIcon';
 
 Fontisto.loadFont();
 
@@ -67,27 +68,9 @@ const FeaturedParkCard = ({containerStyle, parkId, onPress}) => {
 
           {/* make this reusable */}
           <View>
-            <TouchableOpacity
-              style={{marginBottom: 10}}
-              onPress={async () => {
-                FIRESTORE.toggleUserPark(user.uid, 'favorites', data.parkCode);
-              }}>
-              {favorites[data.parkCode] ? (
-                <FavSvg height={30} width={30} />
-              ) : (
-                <NoFavSvg height={30} width={30} />
-              )}
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={async () => {
-                FIRESTORE.toggleUserPark(user.uid, 'visited', data.parkCode);
-              }}>
-              {visited[data.parkCode] ? (
-                <VisitedSvg height={30} width={30} />
-              ) : (
-                <NoVisitedSvg height={30} width={30} />
-              )}
-            </TouchableOpacity>
+            <VisitFavIcon park={parkCode} list="favorites" size={30} />
+            <View style={{flex: 1}} />
+            <VisitFavIcon park={parkCode} list="visited" size={30} />
           </View>
         </View>
       </BlurView>

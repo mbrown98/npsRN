@@ -20,6 +20,7 @@ import currentPin from '../../assets/icons/pins/pin.png';
 import ASSETS from '../../assets';
 import {FIRESTORE} from '../../api/firebase/firestore';
 import {useAuth} from '../../context/auth-context';
+import VisitFavIcon from '../../components/VisitFavIcon';
 
 const mapCoords = {
   latitude: '38.88927229',
@@ -97,26 +98,8 @@ const FullMap = ({navigation}) => {
               marginTop: 10,
               justifyContent: 'space-around',
             }}>
-            <TouchableOpacity
-              onPress={async () => {
-                FIRESTORE.toggleUserPark(user.uid, 'favorites', selectedPark);
-              }}>
-              {favorites[selectedPark] ? (
-                <FavSvg height={50} width={50} />
-              ) : (
-                <NoFavSvg height={50} width={50} />
-              )}
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={async () => {
-                FIRESTORE.toggleUserPark(user.uid, 'visited', selectedPark);
-              }}>
-              {visited[selectedPark] ? (
-                <VisitedSvg height={50} width={50} />
-              ) : (
-                <NoVisitedSvg height={50} width={50} />
-              )}
-            </TouchableOpacity>
+            <VisitFavIcon park={selectedPark} list="favorites" size={50} />
+            <VisitFavIcon park={selectedPark} list="visited" size={50} />
           </View>
         </TouchableOpacity>
       )}
