@@ -18,6 +18,8 @@ import lovePin from '../../assets/icons/pins/love.png';
 import verifiedPin from '../../assets/icons/pins/verified.png';
 import currentPin from '../../assets/icons/pins/pin.png';
 import ASSETS from '../../assets';
+import {FIRESTORE} from '../../api/firebase/firestore';
+import {useAuth} from '../../context/auth-context';
 
 const mapCoords = {
   latitude: '38.88927229',
@@ -29,13 +31,14 @@ const mapCoords = {
 Fontisto.loadFont();
 
 const FullMap = ({navigation}) => {
+  const {user} = useAuth();
   const {
     userData: {favorites, visited},
   } = useFirebase();
 
   const {
-    favorites: {FavPng},
-    visited: {VisitedPng},
+    favorites: {FavPng, FavSvg, NoFavSvg},
+    visited: {VisitedPng, VisitedSvg, NoVisitedSvg},
     map: {BinoSvg},
   } = ASSETS;
   const [selectedPark, setSelectedPark] = useState('');
@@ -58,20 +61,6 @@ const FullMap = ({navigation}) => {
         initialRegion={mapCoords}
         userInterfaceStyle={'dark'}
         style={styles.map}>
-        {/* <TouchableOpacity
-        onPress={() => {
-          navigation.goBack();
-        }}
-        style={{
-          position: 'absolute',
-          height: 20,
-          width: 20,
-          backgroundColor: 'red',
-          top: 50,
-          left: 20,
-          zIndex: 300,
-        }}
-      /> */}
         {Object.values(parkCodes).map((park, index) => {
           const {latitude, longitude, fullName, parkCode} = park;
           return (
@@ -102,6 +91,33 @@ const FullMap = ({navigation}) => {
             }}>
             {parkCodes[selectedPark].description}
           </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginTop: 10,
+              justifyContent: 'space-around',
+            }}>
+            <TouchableOpacity
+              onPress={async () => {
+                FIRESTORE.toggleUserPark(user.uid, 'favorites', selectedPark);
+              }}>
+              {favorites[selectedPark] ? (
+                <FavSvg height={50} width={50} />
+              ) : (
+                <NoFavSvg height={50} width={50} />
+              )}
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={async () => {
+                FIRESTORE.toggleUserPark(user.uid, 'visited', selectedPark);
+              }}>
+              {visited[selectedPark] ? (
+                <VisitedSvg height={50} width={50} />
+              ) : (
+                <NoVisitedSvg height={50} width={50} />
+              )}
+            </TouchableOpacity>
+          </View>
         </TouchableOpacity>
       )}
     </>
