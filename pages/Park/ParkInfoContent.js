@@ -113,20 +113,21 @@ const ParkInfoContent = () => {
             content: <ParkThingsToDo data={fullData?.thingstodo} />,
           },
           {
-            section: 'People',
-            content: <ParkPeople data={fullData?.people} />,
+            section: 'Weather',
+            content: <ParkWeather data={weatherInfo} />,
           },
           {
-            section: 'Alerts',
-            content: <DevSection data={fullData?.alerts} />,
-          },
-          {
-            section: 'Articles',
-            content: <DevSection data={fullData?.articles} />,
+            section: 'Places',
+            content: <DevSection data={fullData?.places} />,
           },
           {
             section: 'Campgrounds',
             content: <DevSection data={fullData?.campgrounds} />,
+          },
+
+          {
+            section: 'Webcams',
+            content: <DevSection data={fullData?.webcams} />,
           },
           {
             section: 'Events',
@@ -136,18 +137,18 @@ const ParkInfoContent = () => {
             section: 'News Releases',
             content: <DevSection data={fullData?.newsreleases} />,
           },
+          {
+            section: 'Alerts',
+            content: <DevSection data={fullData?.alerts} />,
+          },
+          {
+            section: 'Articles',
+            content: <DevSection data={fullData?.articles} />,
+          },
 
           {
-            section: 'Places',
-            content: <DevSection data={fullData?.places} />,
-          },
-          {
-            section: 'Webcams',
-            content: <DevSection data={fullData?.webcams} />,
-          },
-          {
-            section: 'Weather',
-            content: <ParkWeather data={weatherInfo} />,
+            section: 'People',
+            content: <ParkPeople data={fullData?.people} />,
           },
           {
             section: 'Topics',
