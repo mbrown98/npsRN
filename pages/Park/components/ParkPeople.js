@@ -17,7 +17,7 @@ const ParkPeople = () => {
   const {data, setImgIndex} = usePark();
   const {data: fullData} = useFullParkData(data.parkCode);
 
-  if (!fullData.people) {
+  if (!fullData || fullData.people) {
     return null;
   }
 

@@ -31,10 +31,7 @@ Ionicons.loadFont();
 
 const ParkScreen = ({route}) => {
   const navigation = useNavigation();
-  const {user} = useAuth();
-  const {
-    userData: {favorites, visited},
-  } = useFirebase();
+
   const {data, imgIndex} = usePark();
   const scrollY = useRef(new Animated.Value(0)).current;
 

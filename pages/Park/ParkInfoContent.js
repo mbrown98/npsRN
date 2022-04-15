@@ -56,16 +56,12 @@ const ParkInfoContent = () => {
         showsHorizontalScrollIndicator={false}
       />
 
-      {fullData && (
-        <>
-          {/* <ParkAlerts /> */}
-          <ParkThingsToDo />
-          <ParkPeople />
-        </>
-      )}
-      <BoxListSection title="Topics" data={data.topics} />
+      <ParkThingsToDo />
+      <ParkPeople />
+
+      {/* <BoxListSection title="Topics" data={data.topics} />
       <BoxListSection title="Activities" data={data.activities} />
-      <ParkMap />
+      <ParkMap /> */}
     </View>
   );
 };

@@ -6,12 +6,13 @@ import useFullParkData from '../../../api/nps/getFullParkData';
 import {FONTS} from '../../../constants';
 import {UTILS} from '../../../utils';
 import {usePark} from '../park-context';
+import SectionHead from '../subComponents/SectionHead';
 
 Entypo.loadFont();
 
 const ParkThingsToDo = () => {
   const navigation = useNavigation();
-  const {data, setImgIndex} = usePark();
+  const {data, setImgIndex, sections} = usePark();
   const {data: fullData} = useFullParkData(data.parkCode);
 
   const [sectionOpen, setSectionOpen] = useState(false);
@@ -25,18 +26,12 @@ const ParkThingsToDo = () => {
     return null;
   }
 
+  console.log('SSS', sections);
+
   return (
     <>
-      <View style={styles.topRow}>
-        <Text style={{...FONTS.h2, marginVertical: 5}}>Things To Do</Text>
-        <TouchableOpacity onPress={() => setSectionOpen(!sectionOpen)}>
-          <Entypo
-            name={`chevron-thin-${sectionOpen ? 'up' : 'down'}`}
-            size={16}
-          />
-        </TouchableOpacity>
-      </View>
-      {sectionOpen && (
+      <SectionHead section="Things To Do" />
+      {sections['Things To Do'] && (
         <FlatList
           style={{}}
           data={TTD}
@@ -67,11 +62,6 @@ const ParkThingsToDo = () => {
 export default ParkThingsToDo;
 
 const styles = StyleSheet.create({
-  topRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
   optBox: {
     marginVertical: 5,
     padding: 5,
