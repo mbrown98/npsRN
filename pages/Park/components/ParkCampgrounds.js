@@ -10,7 +10,6 @@ import BROWSER from '../../../utils/browser';
 import ImgInfoBox from '../../../components/ImgInfoBox';
 
 const ParkCampgrounds = ({data}) => {
-  console.log(' ------------CP --------- ', Object.keys(data[0]));
   return (
     <FlatList
       data={data}

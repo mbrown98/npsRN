@@ -2,33 +2,23 @@ import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
-import useFullParkData from '../../../api/nps/getFullParkData';
-import {FONTS} from '../../../constants';
-import {UTILS} from '../../../utils';
-import {usePark} from '../park-context';
-import SectionHead from '../subComponents/SectionHead';
+import ImgInfoBox from '../../../components/ImgInfoBox';
 
 Entypo.loadFont();
 
 const ParkThingsToDo = ({data}) => {
   return (
     <FlatList
-      style={{}}
       data={data}
-      renderItem={item => {
-        const thing = item.item;
+      renderItem={({item: thing, index}) => {
+        const {
+          url: infoUrl,
+          title,
+          images,
+          activityDescription: subText,
+        } = thing;
         return (
-          <TouchableOpacity
-            style={styles.optBox}
-            onPress={async () => {
-              await UTILS.browser.openBrowser(thing.url);
-            }}>
-            <Text style={{fontWeight: '700'}}>{thing.title}</Text>
-
-            <Text style={{fontWeight: '300', marginVertical: 5}}>
-              {thing.shortDescription}
-            </Text>
-          </TouchableOpacity>
+          <ImgInfoBox data={{infoUrl, img: images[0].url, title, index}} />
         );
       }}
       keyExtractor={item => item.id}
