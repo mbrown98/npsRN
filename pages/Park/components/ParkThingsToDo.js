@@ -26,36 +26,29 @@ const ParkThingsToDo = () => {
     return null;
   }
 
-  console.log('SSS', sections);
-
   return (
-    <>
-      <SectionHead section="Things To Do" />
-      {sections['Things To Do'] && (
-        <FlatList
-          style={{}}
-          data={TTD}
-          renderItem={item => {
-            const thing = item.item;
-            return (
-              <TouchableOpacity
-                style={styles.optBox}
-                onPress={async () => {
-                  await UTILS.browser.openBrowser(thing.url);
-                }}>
-                <Text style={{fontWeight: '700'}}>{thing.title}</Text>
+    <FlatList
+      style={{}}
+      data={TTD}
+      renderItem={item => {
+        const thing = item.item;
+        return (
+          <TouchableOpacity
+            style={styles.optBox}
+            onPress={async () => {
+              await UTILS.browser.openBrowser(thing.url);
+            }}>
+            <Text style={{fontWeight: '700'}}>{thing.title}</Text>
 
-                <Text style={{fontWeight: '300', marginVertical: 5}}>
-                  {thing.shortDescription}
-                </Text>
-              </TouchableOpacity>
-            );
-          }}
-          keyExtractor={item => item.id}
-          showsVerticalScrollIndicator={false}
-        />
-      )}
-    </>
+            <Text style={{fontWeight: '300', marginVertical: 5}}>
+              {thing.shortDescription}
+            </Text>
+          </TouchableOpacity>
+        );
+      }}
+      keyExtractor={item => item.id}
+      showsVerticalScrollIndicator={false}
+    />
   );
 };
 

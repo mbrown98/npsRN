@@ -16,9 +16,7 @@ function usePark() {
 const ParkProvider = ({...props}) => {
   const {data, isLoading, isSuccess} = useParkByID(props.code);
 
-  const [sections, setSections] = useState({
-    'Things To Do': false,
-  });
+  const [sections, setSections] = useState({});
 
   const [imgIndex, setImgIndex] = useState(0);
   return (

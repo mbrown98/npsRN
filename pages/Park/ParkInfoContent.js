@@ -17,9 +17,10 @@ import ParkThingsToDo from './components/ParkThingsToDo';
 import ParkTopics from './components/ParkTopics';
 import {usePark} from './park-context';
 import BoxListSection from './subComponents/BoxListSection';
+import SectionHead from './subComponents/SectionHead';
 
 const ParkInfoContent = () => {
-  const {data, setImgIndex} = usePark();
+  const {data, setImgIndex, sections} = usePark();
   const {data: fullData} = useFullParkData(data.parkCode);
 
   if (!data) {
@@ -56,12 +57,22 @@ const ParkInfoContent = () => {
         showsHorizontalScrollIndicator={false}
       />
 
-      <ParkThingsToDo />
-      <ParkPeople />
-
-      {/* <BoxListSection title="Topics" data={data.topics} />
-      <BoxListSection title="Activities" data={data.activities} />
-      <ParkMap /> */}
+      <FlatList
+        data={[
+          {section: 'Things To Do', content: <ParkThingsToDo />},
+          {section: 'People', content: <ParkPeople />},
+        ]}
+        renderItem={({item}) => {
+          return (
+            <>
+              <SectionHead section={item.section} />
+              {sections[item.section] && item.content}
+            </>
+          );
+        }}
+        keyExtractor={item => item.section}
+        showsHorizontalScrollIndicator={false}
+      />
     </View>
   );
 };
