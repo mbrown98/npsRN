@@ -20,7 +20,6 @@ const VisitFavIcon = ({park, list, size}) => {
 
   const dataSet = isFavs ? favorites : visited;
 
-  console.log(size);
   return (
     <TouchableOpacity
       onPress={async () => {

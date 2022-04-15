@@ -27,17 +27,21 @@ import ParksSearchBar from './components/ParksSearchBar';
 import useGroupParkData from '../../api/nps/getGroupParkData';
 import {BlurView} from '@react-native-community/blur';
 import {UTILS} from '../../utils';
+import {useFirebase} from '../../context/firebase-content';
 
 Feather.loadFont();
 
 const Home = ({navigation}) => {
+  const {
+    userData: {favorites, visited},
+  } = useFirebase();
   const [parkData, setParkData] = useState(null);
 
   const [infoList, setInfoList] = useState('News');
 
-  const {data: alerts} = useGroupParkData('alerts', []);
-  const {data: news} = useGroupParkData('newsreleases', []);
-  const {data: events} = useGroupParkData('events', []);
+  const {data: alerts} = useGroupParkData('alerts', [favorites]);
+  const {data: news} = useGroupParkData('newsreleases', [favorites]);
+  const {data: events} = useGroupParkData('events', [favorites]);
 
   useEffect(() => {
     const asyncFetch = async () => {

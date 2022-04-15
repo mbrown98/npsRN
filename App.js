@@ -12,7 +12,6 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {BlurView} from '@react-native-community/blur';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -118,6 +117,14 @@ export default function App() {
 
   if (onboardComplete === 'NOT_COMPLETE') {
     return <Onboard />;
+  }
+
+  if (initializing) {
+    return (
+      <View style={{flex: 1}}>
+        <Text>Loading</Text>
+      </View>
+    );
   }
 
   return (

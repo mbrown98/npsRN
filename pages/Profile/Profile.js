@@ -19,7 +19,6 @@ export default function Profile({navigation}) {
   const {
     userData: {favorites, visited},
   } = useFirebase();
-  console.log(user);
 
   return (
     <SafeAreaView style={{flex: 1}}>
