@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {COLORS, FONTS} from '../../../constants';
 
 Entypo.loadFont();
 

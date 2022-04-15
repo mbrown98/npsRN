@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import useFullParkData from '../../../api/nps/getFullParkData';
 import {FONTS} from '../../../constants';
+import BROWSER from '../../../utils/browser';
 import {usePark} from '../park-context';
 import SectionHead from '../subComponents/SectionHead';
 
@@ -20,19 +21,14 @@ const ParkPeople = ({data}) => {
     <FlatList
       data={data}
       horizontal={true}
-      renderItem={item => {
-        const person = item.item;
+      renderItem={({item: person}) => {
         return (
           <TouchableOpacity
             style={styles.imgBox}
-            onPress={() => navigation.navigate('HistoricPerson', {person})}>
-            <Image
-              source={{uri: person.images[0].url}}
-              style={{height: 100, width: 100, borderRadius: 50}}
-            />
-            <Text style={{fontWeight: '700', fontSize: 15, marginTop: 5}}>
-              {person.firstName}
-            </Text>
+            onPress={() => BROWSER.openBrowser(person.url)}>
+            <Image source={{uri: person.images[0].url}} style={styles.img} />
+            <Text style={styles.infoText}>{person.firstName}</Text>
+            <Text style={styles.infoText}>{person.lastName}</Text>
           </TouchableOpacity>
         );
       }}
@@ -48,6 +44,7 @@ const styles = StyleSheet.create({
   imgBox: {
     marginRight: 20,
     alignItems: 'center',
-    marginVertical: 5,
   },
+  img: {height: 100, width: 100, borderRadius: 50, marginVertical: 10},
+  infoText: {fontWeight: '700', fontSize: 15, marginTop: 0},
 });
