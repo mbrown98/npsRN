@@ -59,10 +59,19 @@ const ParkInfoContent = () => {
 
       <FlatList
         data={[
-          {section: 'Things To Do', content: <ParkThingsToDo />},
-          {section: 'People', content: <ParkPeople />},
+          {
+            section: 'Things To Do',
+            content: fullData && <ParkThingsToDo data={fullData.thingstodo} />,
+          },
+          {
+            section: 'People',
+            content: fullData && <ParkPeople data={fullData.people} />,
+          },
         ]}
         renderItem={({item}) => {
+          if (!item.content) {
+            return null;
+          }
           return (
             <>
               <SectionHead section={item.section} />

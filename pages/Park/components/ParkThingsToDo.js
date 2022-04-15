@@ -10,26 +10,11 @@ import SectionHead from '../subComponents/SectionHead';
 
 Entypo.loadFont();
 
-const ParkThingsToDo = () => {
-  const navigation = useNavigation();
-  const {data, setImgIndex, sections} = usePark();
-  const {data: fullData} = useFullParkData(data.parkCode);
-
-  const [sectionOpen, setSectionOpen] = useState(false);
-  if (!fullData) {
-    return null;
-  }
-
-  const {thingstodo: TTD} = fullData;
-
-  if (!TTD.length) {
-    return null;
-  }
-
+const ParkThingsToDo = ({data}) => {
   return (
     <FlatList
       style={{}}
-      data={TTD}
+      data={data}
       renderItem={item => {
         const thing = item.item;
         return (

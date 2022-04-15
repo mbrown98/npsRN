@@ -13,21 +13,12 @@ import {FONTS} from '../../../constants';
 import {usePark} from '../park-context';
 import SectionHead from '../subComponents/SectionHead';
 
-const ParkPeople = () => {
+const ParkPeople = ({data}) => {
   const navigation = useNavigation();
-  const {data, setImgIndex, sections} = usePark();
-  const {data: fullData} = useFullParkData(data.parkCode);
-
-  if (!fullData || !fullData.people) {
-    return null;
-  }
-
-  const {people} = fullData;
 
   return (
     <FlatList
-      style={{}}
-      data={people}
+      data={data}
       horizontal={true}
       renderItem={item => {
         const person = item.item;
