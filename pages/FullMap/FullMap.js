@@ -13,9 +13,6 @@ import MapView, {Marker, Overlay} from 'react-native-maps';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import {COLORS, FONTS, parkCodes} from '../../constants';
 import {useFirebase} from '../../context/firebase-content';
-import plusPin from '../../assets/icons/pins/plus.png';
-import lovePin from '../../assets/icons/pins/love.png';
-import verifiedPin from '../../assets/icons/pins/verified.png';
 import currentPin from '../../assets/icons/pins/pin.png';
 import ASSETS from '../../assets';
 import {FIRESTORE} from '../../api/firebase/firestore';
@@ -79,9 +76,22 @@ const FullMap = ({navigation}) => {
         <TouchableOpacity
           style={styles.selectedOverlay}
           onPress={() => navigation.navigate('Park', {code: selectedPark})}>
-          <Text style={{...FONTS.h3, marginBottom: 5}}>
-            {parkCodes[selectedPark].fullName}
-          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: 5,
+            }}>
+            <Text style={{...FONTS.h3}}>
+              {parkCodes[selectedPark].fullName}
+            </Text>
+            <TouchableOpacity
+              style={{paddingLeft: 5}}
+              onPress={() => setSelectedPark(null)}>
+              <Text>X</Text>
+            </TouchableOpacity>
+          </View>
 
           <Text
             style={{
