@@ -1,6 +1,5 @@
-import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {FlatList, StyleSheet} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import ImgInfoBox from '../../../components/ImgInfoBox';
 
@@ -29,11 +28,4 @@ const ParkThingsToDo = ({data}) => {
 
 export default ParkThingsToDo;
 
-const styles = StyleSheet.create({
-  optBox: {
-    marginVertical: 5,
-    padding: 5,
-    borderBottomColor: 'grey',
-    borderBottomWidth: 0.5,
-  },
-});
+const styles = StyleSheet.create({});
