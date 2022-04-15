@@ -5,36 +5,21 @@ import {COLORS, FONTS} from '../../../constants';
 
 Entypo.loadFont();
 
-const BoxListSection = ({title, data}) => {
-  const [sectionOpen, setSectionOpen] = useState(false);
+const BoxListSection = ({data}) => {
   return (
-    <>
-      <View style={styles.topRow}>
-        <Text style={{...FONTS.h2, marginVertical: 5}}>{title}</Text>
-        <TouchableOpacity onPress={() => setSectionOpen(!sectionOpen)}>
-          <Entypo
-            name={`chevron-thin-${sectionOpen ? 'up' : 'down'}`}
-            size={16}
-          />
-        </TouchableOpacity>
-      </View>
-      {sectionOpen && (
-        <FlatList
-          style={{}}
-          data={data}
-          numColumns={2}
-          renderItem={item => {
-            return (
-              <View style={styles.optBox}>
-                <Text style={styles.optText}>{item.item.name}</Text>
-              </View>
-            );
-          }}
-          keyExtractor={item => item.id}
-          showsHorizontalScrollIndicator={false}
-        />
-      )}
-    </>
+    <FlatList
+      data={data}
+      numColumns={2}
+      renderItem={({item}) => {
+        return (
+          <View style={styles.optBox}>
+            <Text style={styles.optText}>{item.name}</Text>
+          </View>
+        );
+      }}
+      keyExtractor={item => item.name}
+      showsHorizontalScrollIndicator={false}
+    />
   );
 };
 

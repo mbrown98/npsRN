@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import useFullParkData from '../../api/nps/getFullParkData';
 import {COLORS, FONTS, SIZES} from '../../constants';
+import DevSection from './components/DevSection';
 import ParkActivities from './components/ParkActivities';
 import ParkAlerts from './components/ParkAlerts';
 import ParkMap from './components/ParkMap';
@@ -20,6 +21,44 @@ import {usePark} from './park-context';
 import BoxListSection from './subComponents/BoxListSection';
 import SectionHead from './subComponents/SectionHead';
 
+const DataKeys = [
+  'id',
+  'url',
+  'fullName',
+  'parkCode',
+  'description',
+  'latitude',
+  'longitude',
+  'latLong',
+  'activities',
+  'topics',
+  'states',
+  'contacts',
+  'entranceFees',
+  'entrancePasses',
+  'fees',
+  'directionsInfo',
+  'directionsUrl',
+  'operatingHours',
+  'addresses',
+  'images',
+  'weatherInfo',
+  'name',
+  'designation',
+];
+
+const FDKeys = [
+  'alerts',
+  'articles',
+  'campgrounds',
+  'events',
+  'newsreleases',
+  'people',
+  'places',
+  'thingstodo',
+  'webcams',
+];
+
 const ParkInfoContent = () => {
   const {data, setImgIndex, sections} = usePark();
   const {data: fullData} = useFullParkData(data.parkCode);
@@ -28,7 +67,16 @@ const ParkInfoContent = () => {
     return null;
   }
 
-  const {description, images} = data;
+  const {
+    description,
+    images,
+    weatherInfo,
+    topics,
+    activities,
+    states,
+    contacts,
+    fees,
+  } = data;
 
   return (
     <View style={styles.infoWrapper}>
@@ -62,34 +110,76 @@ const ParkInfoContent = () => {
         data={[
           {
             section: 'Things To Do',
-            content: fullData && <ParkThingsToDo data={fullData.thingstodo} />,
+            content: <ParkThingsToDo data={fullData?.thingstodo} />,
           },
           {
             section: 'People',
-            content: fullData && <ParkPeople data={fullData.people} />,
+            content: <ParkPeople data={fullData?.people} />,
+          },
+          {
+            section: 'Alerts',
+            content: <DevSection data={fullData?.alerts} />,
+          },
+          {
+            section: 'Articles',
+            content: <DevSection data={fullData?.articles} />,
+          },
+          {
+            section: 'Campgrounds',
+            content: <DevSection data={fullData?.campgrounds} />,
+          },
+          {
+            section: 'Events',
+            content: <DevSection data={fullData?.events} />,
+          },
+          {
+            section: 'News Releases',
+            content: <DevSection data={fullData?.newsreleases} />,
+          },
+
+          {
+            section: 'Places',
+            content: <DevSection data={fullData?.places} />,
+          },
+          {
+            section: 'Webcams',
+            content: <DevSection data={fullData?.webcams} />,
           },
           {
             section: 'Weather',
-            content: data && <ParkWeather data={data.weatherInfo} />,
-            type: 'string',
+            content: <ParkWeather data={weatherInfo} />,
+          },
+          {
+            section: 'Topics',
+            content: <BoxListSection data={topics} />,
+          },
+          {
+            section: 'Activities',
+            content: <BoxListSection data={activities} />,
+          },
+          {
+            section: 'States',
+            content: (
+              <BoxListSection
+                data={states.split(',').map(opt => ({
+                  name: opt,
+                }))}
+              />
+            ),
           },
         ]}
         renderItem={({item}) => {
-          if (!item.content) {
+          const hasEntries = !!item.content.props?.data?.length;
+
+          if (!hasEntries) {
             return null;
           }
-
-          const hasEntries = !!item.content.props?.data.length;
 
           return (
             <>
               <SectionHead section={item.section} />
-              {sections[item.section] && hasEntries && item.content}
-              {sections[item.section] && !hasEntries && (
-                <View>
-                  <Text style={styles.noEntries}>None Found for this Park</Text>
-                </View>
-              )}
+              {sections[item.section] && item.content}
+
               <View style={{height: 10}} />
             </>
           );
