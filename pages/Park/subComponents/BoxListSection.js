@@ -13,7 +13,9 @@ const BoxListSection = ({data}) => {
       renderItem={({item}) => {
         return (
           <View style={styles.optBox}>
-            <Text style={styles.optText}>{item.name}</Text>
+            <Text style={styles.optText} numberOfLines={1} ellipsizeMode="tail">
+              {item.name}
+            </Text>
           </View>
         );
       }}
@@ -43,9 +45,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderColor: 'black',
     borderWidth: 0.5,
+    height: 40,
   },
   optText: {
     fontWeight: '700',
     textAlign: 'center',
+    fontSize: 12,
   },
 });
