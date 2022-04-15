@@ -8,13 +8,14 @@ import {
   View,
 } from 'react-native';
 import useFullParkData from '../../api/nps/getFullParkData';
-import {FONTS, SIZES} from '../../constants';
+import {COLORS, FONTS, SIZES} from '../../constants';
 import ParkActivities from './components/ParkActivities';
 import ParkAlerts from './components/ParkAlerts';
 import ParkMap from './components/ParkMap';
 import ParkPeople from './components/ParkPeople';
 import ParkThingsToDo from './components/ParkThingsToDo';
 import ParkTopics from './components/ParkTopics';
+import ParkWeather from './components/ParkWeather';
 import {usePark} from './park-context';
 import BoxListSection from './subComponents/BoxListSection';
 import SectionHead from './subComponents/SectionHead';
@@ -67,15 +68,29 @@ const ParkInfoContent = () => {
             section: 'People',
             content: fullData && <ParkPeople data={fullData.people} />,
           },
+          {
+            section: 'Weather',
+            content: data && <ParkWeather data={data.weatherInfo} />,
+            type: 'string',
+          },
         ]}
         renderItem={({item}) => {
           if (!item.content) {
             return null;
           }
+
+          const hasEntries = !!item.content.props?.data.length;
+
           return (
             <>
               <SectionHead section={item.section} />
-              {sections[item.section] && item.content}
+              {sections[item.section] && hasEntries && item.content}
+              {sections[item.section] && !hasEntries && (
+                <View>
+                  <Text style={styles.noEntries}>None Found for this Park</Text>
+                </View>
+              )}
+              <View style={{height: 10}} />
             </>
           );
         }}
@@ -99,5 +114,11 @@ const styles = StyleSheet.create({
   },
   imageScrollWrapper: {
     marginVertical: SIZES.padding,
+  },
+  noEntries: {
+    color: COLORS.lightGray2,
+    fontWeight: '800',
+    textAlign: 'center',
+    marginVertical: 10,
   },
 });
