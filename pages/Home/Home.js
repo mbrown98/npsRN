@@ -28,6 +28,7 @@ import useGroupParkData from '../../api/nps/getGroupParkData';
 import {BlurView} from '@react-native-community/blur';
 import {UTILS} from '../../utils';
 import {useFirebase} from '../../context/firebase-content';
+import ImgInfoBox from '../../components/ImgInfoBox';
 
 Feather.loadFont();
 
@@ -165,47 +166,17 @@ const Home = ({navigation}) => {
             );
           })}
         </View>
-        <View style={{margin: SIZES.padding}}>
+        <View style={{margin: SIZES.padding, marginHorizontal: 10}}>
           {/* <Text>News</Text> */}
           <FlatList
             data={infoListData}
             showsVerticalScrollIndicator={false}
             keyExtractor={item => item.id}
             renderItem={({item, index}) => {
-              const {title, img, infoUrl} = item;
-              if (!title) {
+              if (!item.title) {
                 return null;
               }
-              return (
-                <TouchableOpacity
-                  onPress={() => UTILS.browser.openBrowser(infoUrl)}
-                  style={{
-                    flexDirection: 'row',
-                    marginBottom: 20,
-                    alignItems: 'center',
-                  }}>
-                  <View style={{flex: 6, paddingRight: 10}}>
-                    <Text
-                      numberOfLines={2}
-                      ellipsizeMode="tail"
-                      style={{fontWeight: '800'}}>
-                      {item.title}
-                    </Text>
-                  </View>
-                  {!!img && (
-                    <View style={{flex: 2, maxHeight: 90}}>
-                      <Image
-                        source={{uri: img}}
-                        style={{
-                          height: '100%',
-                          width: '100%',
-                          borderRadius: 10,
-                        }}
-                      />
-                    </View>
-                  )}
-                </TouchableOpacity>
-              );
+              return <ImgInfoBox data={{...item, index}} />;
             }}
           />
         </View>

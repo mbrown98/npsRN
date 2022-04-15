@@ -15,8 +15,6 @@ import {usePark} from '../park-context';
 import SectionHead from '../subComponents/SectionHead';
 
 const ParkPeople = ({data}) => {
-  const navigation = useNavigation();
-
   return (
     <FlatList
       data={data}

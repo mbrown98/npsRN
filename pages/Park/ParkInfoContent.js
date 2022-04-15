@@ -12,6 +12,7 @@ import {COLORS, FONTS, SIZES} from '../../constants';
 import DevSection from './components/DevSection';
 import ParkActivities from './components/ParkActivities';
 import ParkAlerts from './components/ParkAlerts';
+import ParkCampgrounds from './components/ParkCampgrounds';
 import ParkMap from './components/ParkMap';
 import ParkPeople from './components/ParkPeople';
 import ParkThingsToDo from './components/ParkThingsToDo';
@@ -122,7 +123,7 @@ const ParkInfoContent = () => {
           },
           {
             section: 'Campgrounds',
-            content: <DevSection data={fullData?.campgrounds} />,
+            content: <ParkCampgrounds data={fullData?.campgrounds} />,
           },
 
           {
