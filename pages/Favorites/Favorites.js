@@ -13,6 +13,7 @@ import {
 import {COLORS, FONTS, SIZES} from '../../constants';
 import FavCard from './components/FavCard';
 import {useFirebase} from '../../context/firebase-content';
+import ParksSearchBar from '../Home/components/ParksSearchBar';
 
 export default function Favorites() {
   const {
@@ -38,6 +39,10 @@ export default function Favorites() {
           );
         })}
       </View>
+      <View style={{paddingBottom: 10}}>
+        <ParksSearchBar />
+      </View>
+
       <FlatList
         numColumns={2}
         contentContainerStyle={styles.flatlistContent}
