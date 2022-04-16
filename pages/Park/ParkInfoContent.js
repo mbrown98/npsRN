@@ -11,8 +11,6 @@ import useFullParkData from '../../api/nps/getFullParkData';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import DevSection from './components/DevSection';
 import ParkPeople from './components/ParkPeople';
-import ParkThingsToDo from './components/ParkThingsToDo';
-import ParkTopics from './components/ParkTopics';
 import ParkWeather from './components/ParkWeather';
 import {usePark} from './park-context';
 import BoxListSection from './subComponents/BoxListSection';
@@ -107,8 +105,11 @@ const ParkInfoContent = () => {
       <FlatList
         data={[
           {
+            section: 'Weather',
+            content: <ParkWeather data={weatherInfo} />,
+          },
+          {
             section: 'Things To Do',
-            // content: <ParkThingsToDo data={fullData?.thingstodo} />,
             content: (
               <ImgInfoBoxFlatList
                 data={fullData?.thingstodo.map(ttd => {
@@ -122,13 +123,21 @@ const ParkInfoContent = () => {
               />
             ),
           },
-          {
-            section: 'Weather',
-            content: <ParkWeather data={weatherInfo} />,
-          },
+
           {
             section: 'Places',
-            content: <DevSection data={fullData?.places} />,
+            content: (
+              <ImgInfoBoxFlatList
+                data={fullData?.places.map(place => {
+                  return {
+                    ...place,
+                    infoUrl: place.url,
+                    subText: place.listingDescription,
+                    img: place.images[0].url,
+                  };
+                })}
+              />
+            ),
           },
           {
             section: 'Campgrounds',
@@ -136,6 +145,7 @@ const ParkInfoContent = () => {
               <ImgInfoBoxFlatList
                 data={fullData?.campgrounds.map(camp => {
                   return {
+                    ...camp,
                     infoUrl: camp.url,
                     title: camp.name,
                     subText: camp.description,
@@ -156,15 +166,45 @@ const ParkInfoContent = () => {
           },
           {
             section: 'News Releases',
-            content: <DevSection data={fullData?.newsreleases} />,
+            content: (
+              <ImgInfoBoxFlatList
+                data={fullData?.newsreleases.map(nr => {
+                  return {
+                    ...nr,
+                    infoUrl: nr.url,
+                    img: nr.image.url,
+                  };
+                })}
+              />
+            ),
           },
           {
             section: 'Alerts',
-            content: <DevSection data={fullData?.alerts} />,
+            content: (
+              <ImgInfoBoxFlatList
+                data={fullData?.alerts.map(alert => {
+                  return {
+                    ...alert,
+                    infoUrl: alert.url,
+                    subText: alert.description,
+                  };
+                })}
+              />
+            ),
           },
           {
             section: 'Articles',
-            content: <DevSection data={fullData?.articles} />,
+            content: (
+              <ImgInfoBoxFlatList
+                data={fullData?.articles.map(article => {
+                  return {
+                    ...article,
+                    infoUrl: article.url,
+                    subText: article.listingDescription,
+                  };
+                })}
+              />
+            ),
           },
 
           {
