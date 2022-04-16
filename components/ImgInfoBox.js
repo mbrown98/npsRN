@@ -16,7 +16,11 @@ const ImgInfoBox = ({data: {infoUrl, img, title, subText, index}}) => {
           style={{fontWeight: '800'}}>
           {title}
         </Text>
-        {!!subText && <Text style={styles.subText}>{subText}</Text>}
+        {!!subText && (
+          <Text numberOfLines={5} ellipsizeMode="tail" style={styles.subText}>
+            {subText}
+          </Text>
+        )}
       </View>
       {!!img && (
         <View style={styles.imgWrapper}>

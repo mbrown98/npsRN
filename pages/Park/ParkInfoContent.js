@@ -116,7 +116,7 @@ const ParkInfoContent = () => {
                   return {
                     ...ttd,
                     infoUrl: ttd.url,
-                    subText: ttd.description,
+                    subText: ttd.activityDescription,
                     img: ttd.images[0].url,
                   };
                 })}
