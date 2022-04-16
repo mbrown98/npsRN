@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
   },
-  imgWrapper: {flex: 2, maxHeight: 90},
+  imgWrapper: {flex: 2, maxHeight: 60},
   img: {
     height: '100%',
     width: '100%',

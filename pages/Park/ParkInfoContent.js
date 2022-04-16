@@ -10,16 +10,13 @@ import {
 import useFullParkData from '../../api/nps/getFullParkData';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import DevSection from './components/DevSection';
-import ParkActivities from './components/ParkActivities';
-import ParkAlerts from './components/ParkAlerts';
-import ParkCampgrounds from './components/ParkCampgrounds';
-import ParkMap from './components/ParkMap';
 import ParkPeople from './components/ParkPeople';
 import ParkThingsToDo from './components/ParkThingsToDo';
 import ParkTopics from './components/ParkTopics';
 import ParkWeather from './components/ParkWeather';
 import {usePark} from './park-context';
 import BoxListSection from './subComponents/BoxListSection';
+import ImgInfoBoxFlatList from './subComponents/ImgInfoBoxFlatList';
 import SectionHead from './subComponents/SectionHead';
 
 const DataKeys = [
@@ -111,7 +108,19 @@ const ParkInfoContent = () => {
         data={[
           {
             section: 'Things To Do',
-            content: <ParkThingsToDo data={fullData?.thingstodo} />,
+            // content: <ParkThingsToDo data={fullData?.thingstodo} />,
+            content: (
+              <ImgInfoBoxFlatList
+                data={fullData?.thingstodo.map(ttd => {
+                  return {
+                    ...ttd,
+                    infoUrl: ttd.url,
+                    subText: ttd.description,
+                    img: ttd.images[0].url,
+                  };
+                })}
+              />
+            ),
           },
           {
             section: 'Weather',
@@ -123,7 +132,18 @@ const ParkInfoContent = () => {
           },
           {
             section: 'Campgrounds',
-            content: <ParkCampgrounds data={fullData?.campgrounds} />,
+            content: (
+              <ImgInfoBoxFlatList
+                data={fullData?.campgrounds.map(camp => {
+                  return {
+                    infoUrl: camp.url,
+                    title: camp.name,
+                    subText: camp.description,
+                    img: camp.images[0].url,
+                  };
+                })}
+              />
+            ),
           },
 
           {
