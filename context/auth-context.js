@@ -21,7 +21,9 @@ const AuthProvider = ({...props}) => {
     // Handle user state changes
     function onAuthStateChanged(user) {
       setUser(user);
-      if (initializing) setInitializing(false);
+      if (initializing) {
+        setInitializing(false);
+      }
     }
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount

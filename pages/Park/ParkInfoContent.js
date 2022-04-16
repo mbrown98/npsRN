@@ -8,25 +8,71 @@ import {
   View,
 } from 'react-native';
 import useFullParkData from '../../api/nps/getFullParkData';
-import {FONTS, SIZES} from '../../constants';
-import ParkActivities from './components/ParkActivities';
-import ParkAlerts from './components/ParkAlerts';
-import ParkMap from './components/ParkMap';
+import {COLORS, FONTS, SIZES} from '../../constants';
+import DevSection from './components/DevSection';
 import ParkPeople from './components/ParkPeople';
-import ParkThingsToDo from './components/ParkThingsToDo';
-import ParkTopics from './components/ParkTopics';
+import ParkWeather from './components/ParkWeather';
 import {usePark} from './park-context';
 import BoxListSection from './subComponents/BoxListSection';
+import ImgInfoBoxFlatList from './subComponents/ImgInfoBoxFlatList';
+import SectionHead from './subComponents/SectionHead';
+
+const DataKeys = [
+  'id',
+  'url',
+  'fullName',
+  'parkCode',
+  'description',
+  'latitude',
+  'longitude',
+  'latLong',
+  'activities',
+  'topics',
+  'states',
+  'contacts',
+  'entranceFees',
+  'entrancePasses',
+  'fees',
+  'directionsInfo',
+  'directionsUrl',
+  'operatingHours',
+  'addresses',
+  'images',
+  'weatherInfo',
+  'name',
+  'designation',
+];
+
+const FDKeys = [
+  'alerts',
+  'articles',
+  'campgrounds',
+  'events',
+  'newsreleases',
+  'people',
+  'places',
+  'thingstodo',
+  'webcams',
+];
 
 const ParkInfoContent = () => {
-  const {data, setImgIndex} = usePark();
+  const {data, setImgIndex, sections} = usePark();
   const {data: fullData} = useFullParkData(data.parkCode);
 
   if (!data) {
     return null;
   }
 
-  const {description, images} = data;
+  const {
+    description,
+    images,
+    weatherInfo,
+    topics,
+    activities,
+    states,
+    contacts,
+    fees,
+  } = data;
 
   return (
     <View style={styles.infoWrapper}>
@@ -56,16 +102,153 @@ const ParkInfoContent = () => {
         showsHorizontalScrollIndicator={false}
       />
 
-      {fullData && (
-        <>
-          {/* <ParkAlerts /> */}
-          <ParkThingsToDo />
-          <ParkPeople />
-        </>
-      )}
-      <BoxListSection title="Topics" data={data.topics} />
-      <BoxListSection title="Activities" data={data.activities} />
-      <ParkMap />
+      <FlatList
+        data={[
+          {
+            section: 'Weather',
+            content: <ParkWeather data={weatherInfo} />,
+          },
+          {
+            section: 'Things To Do',
+            content: (
+              <ImgInfoBoxFlatList
+                data={fullData?.thingstodo.map(ttd => {
+                  return {
+                    ...ttd,
+                    infoUrl: ttd.url,
+                    subText: ttd.activityDescription,
+                    img: ttd.images[0].url,
+                  };
+                })}
+              />
+            ),
+          },
+
+          {
+            section: 'Places',
+            content: (
+              <ImgInfoBoxFlatList
+                data={fullData?.places.map(place => {
+                  return {
+                    ...place,
+                    infoUrl: place.url,
+                    subText: place.listingDescription,
+                    img: place.images[0].url,
+                  };
+                })}
+              />
+            ),
+          },
+          {
+            section: 'Campgrounds',
+            content: (
+              <ImgInfoBoxFlatList
+                data={fullData?.campgrounds.map(camp => {
+                  return {
+                    ...camp,
+                    infoUrl: camp.url,
+                    title: camp.name,
+                    subText: camp.description,
+                    img: camp.images[0].url,
+                  };
+                })}
+              />
+            ),
+          },
+
+          {
+            section: 'Webcams',
+            content: <DevSection data={fullData?.webcams} />,
+          },
+          {
+            section: 'Events',
+            content: <DevSection data={fullData?.events} />,
+          },
+          {
+            section: 'News Releases',
+            content: (
+              <ImgInfoBoxFlatList
+                data={fullData?.newsreleases.map(nr => {
+                  return {
+                    ...nr,
+                    infoUrl: nr.url,
+                    img: nr.image.url,
+                  };
+                })}
+              />
+            ),
+          },
+          {
+            section: 'Alerts',
+            content: (
+              <ImgInfoBoxFlatList
+                data={fullData?.alerts.map(alert => {
+                  return {
+                    ...alert,
+                    infoUrl: alert.url,
+                    subText: alert.description,
+                  };
+                })}
+              />
+            ),
+          },
+          {
+            section: 'Articles',
+            content: (
+              <ImgInfoBoxFlatList
+                data={fullData?.articles.map(article => {
+                  return {
+                    ...article,
+                    infoUrl: article.url,
+                    subText: article.listingDescription,
+                  };
+                })}
+              />
+            ),
+          },
+
+          {
+            section: 'People',
+            content: <ParkPeople data={fullData?.people} />,
+          },
+          {
+            section: 'Topics',
+            content: <BoxListSection data={topics} />,
+          },
+          {
+            section: 'Activities',
+            content: <BoxListSection data={activities} />,
+          },
+          {
+            section: 'States',
+            content: (
+              <BoxListSection
+                data={states.split(',').map(opt => ({
+                  name: opt,
+                }))}
+              />
+            ),
+          },
+        ]}
+        renderItem={({item}) => {
+          const hasEntries = !!item.content.props?.data?.length;
+
+          if (!hasEntries) {
+            return null;
+          }
+
+          return (
+            <>
+              <SectionHead section={item.section} />
+              {sections[item.section] && item.content}
+
+              <View style={{height: 10}} />
+            </>
+          );
+        }}
+        keyExtractor={item => item.section}
+        showsHorizontalScrollIndicator={false}
+      />
     </View>
   );
 };
@@ -83,5 +266,11 @@ const styles = StyleSheet.create({
   },
   imageScrollWrapper: {
     marginVertical: SIZES.padding,
+  },
+  noEntries: {
+    color: COLORS.lightGray2,
+    fontWeight: '800',
+    textAlign: 'center',
+    marginVertical: 10,
   },
 });

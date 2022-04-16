@@ -146,7 +146,7 @@ export default function App() {
             component={HistoricPerson}
             options={{headerShown: false}}
           />
-          {/*   
+          {/*
           <Stack.Screen
             name="Profile"
             component={Profile}

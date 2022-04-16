@@ -16,10 +16,12 @@ function usePark() {
 const ParkProvider = ({...props}) => {
   const {data, isLoading, isSuccess} = useParkByID(props.code);
 
+  const [sections, setSections] = useState({});
+
   const [imgIndex, setImgIndex] = useState(0);
   return (
     <ParkContext.Provider
-      value={{data, isSuccess, imgIndex, setImgIndex}}
+      value={{data, isSuccess, imgIndex, setImgIndex, sections, setSections}}
       {...props}
     />
   );

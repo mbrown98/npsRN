@@ -14,7 +14,7 @@ function useFirebase() {
 
 const FirebaseProvider = ({...props}) => {
   const {user} = useAuth();
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState({favorites: [], visited: []});
 
   useEffect(() => {
     if (!user) {
