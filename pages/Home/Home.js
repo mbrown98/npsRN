@@ -79,7 +79,7 @@ const Home = ({navigation}) => {
     <SafeAreaView style={styles.contain}>
       <FlatList
         data={infoListData}
-        style={{marginHorizontal: SIZES.padding}}
+        style={{marginHorizontal: 12}}
         ListHeaderComponent={() => (
           <>
             <HomeHeader />
