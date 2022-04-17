@@ -83,6 +83,7 @@ const Home = ({navigation}) => {
         ListHeaderComponent={() => (
           <>
             <HomeHeader />
+
             <ParksSearchBar />
             <View style={{marginTop: 10}}>
               <Text

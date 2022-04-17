@@ -54,6 +54,7 @@ const ParkScreen = ({route}) => {
           resizeMode="cover"
           style={{
             ...styles.animatedHeaderImg,
+            backgroundColor: COLORS.transparentGreen,
             transform: [
               {
                 translateY: scrollY.interpolate({
