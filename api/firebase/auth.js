@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
@@ -21,6 +22,12 @@ const AUTH = {
         }
       })
       .catch(e => console.log('e', e));
+  },
+  signOut: async () => {
+    auth()
+      .signOut()
+      .then(() => AsyncStorage.removeItem('ONBOARD_COMPLETE'))
+      .catch(e => console.log('e'));
   },
 };
 
