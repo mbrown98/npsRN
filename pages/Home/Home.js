@@ -119,6 +119,7 @@ const Home = ({navigation}) => {
                 return (
                   <TouchableOpacity
                     onPress={() => setInfoList(opt)}
+                    key={opt}
                     style={[
                       styles.newsToggleOpt,
                       active && {
