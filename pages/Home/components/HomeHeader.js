@@ -25,7 +25,6 @@ export default HomeHeader;
 const styles = StyleSheet.create({
   contain: {
     flexDirection: 'row',
-    marginHorizontal: SIZES.padding,
     alignItems: 'center',
     height: 80,
   },

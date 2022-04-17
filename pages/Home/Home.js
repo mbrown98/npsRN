@@ -2,31 +2,18 @@ import React, {useEffect, useState, useCallback} from 'react';
 import {
   View,
   Text,
-  Image,
   SafeAreaView,
   TouchableOpacity,
   FlatList,
   StyleSheet,
-  Button,
-  ScrollView,
-  ImageBackground,
-  Linking,
-  Switch,
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
-import Pie from 'react-native-pie';
 import {getFeaturedParks} from '../../api/firebase/parks';
-import {IMAGES} from '../../assets/images';
-
-import {FONTS, COLORS, icons, images, SIZES, parkCodes} from '../../constants';
-import {useAuth} from '../../context/auth-context';
+import {FONTS, COLORS, SIZES} from '../../constants';
 import FeaturedParkCard from './components/FeaturedParkCard';
 import HomeHeader from './components/HomeHeader';
-import ParksRemainingCard from './components/ParksRemainingCard';
 import ParksSearchBar from './components/ParksSearchBar';
 import useGroupParkData from '../../api/nps/getGroupParkData';
-import {BlurView} from '@react-native-community/blur';
-import {UTILS} from '../../utils';
 import {useFirebase} from '../../context/firebase-content';
 import ImgInfoBox from '../../components/ImgInfoBox';
 
@@ -90,97 +77,76 @@ const Home = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.contain}>
-      <ScrollView>
-        <HomeHeader />
-        <ParksSearchBar />
+      <FlatList
+        data={infoListData}
+        style={{marginHorizontal: SIZES.padding}}
+        ListHeaderComponent={() => (
+          <>
+            <HomeHeader />
+            <ParksSearchBar />
+            <View style={{marginTop: 10}}>
+              <Text
+                style={{
+                  ...FONTS.h2,
+                  color: COLORS.darkGreen,
+                }}>
+                Featured Parks
+              </Text>
 
-        <View style={{marginTop: 10}}>
-          <Text
-            style={{
-              marginHorizontal: SIZES.padding,
-              ...FONTS.h2,
-              color: COLORS.darkGreen,
-            }}>
-            Featured Parks
-          </Text>
-
-          {parkData && parkData.length && (
-            <FlatList
-              data={parkData}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              keyExtractor={item => `${item}`}
-              renderItem={({item, index}) => {
+              {parkData?.length && (
+                <FlatList
+                  data={parkData}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  keyExtractor={item => `${item}`}
+                  renderItem={({item, index}) => {
+                    return (
+                      <FeaturedParkCard
+                        parkId={item}
+                        onPress={() =>
+                          navigation.navigate('Park', {code: item})
+                        }
+                      />
+                    );
+                  }}
+                />
+              )}
+            </View>
+            <Text style={styles.justForYouText}>Just For You</Text>
+            <View style={styles.newsToggle}>
+              {['News', 'Alerts', 'Events'].map(opt => {
+                const active = opt === infoList;
                 return (
-                  <FeaturedParkCard
-                    containerStyle={{
-                      marginLeft: index == 0 ? SIZES.padding : 0,
-                    }}
-                    parkId={item}
-                    onPress={() => navigation.navigate('Park', {code: item})}
-                  />
+                  <TouchableOpacity
+                    onPress={() => setInfoList(opt)}
+                    style={[
+                      styles.newsToggleOpt,
+                      active && {
+                        backgroundColor: COLORS.darkGreen,
+                      },
+                    ]}>
+                    <Text
+                      style={{
+                        fontWeight: '800',
+                        color: active ? 'white' : COLORS.darkGreen,
+                      }}>
+                      {opt}
+                    </Text>
+                  </TouchableOpacity>
                 );
-              }}
-            />
-          )}
-        </View>
-        <Text
-          style={{
-            marginHorizontal: SIZES.padding,
-            ...FONTS.h2,
-            color: COLORS.darkGreen,
-            marginVertical: 10,
-            marginTop: 20,
-          }}>
-          Just For You
-        </Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-            margin: 10,
-            backgroundColor: COLORS.lightGreen,
-            paddingVertical: 5,
-            borderRadius: 5,
-            marginHorizontal: SIZES.padding,
-          }}>
-          {['News', 'Alerts', 'Events'].map(opt => {
-            const active = opt === infoList;
-            return (
-              <TouchableOpacity
-                onPress={() => setInfoList(opt)}
-                style={[
-                  {paddingVertical: 5, paddingHorizontal: 20, borderRadius: 5},
-                  active && {
-                    backgroundColor: COLORS.darkGreen,
-                  },
-                ]}>
-                <Text
-                  style={{
-                    fontWeight: '800',
-                    color: active ? 'white' : COLORS.darkGreen,
-                  }}>
-                  {opt}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
-        <View style={{margin: SIZES.padding, marginHorizontal: 10}}>
-          {/* <Text>News</Text> */}
-          <FlatList
-            data={infoListData}
-            showsVerticalScrollIndicator={false}
-            keyExtractor={item => item.id}
-            renderItem={({item, index}) => {
-              if (!item.title) {
-                return null;
-              }
-              return <ImgInfoBox data={{...item, index}} />;
-            }}
-          />
-        </View>
-      </ScrollView>
+              })}
+            </View>
+          </>
+        )}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={item => item.id}
+        renderItem={({item, index}) => {
+          if (!item.title) {
+            return null;
+          }
+          return <ImgInfoBox data={{...item, index}} />;
+        }}
+      />
     </SafeAreaView>
   );
 };
@@ -191,5 +157,24 @@ const styles = StyleSheet.create({
   contain: {
     flex: 1,
     backgroundColor: COLORS.white,
+  },
+  justForYouText: {
+    ...FONTS.h2,
+    color: COLORS.darkGreen,
+    marginVertical: 10,
+    marginTop: 20,
+  },
+  newsToggle: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 10,
+    backgroundColor: COLORS.lightGreen,
+    paddingVertical: 5,
+    borderRadius: 5,
+  },
+  newsToggleOpt: {
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+    borderRadius: 5,
   },
 });
