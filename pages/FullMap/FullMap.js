@@ -72,18 +72,7 @@ const FullMap = ({navigation}) => {
           );
         })}
       </MapView>
-      <View
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: '90%',
-          backgroundColor: 'rgba(231, 249, 239,.9)',
-          paddingTop: 100,
-          marginHorizontal: '2%',
-          borderRadius: 20,
-        }}>
+      <View style={styles.legendOverlay}>
         <Text>Hi</Text>
       </View>
       {!!selectedPark && (
@@ -152,5 +141,17 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 20,
     borderRadius: 10,
+  },
+  legendOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: '90%',
+    backgroundColor: 'rgba(231, 249, 239,.9)',
+    paddingTop: 100,
+    paddingHorizontal: 20,
+    marginHorizontal: '2%',
+    borderRadius: 20,
   },
 });
