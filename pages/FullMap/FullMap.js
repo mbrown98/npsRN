@@ -18,6 +18,7 @@ import ASSETS from '../../assets';
 import {FIRESTORE} from '../../api/firebase/firestore';
 import {useAuth} from '../../context/auth-context';
 import VisitFavIcon from '../../components/VisitFavIcon';
+import MapLegend from './components/MapLegend';
 
 const mapCoords = {
   latitude: '38.88927229',
@@ -72,9 +73,7 @@ const FullMap = ({navigation}) => {
           );
         })}
       </MapView>
-      <View style={styles.legendOverlay}>
-        <Text>Hi</Text>
-      </View>
+      <MapLegend />
       {!!selectedPark && (
         <TouchableOpacity
           style={styles.selectedOverlay}
@@ -141,17 +140,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 20,
     borderRadius: 10,
-  },
-  legendOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: '90%',
-    backgroundColor: 'rgba(231, 249, 239,.9)',
-    paddingTop: 100,
-    paddingHorizontal: 20,
-    marginHorizontal: '2%',
-    borderRadius: 20,
   },
 });
