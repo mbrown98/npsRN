@@ -72,6 +72,20 @@ const FullMap = ({navigation}) => {
           );
         })}
       </MapView>
+      <View
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: '90%',
+          backgroundColor: 'rgba(231, 249, 239,.9)',
+          paddingTop: 100,
+          marginHorizontal: '2%',
+          borderRadius: 20,
+        }}>
+        <Text>Hi</Text>
+      </View>
       {!!selectedPark && (
         <TouchableOpacity
           style={styles.selectedOverlay}
