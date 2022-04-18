@@ -37,6 +37,7 @@ const FeaturedParkCard = ({containerStyle, parkId, onPress}) => {
       style={{...styles.contain, ...containerStyle}}
       onPress={onPress}>
       {/* Background Image */}
+
       <Image
         source={{uri: images[0].url}}
         resizeMode="cover"
@@ -90,6 +91,7 @@ const styles = StyleSheet.create({
     width: 250,
     height: 275,
     borderRadius: SIZES.radius,
+    backgroundColor: COLORS.transparentGreen,
   },
   parkCategoryWrapper: {
     position: 'absolute',

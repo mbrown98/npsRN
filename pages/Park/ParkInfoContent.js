@@ -93,6 +93,7 @@ const ParkInfoContent = () => {
                   height: 120,
                   width: 120,
                   borderRadius: 10,
+                  backgroundColor: COLORS.transparentGreen,
                 }}
               />
             </TouchableOpacity>

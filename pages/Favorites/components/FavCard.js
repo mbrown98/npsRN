@@ -52,7 +52,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  bgImgStyle: {borderRadius: 5, opacity: 0.9},
+  bgImgStyle: {
+    borderRadius: 5,
+    opacity: 0.9,
+    backgroundColor: COLORS.transparentGreen,
+  },
   favCardName: {
     color: 'white',
     textAlign: 'center',

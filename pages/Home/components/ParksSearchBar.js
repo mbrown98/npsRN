@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 50,
     alignItems: 'center',
-    marginHorizontal: SIZES.padding,
+
     paddingHorizontal: SIZES.radius,
     borderRadius: 10,
     backgroundColor: COLORS.lightGray,
@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
     ...FONTS.body3,
   },
   searchResultsContain: {
-    paddingHorizontal: SIZES.padding,
     paddingVertical: 10,
   },
   resultRow: {

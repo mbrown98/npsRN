@@ -1,19 +1,36 @@
-import {useNavigation} from '@react-navigation/native';
-import React from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
+import React, {useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
+import AUTH from '../../../api/firebase/auth';
 import {COLORS, FONTS, SIZES} from '../../../constants';
 import {useAuth} from '../../../context/auth-context';
 
 const HomeHeader = () => {
   const {user} = useAuth();
-  const navigation = useNavigation();
+  const [profileOpen, setProfileOpen] = useState(false);
   return (
     <View style={styles.contain}>
-      <View style={styles.userInfoWrapper}>
-        <Text style={styles.userName}>Hello {user.displayName},</Text>
-        <Text style={styles.subText}>What do you want to explore today?</Text>
-      </View>
-      <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+      {!profileOpen ? (
+        <View style={styles.userInfoWrapper}>
+          <Text style={styles.userName}>Hello {user.displayName},</Text>
+          <Text style={styles.subText}>What do you want to explore today?</Text>
+        </View>
+      ) : (
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+          }}>
+          <TouchableOpacity style={styles.toBox} onPress={() => AUTH.signOut()}>
+            <Text style={styles.toText}>Sign-Out</Text>
+          </TouchableOpacity>
+          {/* <TouchableOpacity style={styles.toBox}>
+            <Text style={styles.toText}>Delete Account</Text>
+          </TouchableOpacity> */}
+        </View>
+      )}
+      <TouchableOpacity onPress={() => setProfileOpen(!profileOpen)}>
         <Image source={{uri: user.photoURL}} style={styles.userProfileImg} />
       </TouchableOpacity>
     </View>
@@ -25,7 +42,6 @@ export default HomeHeader;
 const styles = StyleSheet.create({
   contain: {
     flexDirection: 'row',
-    marginHorizontal: SIZES.padding,
     alignItems: 'center',
     height: 80,
   },
@@ -40,5 +56,9 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
+  },
+  toBox: {borderWidth: 1, padding: 10, borderRadius: 5},
+  toText: {
+    fontWeight: '800',
   },
 });
