@@ -14,6 +14,7 @@ import {COLORS, FONTS, SIZES} from '../../constants';
 import FavCard from './components/FavCard';
 import {useFirebase} from '../../context/firebase-content';
 import ParksSearchBar from '../Home/components/ParksSearchBar';
+import CacheImage from '../../components/CacheImage';
 
 export default function Favorites() {
   const {
@@ -42,7 +43,7 @@ export default function Favorites() {
       <View style={{paddingBottom: 10}}>
         <ParksSearchBar />
       </View>
-
+      {activeList === 'favorites' && <CacheImage />}
       <FlatList
         numColumns={2}
         contentContainerStyle={styles.flatlistContent}

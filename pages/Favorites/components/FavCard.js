@@ -7,7 +7,8 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import useParkByID from '../../../api/hooks/useParkByID';
-import {COLORS, FONTS} from '../../../constants';
+import {COLORS, FONTS, SIZES} from '../../../constants';
+import CacheImage from '../../../components/CacheImage';
 
 const FavCard = ({parkId}) => {
   const navigation = useNavigation();
@@ -24,14 +25,11 @@ const FavCard = ({parkId}) => {
       style={{...styles.contain}}
       onPress={() => navigation.navigate('Park', {code: parkId})}>
       {/* Background Image */}
-      <ImageBackground
-        source={{uri: images[0].url}}
-        imageS
-        resizeMode="cover"
-        style={styles.bgImg}
-        imageStyle={styles.bgImgStyle}>
-        <Text style={styles.favCardName}>{fullName}</Text>
-      </ImageBackground>
+      <CacheImage uri={images[0].url} style={styles.bgImg}>
+        <Text numberOfLines={2} ellipsizeMode="tail" style={styles.favCardName}>
+          {fullName}
+        </Text>
+      </CacheImage>
     </TouchableOpacity>
   );
 };
@@ -48,7 +46,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   bgImg: {
-    flex: 1,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    padding: 5,
+    borderRadius: 10,
+    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
   },
