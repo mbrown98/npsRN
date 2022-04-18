@@ -10,6 +10,7 @@ import {useAuth} from '../../../context/auth-context';
 import {useFirebase} from '../../../context/firebase-content';
 import ASSETS from '../../../assets';
 import VisitFavIcon from '../../../components/VisitFavIcon';
+import CacheImage from '../../../components/CacheImage';
 
 Fontisto.loadFont();
 
@@ -38,11 +39,7 @@ const FeaturedParkCard = ({containerStyle, parkId, onPress}) => {
       onPress={onPress}>
       {/* Background Image */}
 
-      <Image
-        source={{uri: images[0].url}}
-        resizeMode="cover"
-        style={styles.bgImg}
-      />
+      <CacheImage uri={images[0].url} style={styles.bgImg} />
 
       {/* Category */}
       <View style={styles.parkCategoryWrapper}>
