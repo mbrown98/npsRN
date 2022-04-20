@@ -16,6 +16,7 @@ import ParksSearchBar from './components/ParksSearchBar';
 import useGroupParkData from '../../api/nps/getGroupParkData';
 import {useFirebase} from '../../context/firebase-content';
 import ImgInfoBox from '../../components/ImgInfoBox';
+import Spacer from '../../components/Spacer';
 
 Feather.loadFont();
 
@@ -147,6 +148,24 @@ const Home = ({navigation}) => {
             return null;
           }
           return <ImgInfoBox data={{...item, index}} />;
+        }}
+        ListFooterComponent={() => {
+          if (!infoListData.length) {
+            return (
+              // make this reusable
+              <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={{fontWeight: '600'}}>
+                  No {infoList} for your Favorited Parks
+                </Text>
+                <Spacer h={10} />
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('FullMap')}>
+                  <Text style={{color: COLORS.darkGreen}}>Explore Parks</Text>
+                </TouchableOpacity>
+              </View>
+            );
+          }
+          return null;
         }}
       />
     </SafeAreaView>
