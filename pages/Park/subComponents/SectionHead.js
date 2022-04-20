@@ -9,16 +9,16 @@ Entypo.loadFont();
 const SectionHead = ({section: title}) => {
   const {sections, setSections} = usePark();
   return (
-    <View style={styles.topRow}>
+    <TouchableOpacity
+      style={styles.topRow}
+      onPress={() => setSections({...sections, [title]: !sections[title]})}>
       <Text style={{...FONTS.h2, marginVertical: 5}}>{title}</Text>
-      <TouchableOpacity
-        onPress={() => setSections({...sections, [title]: !sections[title]})}>
-        <Entypo
-          name={`chevron-thin-${sections[title] ? 'up' : 'down'}`}
-          size={16}
-        />
-      </TouchableOpacity>
-    </View>
+
+      <Entypo
+        name={`chevron-thin-${sections[title] ? 'up' : 'down'}`}
+        size={16}
+      />
+    </TouchableOpacity>
   );
 };
 

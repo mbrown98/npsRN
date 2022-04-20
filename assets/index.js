@@ -9,6 +9,8 @@ import VisitedPng from './visited/visited.png';
 import BinoPng from './map/binoculars.png';
 import BinoSvg from './map/binoculars.svg';
 
+import CurrentPin from './icons/pins/pin.png';
+
 const ASSETS = {
   favorites: {
     NoFavSvg,
@@ -23,6 +25,7 @@ const ASSETS = {
   map: {
     BinoPng,
     BinoSvg,
+    CurrentPin,
   },
 };
 
