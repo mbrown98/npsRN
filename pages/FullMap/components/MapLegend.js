@@ -36,23 +36,13 @@ const MapLegend = () => {
   );
   if (!legendOpen) {
     return (
-      <View
-        style={{
-          position: 'absolute',
-          top: 0,
-          right: 0,
-        }}>
+      <View style={styles.legendTabContain}>
         <SafeAreaView />
         <Spacer h={20} />
         <TouchableOpacity
-          style={{
-            backgroundColor: COLORS.transparentGreen,
-            padding: 10,
-            borderTopLeftRadius: 10,
-            borderBottomLeftRadius: 10,
-          }}
+          style={styles.legendOpen}
           onPress={() => setLegendOpen(true)}>
-          <Text style={{fontWeight: '600', fontSize: 12}}>Legend</Text>
+          <Text style={styles.legendOpenText}>Legend</Text>
         </TouchableOpacity>
       </View>
     );
@@ -61,7 +51,7 @@ const MapLegend = () => {
     <View style={styles.legendOverlay}>
       <SafeAreaView />
       <Spacer h={20} />
-      <Text style={{textAlign: 'center', fontWeight: '600', fontSize: 17}}>
+      <Text style={styles.parkCountText}>
         You have visited {visitPer}% of the National Parks
       </Text>
       <Spacer h={20} />
@@ -111,15 +101,17 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
   },
-  gauge: {
+  legendTabContain: {
     position: 'absolute',
-    width: 150,
-    height: 300,
-    alignItems: 'center',
-    justifyContent: 'center',
+    top: 0,
+    right: 0,
   },
-  gaugeText: {
-    color: '#000',
-    fontSize: 24,
+  legendOpen: {
+    backgroundColor: COLORS.transparentGreen,
+    padding: 10,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
   },
+  legendOpenText: {fontWeight: '600', fontSize: 12},
+  parkCountText: {textAlign: 'center', fontWeight: '600', fontSize: 17},
 });
