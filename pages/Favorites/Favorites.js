@@ -40,9 +40,9 @@ export default function Favorites() {
           );
         })}
       </View>
-      <View style={{paddingBottom: 10}}>
+      {/* <View style={{paddingBottom: 10}}>
         <ParksSearchBar />
-      </View>
+      </View> */}
       {activeList === 'favorites' && <CacheImage />}
       <FlatList
         numColumns={2}
