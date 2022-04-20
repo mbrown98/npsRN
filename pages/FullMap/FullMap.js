@@ -13,7 +13,6 @@ import MapView, {Marker, Overlay} from 'react-native-maps';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import {COLORS, FONTS, parkCodes} from '../../constants';
 import {useFirebase} from '../../context/firebase-content';
-import currentPin from '../../assets/icons/pins/pin.png';
 import ASSETS from '../../assets';
 import {FIRESTORE} from '../../api/firebase/firestore';
 import {useAuth} from '../../context/auth-context';
@@ -38,13 +37,14 @@ const FullMap = ({navigation}) => {
   const {
     favorites: {FavPng, FavSvg, NoFavSvg},
     visited: {VisitedPng, VisitedSvg, NoVisitedSvg},
-    map: {BinoSvg},
+    map: {BinoSvg, CurrentPin},
   } = ASSETS;
+
   const [selectedPark, setSelectedPark] = useState('');
 
   const determinePin = code => {
     if (code === selectedPark) {
-      return <Image source={currentPin} style={{height: 40, width: 40}} />;
+      return <Image source={CurrentPin} style={{height: 40, width: 40}} />;
     }
     if (visited[code]) {
       return <Image source={VisitedPng} style={{height: 40, width: 40}} />;
@@ -73,7 +73,9 @@ const FullMap = ({navigation}) => {
           );
         })}
       </MapView>
+
       <MapLegend />
+
       {!!selectedPark && (
         <TouchableOpacity
           style={styles.selectedOverlay}
