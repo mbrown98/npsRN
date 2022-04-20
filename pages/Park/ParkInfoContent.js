@@ -83,6 +83,7 @@ const ParkInfoContent = () => {
         data={images}
         renderItem={item => {
           const uri = item.item.url;
+
           return (
             <TouchableOpacity
               style={{marginRight: 10}}
@@ -99,7 +100,7 @@ const ParkInfoContent = () => {
             </TouchableOpacity>
           );
         }}
-        keyExtractor={item => item.url}
+        keyExtractor={item => item.index}
         showsHorizontalScrollIndicator={false}
       />
 
@@ -157,14 +158,25 @@ const ParkInfoContent = () => {
             ),
           },
 
-          {
-            section: 'Webcams',
-            content: <DevSection data={fullData?.webcams} />,
-          },
-          {
-            section: 'Events',
-            content: <DevSection data={fullData?.events} />,
-          },
+          // {
+          //   section: 'Webcams',
+          //   content: <DevSection data={fullData?.webcams} />,
+          // },
+          // {
+          //   section: 'Events',
+          //   // content: <DevSection data={fullData?.events} />,
+          //   content: (
+          //     <ImgInfoBoxFlatList
+          //       data={fullData?.events.map(event => {
+          //         console.log('event', event);
+          //         return {
+          //           ...event,
+
+          //         };
+          //       })}
+          //     />
+          //   ),
+          // },
           {
             section: 'News Releases',
             content: (
