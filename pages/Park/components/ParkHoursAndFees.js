@@ -37,6 +37,7 @@ const ParkHoursAndFees = ({data}) => {
         keyExtractor={item => item[0]}
         renderItem={({item, index}) => {
           return (
+            //   make width based on screen width
             <View style={{marginRight: 15, maxWidth: 200}} key={index}>
               <Text style={{fontWeight: '600', fontSize: 11}}>
                 {item.title}

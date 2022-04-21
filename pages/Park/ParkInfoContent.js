@@ -72,8 +72,6 @@ const ParkInfoContent = () => {
     topics,
     activities,
     states,
-    contacts,
-    fees,
     addresses,
     directionsInfo,
     directionsUrl,
@@ -118,10 +116,6 @@ const ParkInfoContent = () => {
       <FlatList
         data={[
           {
-            section: 'Weather',
-            content: <ParkWeather data={weatherInfo} />,
-          },
-          {
             section: 'Hours and Fees',
             content: (
               <ParkHoursAndFees
@@ -136,6 +130,10 @@ const ParkInfoContent = () => {
                 data={[{directionsInfo, directionsUrl, latLong}]}
               />
             ),
+          },
+          {
+            section: 'Weather',
+            content: <ParkWeather data={weatherInfo} />,
           },
           {
             section: 'Things To Do',
