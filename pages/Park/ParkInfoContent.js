@@ -10,6 +10,7 @@ import {
 import useFullParkData from '../../api/nps/getFullParkData';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import DevSection from './components/DevSection';
+import ParkDirections from './components/ParkDirections';
 import ParkPeople from './components/ParkPeople';
 import ParkWeather from './components/ParkWeather';
 import {usePark} from './park-context';
@@ -72,7 +73,16 @@ const ParkInfoContent = () => {
     states,
     contacts,
     fees,
+    addresses,
+    directionsInfo,
+    directionsUrl,
+    entranceFees,
+    entrancePasses,
+    latLong,
+    operatingHours,
   } = data;
+
+  const address = addresses[0];
 
   return (
     <View style={styles.infoWrapper}>
@@ -109,6 +119,18 @@ const ParkInfoContent = () => {
           {
             section: 'Weather',
             content: <ParkWeather data={weatherInfo} />,
+          },
+          {
+            section: 'Hours and Fees',
+            content: <ParkWeather data={weatherInfo} />,
+          },
+          {
+            section: 'Directions',
+            content: (
+              <ParkDirections
+                data={[{directionsInfo, directionsUrl, latLong}]}
+              />
+            ),
           },
           {
             section: 'Things To Do',
