@@ -3,13 +3,12 @@ import React from 'react';
 import Spacer from '../../../components/Spacer';
 
 const ParkHoursAndFees = ({data}) => {
-  const {operatingHours} = data[0];
+  const {operatingHours, entranceFees} = data[0];
 
   return (
     <View>
-      <Text style={{fontWeight: '600'}}>Operating Hours</Text>
-      <Spacer h={10} />
-      <Text>{operatingHours[0].description}</Text>
+      <Spacer h={5} />
+      <Text style={{fontSize: 12}}>{operatingHours[0].description}</Text>
       <Spacer h={10} />
       <FlatList
         data={Object.entries(operatingHours[0].standardHours)}
@@ -19,11 +18,37 @@ const ParkHoursAndFees = ({data}) => {
         renderItem={({item, index}) => {
           return (
             <View style={{marginRight: 10}}>
-              <Text style={{fontWeight: '600', fontSize: 12}}>
+              <Text style={{fontWeight: '600', fontSize: 11}}>
                 {item[0].toLocaleUpperCase()}
               </Text>
               <Spacer h={5} />
               <Text style={{fontWeight: '400', fontSize: 11}}>{item[1]}</Text>
+            </View>
+          );
+        }}
+      />
+      <Spacer h={10} />
+      <Text style={{fontWeight: '600', fontSize: 16}}>Entrance Fees</Text>
+      <Spacer h={10} />
+      <FlatList
+        data={entranceFees}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        keyExtractor={item => item[0]}
+        renderItem={({item, index}) => {
+          return (
+            <View style={{marginRight: 15, maxWidth: 200}} key={index}>
+              <Text style={{fontWeight: '600', fontSize: 11}}>
+                {item.title}
+              </Text>
+              <Spacer h={5} />
+              <Text style={{fontWeight: '400', fontSize: 11}}>
+                ${item.cost}
+              </Text>
+              <Spacer h={5} />
+              <Text style={{fontWeight: '400', fontSize: 11}}>
+                {item.description}
+              </Text>
             </View>
           );
         }}
