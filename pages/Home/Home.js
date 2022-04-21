@@ -79,7 +79,7 @@ const Home = ({navigation}) => {
   return (
     <SafeAreaView style={styles.contain}>
       <FlatList
-        data={infoListData}
+        data={infoListData.slice(0, 30)}
         style={{marginHorizontal: 12}}
         ListHeaderComponent={() => (
           <>
@@ -144,6 +144,7 @@ const Home = ({navigation}) => {
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id}
         renderItem={({item, index}) => {
+          item.parkCode = item?.parkCodes[0];
           if (!item.title) {
             return null;
           }

@@ -3,13 +3,23 @@ import React from 'react';
 import {UTILS} from '../utils';
 import {COLORS} from '../constants';
 
-const ImgInfoBox = ({data: {infoUrl, img, title, subText, index}}) => {
+const ImgInfoBox = ({
+  data: {infoUrl, img, title, subText, index, parkCode},
+}) => {
   const bg = index % 2 ? 'white' : COLORS.transparentGreen;
   return (
     <TouchableOpacity
       onPress={() => UTILS.browser.openBrowser(infoUrl)}
       style={[styles.contain, {backgroundColor: bg}]}>
       <View style={{flex: 6, paddingRight: 10}}>
+        {!!parkCode && (
+          <Text
+            numberOfLines={2}
+            ellipsizeMode="tail"
+            style={{fontWeight: '200', marginBottom: 5}}>
+            {parkCode.toUpperCase()}
+          </Text>
+        )}
         <Text
           numberOfLines={2}
           ellipsizeMode="tail"

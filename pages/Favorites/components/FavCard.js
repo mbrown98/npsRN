@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  ImageBackground,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import useParkByID from '../../../api/hooks/useParkByID';
 import {COLORS, FONTS, SIZES} from '../../../constants';
@@ -26,9 +21,14 @@ const FavCard = ({parkId}) => {
       onPress={() => navigation.navigate('Park', {code: parkId})}>
       {/* Background Image */}
       <CacheImage uri={images[0].url} style={styles.bgImg}>
-        <Text numberOfLines={2} ellipsizeMode="tail" style={styles.favCardName}>
-          {fullName}
-        </Text>
+        <View style={styles.imgOpacity}>
+          <Text
+            numberOfLines={2}
+            ellipsizeMode="tail"
+            style={styles.favCardName}>
+            {fullName}
+          </Text>
+        </View>
       </CacheImage>
     </TouchableOpacity>
   );
@@ -51,11 +51,17 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    padding: 5,
     borderRadius: 10,
+  },
+  imgOpacity: {
+    height: '100%',
+    width: '100%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: "'rgba(231, 249, 239,.15)'",
+    padding: 5,
+    borderRadius: 10,
   },
   bgImgStyle: {
     borderRadius: 5,
