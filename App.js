@@ -119,14 +119,6 @@ export default function App() {
     return <Onboard />;
   }
 
-  if (initializing) {
-    return (
-      <View style={{flex: 1}}>
-        <Text>Loading</Text>
-      </View>
-    );
-  }
-
   return (
     <NavigationContainer>
       <QueryClientProvider client={queryClient}>

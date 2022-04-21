@@ -2,6 +2,7 @@ import React, {useState, createContext, useContext, useEffect} from 'react';
 import auth from '@react-native-firebase/auth';
 import {downloadAllParkDataToStore} from '../offline/downloadAllParkDataToStore';
 import {fetchParkData} from '../api/hooks/useParkByID';
+import SplashScreen from 'react-native-splash-screen';
 
 const AuthContext = createContext(undefined);
 
@@ -34,10 +35,10 @@ const AuthProvider = ({...props}) => {
     setInitializing(true);
     fetchParkData('yell').then(yellParkData => {
       if (!yellParkData) {
-        console.log('no yell park data');
         downloadAllParkDataToStore().then(parks => {
           if (parks) {
             setInitializing(false);
+            SplashScreen.hide();
           } else {
             console.log('we have an error');
             // we have an error
@@ -45,7 +46,9 @@ const AuthProvider = ({...props}) => {
         });
       } else {
         // yell park data exists, we are good to go
+
         setInitializing(false);
+        SplashScreen.hide();
       }
     });
   }, []);

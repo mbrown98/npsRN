@@ -7,7 +7,6 @@ import {
   FlatList,
   StyleSheet,
 } from 'react-native';
-import SplashScreen from 'react-native-splash-screen';
 import Feather from 'react-native-vector-icons/Feather';
 import {getFeaturedParks} from '../../api/firebase/parks';
 import {FONTS, COLORS, SIZES} from '../../constants';
@@ -22,7 +21,6 @@ import Spacer from '../../components/Spacer';
 Feather.loadFont();
 
 const Home = ({navigation}) => {
-  SplashScreen.show();
   const {
     userData: {favorites, visited},
   } = useFirebase();
