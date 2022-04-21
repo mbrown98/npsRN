@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Keyboard,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Feather from 'react-native-vector-icons/Feather';
@@ -47,6 +48,13 @@ const ParksSearchBar = () => {
             setTextInput(v);
           }}
         />
+        <TouchableOpacity
+          onPress={() => {
+            setTextInput('');
+            Keyboard.dismiss();
+          }}>
+          <Text>X</Text>
+        </TouchableOpacity>
       </View>
       {!!searchResults().length && (
         <View style={styles.searchResultsContain}>
@@ -88,6 +96,7 @@ const styles = StyleSheet.create({
   searchBarText: {
     marginLeft: SIZES.radius,
     ...FONTS.body3,
+    flex: 1,
   },
   searchResultsContain: {
     paddingVertical: 10,
