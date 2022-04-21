@@ -11,6 +11,7 @@ import useFullParkData from '../../api/nps/getFullParkData';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import DevSection from './components/DevSection';
 import ParkDirections from './components/ParkDirections';
+import ParkHoursAndFees from './components/ParkHoursAndFees';
 import ParkPeople from './components/ParkPeople';
 import ParkWeather from './components/ParkWeather';
 import {usePark} from './park-context';
@@ -122,7 +123,11 @@ const ParkInfoContent = () => {
           },
           {
             section: 'Hours and Fees',
-            content: <ParkWeather data={weatherInfo} />,
+            content: (
+              <ParkHoursAndFees
+                data={[{operatingHours, entrancePasses, entranceFees}]}
+              />
+            ),
           },
           {
             section: 'Directions',
