@@ -26,11 +26,7 @@ const Home = ({navigation}) => {
   } = useFirebase();
   const [parkData, setParkData] = useState(null);
 
-  const [infoList, setInfoList] = useState('News');
-
-  const {data: alerts} = useGroupParkData('alerts', [favorites]);
   const {data: news} = useGroupParkData('newsreleases', [favorites]);
-  const {data: events} = useGroupParkData('events', [favorites]);
 
   useEffect(() => {
     const asyncFetch = async () => {
@@ -42,37 +38,17 @@ const Home = ({navigation}) => {
   }, []);
 
   const createInfoList = useCallback(() => {
-    if (infoList === 'News') {
-      if (!news) {
-        return [];
-      }
-      return news.map(opt => ({
-        title: opt.title,
-        parkCodes: opt.relatedParks.map(p => p.parkCode),
-        img: opt.image.url || '',
-        infoUrl: opt.url,
-        date: '',
-      }));
+    if (!news) {
+      return [];
     }
-    if (infoList === 'Alerts') {
-      return alerts?.map(opt => ({
-        title: opt.title,
-        parkCodes: [opt.parkCode],
-        img: '',
-        infoUrl: opt.url,
-        date: opt.lastIndexedDate,
-      }));
-    }
-    if (infoList === 'Events') {
-      return events.map(opt => ({
-        title: opt.title,
-        parkCode: opt.sitecode,
-        img: '',
-        infoUrl: opt.infourl,
-        date: opt.date,
-      }));
-    }
-  }, [infoList, alerts, events, news]);
+    return news.map(opt => ({
+      title: opt.title,
+      parkCodes: opt.relatedParks.map(p => p.parkCode),
+      img: opt.image.url || '',
+      infoUrl: opt.url,
+      date: '',
+    }));
+  }, [news]);
 
   const infoListData = createInfoList();
 
@@ -121,30 +97,6 @@ const Home = ({navigation}) => {
             <Spacer h={20} />
             <Text style={styles.justForYouText}>Just For You</Text>
             <Spacer h={10} />
-            {/* <View style={styles.newsToggle}>
-              {['News', 'Alerts', 'Events'].map(opt => {
-                const active = opt === infoList;
-                return (
-                  <TouchableOpacity
-                    onPress={() => setInfoList(opt)}
-                    key={opt}
-                    style={[
-                      styles.newsToggleOpt,
-                      active && {
-                        backgroundColor: COLORS.darkGreen,
-                      },
-                    ]}>
-                    <Text
-                      style={{
-                        fontWeight: '800',
-                        color: active ? 'white' : COLORS.darkGreen,
-                      }}>
-                      {opt}
-                    </Text>
-                  </TouchableOpacity>
-                );
-              })}
-            </View> */}
           </>
         )}
         showsVerticalScrollIndicator={false}
@@ -165,7 +117,9 @@ const Home = ({navigation}) => {
               // make this reusable
               <View style={{justifyContent: 'center', alignItems: 'center'}}>
                 <Text style={{fontWeight: '600'}}>
-                  No {infoList} for your Favorited Parks
+                  {favorites.length
+                    ? 'No News for your Favorite Parks'
+                    : 'Favorite Parks to stay in the know'}
                 </Text>
                 <Spacer h={10} />
                 <TouchableOpacity
