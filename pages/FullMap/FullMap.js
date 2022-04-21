@@ -17,6 +17,7 @@ import ASSETS from '../../assets';
 import {FIRESTORE} from '../../api/firebase/firestore';
 import {useAuth} from '../../context/auth-context';
 import VisitFavIcon from '../../components/VisitFavIcon';
+import CloseCircle from '../../components/CloseCircle';
 import MapLegend from './components/MapLegend';
 
 const mapCoords = {
@@ -90,11 +91,14 @@ const FullMap = ({navigation}) => {
             <Text style={{...FONTS.h3}}>
               {parkCodes[selectedPark].fullName}
             </Text>
-            <TouchableOpacity
-              style={{paddingLeft: 5}}
-              onPress={() => setSelectedPark(null)}>
-              <Text>X</Text>
-            </TouchableOpacity>
+            <CloseCircle
+              touchProps={{
+                onPress: () => {
+                  setSelectedPark(null);
+                },
+              }}
+              circleProps={{size: 25}}
+            />
           </View>
 
           <Text

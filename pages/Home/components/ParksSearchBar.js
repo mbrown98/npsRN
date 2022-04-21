@@ -12,6 +12,7 @@ import {useNavigation} from '@react-navigation/native';
 import Feather from 'react-native-vector-icons/Feather';
 
 import {COLORS, SIZES, FONTS, parkCodes} from '../../../constants';
+import CloseCircle from '../../../components/CloseCircle';
 
 Feather.loadFont();
 
@@ -48,13 +49,16 @@ const ParksSearchBar = () => {
             setTextInput(v);
           }}
         />
-        <TouchableOpacity
-          onPress={() => {
-            setTextInput('');
-            Keyboard.dismiss();
-          }}>
-          <Text>X</Text>
-        </TouchableOpacity>
+        {!!textInput && (
+          <CloseCircle
+            touchProps={{
+              onPress: () => {
+                setTextInput('');
+                Keyboard.dismiss();
+              },
+            }}
+          />
+        )}
       </View>
       {!!searchResults().length && (
         <View style={styles.searchResultsContain}>
@@ -87,7 +91,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 50,
     alignItems: 'center',
-
     paddingHorizontal: SIZES.radius,
     borderRadius: 10,
     backgroundColor: COLORS.lightGray,
