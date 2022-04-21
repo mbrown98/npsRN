@@ -7,7 +7,6 @@ export const FIRESTORE = {
       .doc(uid)
       .get()
       .then(doc => {
-        console.log('');
         const exists = doc._data[key][park];
         firestore()
           .collection('users')
@@ -18,6 +17,6 @@ export const FIRESTORE = {
               : Date.now(),
           });
       })
-      .catch(e => console.log('e', e));
+      .catch(e => console.log('ERROR', e));
   },
 };
