@@ -114,8 +114,12 @@ const Home = ({navigation}) => {
                 />
               )}
             </View>
+            <Spacer h={10} />
+            <View style={{height: 80, backgroundColor: 'grey'}} />
+            <Spacer h={10} />
             <Text style={styles.justForYouText}>Just For You</Text>
-            <View style={styles.newsToggle}>
+            <Spacer h={10} />
+            {/* <View style={styles.newsToggle}>
               {['News', 'Alerts', 'Events'].map(opt => {
                 const active = opt === infoList;
                 return (
@@ -138,7 +142,7 @@ const Home = ({navigation}) => {
                   </TouchableOpacity>
                 );
               })}
-            </View>
+            </View> */}
           </>
         )}
         showsVerticalScrollIndicator={false}
@@ -186,8 +190,7 @@ const styles = StyleSheet.create({
   justForYouText: {
     ...FONTS.h2,
     color: COLORS.darkGreen,
-    marginVertical: 10,
-    marginTop: 20,
+    marginHorizontal: 5,
   },
   newsToggle: {
     flexDirection: 'row',
