@@ -81,16 +81,6 @@ const TabNavigator = () => {
             ),
         }}
       />
-
-      {/* <Tab.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          tabBarIcon: ({color}) => (
-            <MaterialCommunityIcons name="account" size={32} color={color} />
-          ),
-        }}
-      /> */}
     </Tab.Navigator>
   );
 };
@@ -138,12 +128,6 @@ export default function App() {
             component={HistoricPerson}
             options={{headerShown: false}}
           />
-          {/*
-          <Stack.Screen
-            name="Profile"
-            component={Profile}
-            options={{headerShown: false}}
-          /> */}
         </Stack.Navigator>
       </QueryClientProvider>
     </NavigationContainer>

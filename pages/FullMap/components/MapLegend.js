@@ -68,8 +68,8 @@ const MapLegend = () => {
 
       <Spacer h={20} />
       <View style={{flexDirection: 'row'}}>
-        {IconLegend.map(opt => (
-          <View style={{flex: 1, alignItems: 'center'}}>
+        {IconLegend.map((opt, i) => (
+          <View style={{flex: 1, alignItems: 'center'}} key={i}>
             <Image source={opt.src} style={{height: 40, width: 40}} />
             <Spacer h={5} />
             <Text style={{fontSize: 12, fontWeight: '600'}}>{opt.title}</Text>
