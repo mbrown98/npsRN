@@ -8,7 +8,6 @@ import {
   StyleSheet,
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
-import {NAME} from '@env';
 import {getFeaturedParks} from '../../api/firebase/parks';
 import {FONTS, COLORS, SIZES} from '../../constants';
 import FeaturedParkCard from './components/FeaturedParkCard';
@@ -56,7 +55,7 @@ const Home = ({navigation}) => {
       }));
     }
     if (infoList === 'Alerts') {
-      return alerts.map(opt => ({
+      return alerts?.map(opt => ({
         title: opt.title,
         parkCodes: [opt.parkCode],
         img: '',
@@ -80,7 +79,7 @@ const Home = ({navigation}) => {
   return (
     <SafeAreaView style={styles.contain}>
       <FlatList
-        data={infoListData.slice(0, 30)}
+        data={infoListData?.slice(0, 30)}
         style={{marginHorizontal: 12}}
         ListHeaderComponent={() => (
           <>
@@ -93,7 +92,7 @@ const Home = ({navigation}) => {
                   ...FONTS.h2,
                   color: COLORS.darkGreen,
                 }}>
-                Featured Parks {NAME}
+                Featured Parks
               </Text>
 
               {parkData?.length && (
@@ -145,7 +144,6 @@ const Home = ({navigation}) => {
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id}
         renderItem={({item, index}) => {
-          console.log(item);
           if (!item.parkCode && item?.parkCodes.length) {
             item.parkCode = item?.parkCodes[0];
           }

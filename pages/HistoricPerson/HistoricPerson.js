@@ -19,7 +19,6 @@ const HistoricPerson = ({
     params: {person},
   },
 }) => {
-  console.log(person);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'black', padding: 5}}>
       <StatusBar barStyle="light-content" />
@@ -39,7 +38,9 @@ const HistoricPerson = ({
               data={person.quickFacts}
               showsHorizontalScrollIndicator={false}
               renderItem={({item}) => {
-                if (item.name === 'Significance') return null;
+                if (item.name === 'Significance') {
+                  return null;
+                }
                 return (
                   <View style={{marginRight: 20}}>
                     <Text
