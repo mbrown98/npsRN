@@ -1,10 +1,11 @@
 import axios from 'axios';
 import {useQuery} from 'react-query';
+import {genApiKey} from './genAPIKey';
 
 const getGroupParkData = async (field, parkIds) => {
   const URL = `https://developer.nps.gov/api/v1/${field}?parkCode=${_genParksQuery(
     parkIds[0],
-  )}&api_key=xVDrllRsZGSuU1sLpzu687U6R8bZG9NpU4W2wwSM`;
+  )}&api_key=${genApiKey()}`;
 
   return axios
     .get(URL)

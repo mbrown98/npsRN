@@ -1,9 +1,11 @@
 import {useQuery} from 'react-query';
 import axios from 'axios';
+import {genApiKey} from './genAPIKey';
 
 export const getFullParkData = async parkId => {
   const BASE_START = 'https://developer.nps.gov/api/v1/';
-  const BASE_END = `?parkCode=${parkId}&api_key=xVDrllRsZGSuU1sLpzu687U6R8bZG9NpU4W2wwSM`;
+
+  const BASE_END = `?parkCode=${parkId}&api_key=${genApiKey()}`;
 
   const dataArr = [
     'alerts',

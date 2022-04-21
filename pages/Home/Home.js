@@ -8,6 +8,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
+import {NAME} from '@env';
 import {getFeaturedParks} from '../../api/firebase/parks';
 import {FONTS, COLORS, SIZES} from '../../constants';
 import FeaturedParkCard from './components/FeaturedParkCard';
@@ -92,7 +93,7 @@ const Home = ({navigation}) => {
                   ...FONTS.h2,
                   color: COLORS.darkGreen,
                 }}>
-                Featured Parks
+                Featured Parks {NAME}
               </Text>
 
               {parkData?.length && (
@@ -144,7 +145,11 @@ const Home = ({navigation}) => {
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id}
         renderItem={({item, index}) => {
-          item.parkCode = item?.parkCodes[0];
+          console.log(item);
+          if (!item.parkCode && item?.parkCodes.length) {
+            item.parkCode = item?.parkCodes[0];
+          }
+
           if (!item.title) {
             return null;
           }
