@@ -11,12 +11,12 @@ export const getFullParkData = async parkId => {
     // 'amenities/parksplaces',
     'articles',
     'campgrounds',
-    'events',
+    // 'events',
     'newsreleases',
     'people',
     'places',
     'thingstodo',
-    'webcams',
+    // 'webcams',
   ];
 
   const mappedUrls = dataArr.map(opt => `${BASE_START}${opt}${BASE_END}`);

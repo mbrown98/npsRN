@@ -10,6 +10,8 @@ import {
 import useFullParkData from '../../api/nps/getFullParkData';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import DevSection from './components/DevSection';
+import ParkDirections from './components/ParkDirections';
+import ParkHoursAndFees from './components/ParkHoursAndFees';
 import ParkPeople from './components/ParkPeople';
 import ParkWeather from './components/ParkWeather';
 import {usePark} from './park-context';
@@ -70,9 +72,16 @@ const ParkInfoContent = () => {
     topics,
     activities,
     states,
-    contacts,
-    fees,
+    addresses,
+    directionsInfo,
+    directionsUrl,
+    entranceFees,
+    entrancePasses,
+    latLong,
+    operatingHours,
   } = data;
+
+  const address = addresses[0];
 
   return (
     <View style={styles.infoWrapper}>
@@ -83,6 +92,7 @@ const ParkInfoContent = () => {
         data={images}
         renderItem={item => {
           const uri = item.item.url;
+
           return (
             <TouchableOpacity
               style={{marginRight: 10}}
@@ -99,12 +109,28 @@ const ParkInfoContent = () => {
             </TouchableOpacity>
           );
         }}
-        keyExtractor={item => item.url}
+        keyExtractor={item => item.index}
         showsHorizontalScrollIndicator={false}
       />
 
       <FlatList
         data={[
+          {
+            section: 'Hours and Fees',
+            content: (
+              <ParkHoursAndFees
+                data={[{operatingHours, entrancePasses, entranceFees}]}
+              />
+            ),
+          },
+          {
+            section: 'Directions',
+            content: (
+              <ParkDirections
+                data={[{directionsInfo, directionsUrl, latLong}]}
+              />
+            ),
+          },
           {
             section: 'Weather',
             content: <ParkWeather data={weatherInfo} />,
@@ -157,14 +183,25 @@ const ParkInfoContent = () => {
             ),
           },
 
-          {
-            section: 'Webcams',
-            content: <DevSection data={fullData?.webcams} />,
-          },
-          {
-            section: 'Events',
-            content: <DevSection data={fullData?.events} />,
-          },
+          // {
+          //   section: 'Webcams',
+          //   content: <DevSection data={fullData?.webcams} />,
+          // },
+          // {
+          //   section: 'Events',
+          //   // content: <DevSection data={fullData?.events} />,
+          //   content: (
+          //     <ImgInfoBoxFlatList
+          //       data={fullData?.events.map(event => {
+          //         console.log('event', event);
+          //         return {
+          //           ...event,
+
+          //         };
+          //       })}
+          //     />
+          //   ),
+          // },
           {
             section: 'News Releases',
             content: (
