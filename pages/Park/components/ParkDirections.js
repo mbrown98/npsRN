@@ -2,6 +2,7 @@ import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import openMap from 'react-native-open-maps';
 import React from 'react';
 import BROWSER from '../../../utils/browser';
+import {COLORS} from '../../../constants';
 
 const ParkDirections = ({data}) => {
   let {latLong, directionsUrl, directionsInfo} = data[0];
@@ -37,7 +38,12 @@ const ParkDirections = ({data}) => {
             key={i}
             onPress={opt.onPress}
             style={[i !== mapOpts.length - 1 && {marginBottom: 10}]}>
-            <Text style={{textAlign: 'center', fontWeight: '600'}}>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontWeight: '600',
+                color: COLORS.darkGreen,
+              }}>
               {opt.text}
             </Text>
           </TouchableOpacity>
