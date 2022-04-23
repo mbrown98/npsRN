@@ -103,6 +103,7 @@
 		BB9C0BB728C345F9A830A2B7 /* RobotoCondensed-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoCondensed-Bold.ttf"; path = "../assets/fonts/RobotoCondensed-Bold.ttf"; sourceTree = "<group>"; };
 		C1203A882F094221BB1CF82F /* RobotoCondensed-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoCondensed-Light.ttf"; path = "../assets/fonts/RobotoCondensed-Light.ttf"; sourceTree = "<group>"; };
 		C58BB4E427E7E559009389DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C5EE688F281460D700E910AB /* npsRN.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = npsRN.entitlements; path = npsRN/npsRN.entitlements; sourceTree = "<group>"; };
 		CF6C48E35C8248C79978F686 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		D113C854B4F744D09E42100E /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		D1A5EE1AB9D74663965C57C2 /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-LightItalic.ttf"; path = "../assets/fonts/Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
@@ -160,6 +161,7 @@
 		13B07FAE1A68108700A75B9A /* npsRN */ = {
 			isa = PBXGroup;
 			children = (
+				C5EE688F281460D700E910AB /* npsRN.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -653,6 +655,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = npsRN/npsRN.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -684,6 +687,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = npsRN/npsRN.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
