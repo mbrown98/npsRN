@@ -92,10 +92,10 @@ const Home = ({navigation}) => {
               )}
             </View>
             <Spacer h={20} />
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={{height: 80, backgroundColor: 'grey', borderRadius: 10}}
             />
-            <Spacer h={20} />
+            <Spacer h={20} /> */}
             <Text style={styles.justForYouText}>Just For You</Text>
             <Spacer h={10} />
           </>
