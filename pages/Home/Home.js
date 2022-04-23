@@ -17,6 +17,7 @@ import useGroupParkData from '../../api/nps/getGroupParkData';
 import {useFirebase} from '../../context/firebase-content';
 import ImgInfoBox from '../../components/ImgInfoBox';
 import Spacer from '../../components/Spacer';
+import {useAuth} from '../../context/auth-context';
 
 Feather.loadFont();
 
@@ -24,9 +25,10 @@ const Home = ({navigation}) => {
   const {
     userData: {favorites, visited},
   } = useFirebase();
+  const {user} = useAuth();
   const [parkData, setParkData] = useState(null);
 
-  const {data: news} = useGroupParkData('newsreleases', [favorites]);
+  const {data: news} = useGroupParkData('newsreleases', [favorites], user);
 
   useEffect(() => {
     const asyncFetch = async () => {

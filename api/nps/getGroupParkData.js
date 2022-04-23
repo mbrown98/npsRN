@@ -3,6 +3,9 @@ import {useQuery} from 'react-query';
 import {genApiKey} from './genAPIKey';
 
 const getGroupParkData = async (field, parkIds) => {
+  if (!Object.keys(parkIds[0]).length) {
+    return [];
+  }
   const URL = `https://developer.nps.gov/api/v1/${field}?parkCode=${_genParksQuery(
     parkIds[0],
   )}&api_key=${genApiKey()}`;

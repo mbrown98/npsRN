@@ -17,6 +17,6 @@ export const FIRESTORE = {
               : Date.now(),
           });
       })
-      .catch(e => console.log('ERROR', e));
+      .catch(e => console.log('ERROR!!!!!!', e));
   },
 };
