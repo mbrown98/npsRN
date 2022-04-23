@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, TouchableOpacity, Image, Text, StyleSheet} from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  Image,
+  Text,
+  StyleSheet,
+  Dimensions,
+} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 
@@ -11,6 +18,9 @@ import {useFirebase} from '../../../context/firebase-content';
 import ASSETS from '../../../assets';
 import VisitFavIcon from '../../../components/VisitFavIcon';
 import CacheImage from '../../../components/CacheImage';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 Fontisto.loadFont();
 
@@ -65,11 +75,11 @@ const FeaturedParkCard = ({containerStyle, parkId, onPress}) => {
           </View>
 
           {/* make this reusable */}
-          <View>
+          {/* <View>
             <VisitFavIcon park={parkCode} list="favorites" size={30} />
             <View style={{flex: 1}} />
             <VisitFavIcon park={parkCode} list="visited" size={30} />
-          </View>
+          </View> */}
         </View>
       </BlurView>
     </TouchableOpacity>
@@ -78,15 +88,15 @@ const FeaturedParkCard = ({containerStyle, parkId, onPress}) => {
 
 const styles = StyleSheet.create({
   contain: {
-    height: 275,
-    width: 250,
+    height: windowHeight * 0.4,
+    width: windowWidth * 0.65,
     marginTop: SIZES.radius,
     marginRight: 20,
     borderRadius: SIZES.radius,
   },
   bgImg: {
-    width: 250,
-    height: 275,
+    height: windowHeight * 0.4,
+    width: windowWidth * 0.65,
     borderRadius: SIZES.radius,
     backgroundColor: COLORS.transparentGreen,
   },

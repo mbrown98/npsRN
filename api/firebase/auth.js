@@ -2,15 +2,14 @@ import AsyncStorage from '@react-native-community/async-storage';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {appleAuth} from '@invertase/react-native-apple-authentication';
 
 const AUTH = {
-  signIn: async () => {
-    // Get the users ID token
-    const {idToken} = await GoogleSignin.signIn();
-    // Create a Google credential with the token
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+  signIn: async provider => {
+    const cred = await AUTH.determineCred(provider);
+
     // Sign-in the user with the credential
-    const user_sign_in = auth().signInWithCredential(googleCredential);
+    const user_sign_in = auth().signInWithCredential(cred);
 
     user_sign_in
       .then(async user => {
@@ -18,7 +17,10 @@ const AUTH = {
         const res = await firestore().collection('users').doc(uid).get();
 
         if (!res.exists) {
-          firestore().collection('users').doc(uid).set({name: 'matt'});
+          firestore()
+            .collection('users')
+            .doc(uid)
+            .set({favorites: {}, visited: {}});
         }
       })
       .catch(e => console.log('e', e));
@@ -28,6 +30,43 @@ const AUTH = {
       .signOut()
       .then(() => AsyncStorage.removeItem('ONBOARD_COMPLETE'))
       .catch(e => console.log('e'));
+  },
+  determineCred: async provider => {
+    switch (provider) {
+      case 'apple':
+        return await AUTH.getAppleCredential();
+      case 'google':
+        return await AUTH.getGoogleCredential();
+      default:
+        return null;
+    }
+  },
+  getGoogleCredential: async () => {
+    const {idToken} = await GoogleSignin.signIn();
+    return auth.GoogleAuthProvider.credential(idToken);
+  },
+  getAppleCredential: async () => {
+    console.log('here');
+    // Start the sign-in request
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+    });
+    console.log('here 2');
+    // Ensure Apple returned a user identityToken
+    if (!appleAuthRequestResponse.identityToken) {
+      throw new Error('Apple Sign-In failed - no identify token returned');
+    }
+    console.log('here 3');
+    // Create a Firebase credential from the response
+    const {identityToken, nonce} = appleAuthRequestResponse;
+    const appleCredential = auth.AppleAuthProvider.credential(
+      identityToken,
+      nonce,
+    );
+
+    // Sign the user in with the credential
+    return auth().signInWithCredential(appleCredential);
   },
 };
 

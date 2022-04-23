@@ -142,9 +142,9 @@ const ParkInfoContent = () => {
                 data={fullData?.thingstodo.map(ttd => {
                   return {
                     ...ttd,
-                    infoUrl: ttd.url,
-                    subText: ttd.activityDescription,
-                    img: ttd.images[0].url,
+                    infoUrl: ttd?.url,
+                    subText: ttd?.activityDescription,
+                    img: ttd?.images[0]?.url,
                   };
                 })}
               />
@@ -159,8 +159,8 @@ const ParkInfoContent = () => {
                   return {
                     ...place,
                     infoUrl: place.url,
-                    subText: place.listingDescription,
-                    img: place.images[0].url,
+                    subText: place?.listingDescription,
+                    img: place?.images[0]?.url,
                   };
                 })}
               />
@@ -173,10 +173,10 @@ const ParkInfoContent = () => {
                 data={fullData?.campgrounds.map(camp => {
                   return {
                     ...camp,
-                    infoUrl: camp.url,
-                    title: camp.name,
-                    subText: camp.description,
-                    img: camp.images[0].url,
+                    infoUrl: camp?.url,
+                    title: camp?.name,
+                    subText: camp?.description,
+                    img: camp?.images[0]?.url,
                   };
                 })}
               />
@@ -209,8 +209,8 @@ const ParkInfoContent = () => {
                 data={fullData?.newsreleases.map(nr => {
                   return {
                     ...nr,
-                    infoUrl: nr.url,
-                    img: nr.image.url,
+                    infoUrl: nr?.url,
+                    img: nr?.image?.url,
                   };
                 })}
               />
@@ -223,8 +223,8 @@ const ParkInfoContent = () => {
                 data={fullData?.alerts.map(alert => {
                   return {
                     ...alert,
-                    infoUrl: alert.url,
-                    subText: alert.description,
+                    infoUrl: alert?.url,
+                    subText: alert?.description,
                   };
                 })}
               />
@@ -237,8 +237,8 @@ const ParkInfoContent = () => {
                 data={fullData?.articles.map(article => {
                   return {
                     ...article,
-                    infoUrl: article.url,
-                    subText: article.listingDescription,
+                    infoUrl: article?.url,
+                    subText: article?.listingDescription,
                   };
                 })}
               />

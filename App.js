@@ -17,15 +17,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import {
-  Favorites,
-  Home,
-  Park,
-  Onboard,
-  Login,
-  FullMap,
-  HistoricPerson,
-} from './pages';
+import {Favorites, Home, Park, Onboard, Login, FullMap} from './pages';
 
 import {GlobalProvider, useGlobal} from './context/global-context';
 import {useAuth} from './context/auth-context';
@@ -81,16 +73,6 @@ const TabNavigator = () => {
             ),
         }}
       />
-
-      {/* <Tab.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          tabBarIcon: ({color}) => (
-            <MaterialCommunityIcons name="account" size={32} color={color} />
-          ),
-        }}
-      /> */}
     </Tab.Navigator>
   );
 };
@@ -119,14 +101,6 @@ export default function App() {
     return <Onboard />;
   }
 
-  if (initializing) {
-    return (
-      <View style={{flex: 1}}>
-        <Text>Loading</Text>
-      </View>
-    );
-  }
-
   return (
     <NavigationContainer>
       <QueryClientProvider client={queryClient}>
@@ -141,17 +115,6 @@ export default function App() {
             component={Park}
             options={{headerShown: false}}
           />
-          <Stack.Screen
-            name="HistoricPerson"
-            component={HistoricPerson}
-            options={{headerShown: false}}
-          />
-          {/*
-          <Stack.Screen
-            name="Profile"
-            component={Profile}
-            options={{headerShown: false}}
-          /> */}
         </Stack.Navigator>
       </QueryClientProvider>
     </NavigationContainer>

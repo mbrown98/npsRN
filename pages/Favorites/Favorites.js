@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   Button,
 } from 'react-native';
-import {COLORS, FONTS, SIZES} from '../../constants';
+import {COLORS, FONTS, parkCodes, SIZES} from '../../constants';
 import FavCard from './components/FavCard';
 import {useFirebase} from '../../context/firebase-content';
 import ParksSearchBar from '../Home/components/ParksSearchBar';
@@ -21,12 +21,13 @@ export default function Favorites() {
     userData: {favorites, visited},
   } = useFirebase();
 
-  const [activeList, setActiveList] = useState('favorites');
+  const [activeList, setActiveList] = useState('Favorites');
+  const [term, setTerm] = useState('');
 
   return (
     <SafeAreaView style={styles.contain}>
       <View style={styles.listToggle}>
-        {['favorites', 'visited'].map((opt, i) => {
+        {['Favorites', 'Visited'].map((opt, i) => {
           return (
             <TouchableOpacity key={i} onPress={() => setActiveList(opt)}>
               <Text
@@ -40,17 +41,27 @@ export default function Favorites() {
           );
         })}
       </View>
-      {/* <View style={{paddingBottom: 10}}>
-        <ParksSearchBar />
-      </View> */}
+      <View style={{paddingHorizontal: 10, paddingBottom: 10}}>
+        <ParksSearchBar
+          showDropdown={false}
+          onChange={v => setTerm(v.toLowerCase())}
+          placeholder={`Search ${activeList}`}
+        />
+      </View>
       {activeList === 'favorites' && <CacheImage />}
       <FlatList
         numColumns={2}
         contentContainerStyle={styles.flatlistContent}
         style={{paddingHorizontal: 5}}
-        data={Object.keys(activeList === 'favorites' ? favorites : visited)}
+        data={Object.keys(activeList === 'Favorites' ? favorites : visited)}
         showsVerticalScrollIndicator={false}
-        renderItem={({item}) => <FavCard parkId={item} />}
+        renderItem={({item}) => {
+          const data = parkCodes[item];
+          if (!data?.fullName.toLowerCase().startsWith(term)) {
+            return null;
+          }
+          return <FavCard data={data} key={data.parkCode} />;
+        }}
         keyExtractor={item => item}
       />
     </SafeAreaView>
