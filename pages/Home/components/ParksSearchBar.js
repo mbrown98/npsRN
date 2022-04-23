@@ -16,7 +16,11 @@ import CloseCircle from '../../../components/CloseCircle';
 
 Feather.loadFont();
 
-const ParksSearchBar = ({showDropdown = true, onChange}) => {
+const ParksSearchBar = ({
+  showDropdown = true,
+  onChange,
+  placeholder = 'Search',
+}) => {
   const navigation = useNavigation();
   const [textInput, setTextInput] = useState('');
 
@@ -44,7 +48,7 @@ const ParksSearchBar = ({showDropdown = true, onChange}) => {
           value={textInput}
           style={styles.searchBarText}
           placeholderTextColor={COLORS.gray}
-          placeholder="Search Parks"
+          placeholder={placeholder}
           onChangeText={v => {
             setTextInput(v);
             onChange && onChange(v);
