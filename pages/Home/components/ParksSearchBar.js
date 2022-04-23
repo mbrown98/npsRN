@@ -55,6 +55,7 @@ const ParksSearchBar = ({showDropdown = true, onChange}) => {
             touchProps={{
               onPress: () => {
                 setTextInput('');
+                onChange && onChange('');
                 Keyboard.dismiss();
               },
             }}
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: SIZES.radius,
     borderRadius: 10,
-    backgroundColor: COLORS.lightGray,
+    // backgroundColor: COLORS.lightGray,
   },
   menuIcon: {},
   searchBarText: {

@@ -59,7 +59,7 @@ export default function Favorites() {
           if (!data?.fullName.toLowerCase().startsWith(term)) {
             return null;
           }
-          return <FavCard data={data} />;
+          return <FavCard data={data} key={data.parkCode} />;
         }}
         keyExtractor={item => item}
       />
