@@ -16,12 +16,12 @@ import CloseCircle from '../../../components/CloseCircle';
 
 Feather.loadFont();
 
-const ParksSearchBar = () => {
+const ParksSearchBar = ({showDropdown = true, onChange}) => {
   const navigation = useNavigation();
   const [textInput, setTextInput] = useState('');
 
   const searchResults = useCallback(() => {
-    if (!textInput) {
+    if (!textInput || !showDropdown) {
       return [];
     }
     const filtered = Object.values(parkCodes).filter(park => {
@@ -29,7 +29,7 @@ const ParksSearchBar = () => {
     });
 
     return filtered;
-  }, [textInput]);
+  }, [textInput, showDropdown]);
 
   return (
     <>
@@ -47,6 +47,7 @@ const ParksSearchBar = () => {
           placeholder="Search Parks"
           onChangeText={v => {
             setTextInput(v);
+            onChange && onChange(v);
           }}
         />
         {!!textInput && (
@@ -60,7 +61,7 @@ const ParksSearchBar = () => {
           />
         )}
       </View>
-      {!!searchResults().length && (
+      {showDropdown && !!searchResults().length && (
         <View style={styles.searchResultsContain}>
           <FlatList
             data={searchResults()}

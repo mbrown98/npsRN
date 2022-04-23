@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   Button,
 } from 'react-native';
-import {COLORS, FONTS, SIZES} from '../../constants';
+import {COLORS, FONTS, parkCodes, SIZES} from '../../constants';
 import FavCard from './components/FavCard';
 import {useFirebase} from '../../context/firebase-content';
 import ParksSearchBar from '../Home/components/ParksSearchBar';
@@ -22,6 +22,7 @@ export default function Favorites() {
   } = useFirebase();
 
   const [activeList, setActiveList] = useState('favorites');
+  const [term, setTerm] = useState('');
 
   return (
     <SafeAreaView style={styles.contain}>
@@ -40,9 +41,12 @@ export default function Favorites() {
           );
         })}
       </View>
-      {/* <View style={{paddingBottom: 10}}>
-        <ParksSearchBar />
-      </View> */}
+      <View style={{padding: 10}}>
+        <ParksSearchBar
+          showDropdown={false}
+          onChange={v => setTerm(v.toLowerCase())}
+        />
+      </View>
       {activeList === 'favorites' && <CacheImage />}
       <FlatList
         numColumns={2}
@@ -50,7 +54,13 @@ export default function Favorites() {
         style={{paddingHorizontal: 5}}
         data={Object.keys(activeList === 'favorites' ? favorites : visited)}
         showsVerticalScrollIndicator={false}
-        renderItem={({item}) => <FavCard parkId={item} />}
+        renderItem={({item}) => {
+          const data = parkCodes[item];
+          if (!data?.fullName.toLowerCase().startsWith(term)) {
+            return null;
+          }
+          return <FavCard data={data} />;
+        }}
         keyExtractor={item => item}
       />
     </SafeAreaView>

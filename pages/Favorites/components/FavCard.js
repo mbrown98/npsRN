@@ -1,26 +1,27 @@
 import React from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import useParkByID from '../../../api/hooks/useParkByID';
-import {COLORS, FONTS, SIZES} from '../../../constants';
+import {COLORS, FONTS} from '../../../constants';
 import CacheImage from '../../../components/CacheImage';
 
-const FavCard = ({parkId}) => {
+const FavCard = ({data}) => {
   const navigation = useNavigation();
-
-  const {data, isLoading, isSuccess} = useParkByID(parkId);
 
   if (!data) {
     return null;
   }
-  const {images, fullName} = data;
+  const {
+    parkCode,
+    fullName,
+    image: {url},
+  } = data;
 
   return (
     <TouchableOpacity
       style={{...styles.contain}}
-      onPress={() => navigation.navigate('Park', {code: parkId})}>
+      onPress={() => navigation.navigate('Park', {code: parkCode})}>
       {/* Background Image */}
-      <CacheImage uri={images[0].url} style={styles.bgImg}>
+      <CacheImage uri={url} style={styles.bgImg}>
         <View style={styles.imgOpacity}>
           <Text
             numberOfLines={2}
