@@ -65,11 +65,11 @@ const FeaturedParkCard = ({containerStyle, parkId, onPress}) => {
           </View>
 
           {/* make this reusable */}
-          <View>
+          {/* <View>
             <VisitFavIcon park={parkCode} list="favorites" size={30} />
             <View style={{flex: 1}} />
             <VisitFavIcon park={parkCode} list="visited" size={30} />
-          </View>
+          </View> */}
         </View>
       </BlurView>
     </TouchableOpacity>
