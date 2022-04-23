@@ -6,17 +6,33 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {parkCodes, SIZES} from '../../constants';
+import {COLORS, parkCodes, SIZES} from '../../constants';
 import CacheImage from '../../components/CacheImage';
 import {generateAnswers} from './utils';
+import {useAsyncStorage} from '@react-native-async-storage/async-storage';
 
 const parksArr = Object.values(parkCodes);
 
 const ParkGame = () => {
+  const {getItem, setItem} = useAsyncStorage('@game-record');
   const [questions, setQuestions] = useState([]);
   const [correctCount, setCorrectCount] = useState(0);
   const [showAnswer, setShowAnswer] = useState(-1);
   const [answers, setAnswers] = useState([]);
+  const [record, setRecord] = useState(0);
+
+  const writeItemToStorage = async newValue => {
+    await setItem(newValue);
+    setRecord(newValue);
+  };
+
+  useEffect(() => {
+    const readItemFromStorage = async () => {
+      const item = await getItem();
+      setRecord(item);
+    };
+    readItemFromStorage();
+  }, [getItem]);
 
   useEffect(() => {
     const quesTemp = [];
@@ -28,8 +44,12 @@ const ParkGame = () => {
   }, []);
 
   useEffect(() => {
-    if (!questions.length || !correctCount) {
+    if (!questions.length) {
       return;
+    }
+    if (correctCount > record) {
+      // update record in storage
+      writeItemToStorage(correctCount + '');
     }
     let newQs = questions;
     const p = parksArr[Math.floor(Math.random() * parksArr.length)];
@@ -56,53 +76,46 @@ const ParkGame = () => {
       </View>
 
       <View style={{flex: 1, paddingHorizontal: 20}}>
-        <View>
-          <Text>Current Streak: {correctCount}</Text>
-          <Text>Record: 1</Text>
+        <Text style={styles.titleText}>Guess that Park</Text>
+
+        <View style={styles.statsRow}>
+          <Text style={styles.statText}>Streak: {correctCount}</Text>
+          {!!record && <Text style={styles.statText}>Record: {record}</Text>}
         </View>
-        <View style={{flex: 1}}>
-          <CacheImage
-            uri={currentQuestion.url}
-            style={{height: '100%', borderRadius: 20}}
-          />
-        </View>
-        <View style={{flex: 1, flexWrap: 'wrap', marginVertical: 10}}>
+
+        <CacheImage uri={currentQuestion.url} style={styles.mainImage} />
+
+        <View style={styles.answersContain}>
           {answers.map((opt, i) => {
             return (
               <TouchableOpacity
-                style={{
-                  flex: 1,
-                  borderWidth: 2,
-                  marginVertical: 5,
-                  flexGrow: 1,
-                  width: '100%',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderRadius: 20,
-                  padding: 10,
-                  backgroundColor:
-                    showAnswer === i
-                      ? opt.correct
-                        ? 'green'
-                        : 'red'
-                      : 'white',
-                }}
+                style={[
+                  styles.answerOpt,
+                  {
+                    backgroundColor:
+                      showAnswer === i
+                        ? opt.correct
+                          ? COLORS.transparentGreen
+                          : COLORS.transparentRed
+                        : COLORS.lightGray,
+                  },
+                ]}
                 onPress={() => {
                   if (opt.correct) {
                     setShowAnswer(i);
                     setTimeout(() => {
                       setCorrectCount(correctCount + 1);
                       setShowAnswer(-1);
-                    }, 500);
+                    }, 250);
                   } else {
                     setShowAnswer(i);
                     setTimeout(() => {
                       setCorrectCount(0);
                       setShowAnswer(-1);
-                    }, 500);
+                    }, 250);
                   }
                 }}>
-                <Text style={{fontWeight: '700', textAlign: 'center'}}>
+                <Text style={styles.answerText}>
                   {opt.name} {opt.correct && 'T'}
                 </Text>
               </TouchableOpacity>
@@ -116,4 +129,32 @@ const ParkGame = () => {
 
 export default ParkGame;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  titleText: {
+    fontWeight: '700',
+    fontSize: 30,
+    color: COLORS.darkGreen,
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  statsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 10,
+  },
+  statText: {fontWeight: '600', fontSize: 20},
+  mainImage: {height: '100%', borderRadius: 20, flex: 1},
+  answersContain: {flex: 1, flexWrap: 'wrap', marginVertical: 10},
+  answerOpt: {
+    flex: 1,
+    borderWidth: 0.2,
+    marginVertical: 5,
+    flexGrow: 1,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
+    padding: 10,
+  },
+  answerText: {fontWeight: '700', textAlign: 'center'},
+});
