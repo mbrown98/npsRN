@@ -18,7 +18,8 @@ const CustomButton = ({buttonText, buttonContainerStyle, onPress, colors}) => {
             style={{
               textAlign: 'center',
               color: COLORS.white,
-              ...FONTS.h2,
+              fontSize: 19,
+              fontWeight: '700',
             }}>
             {buttonText}
           </Text>

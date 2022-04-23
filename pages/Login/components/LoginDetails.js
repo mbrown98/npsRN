@@ -4,6 +4,7 @@ import AUTH from '../../../api/firebase/auth';
 import {AppleButton} from '@invertase/react-native-apple-authentication';
 import CustomButton from '../../../components/CustomButton';
 import {COLORS, SIZES, FONTS} from '../../../constants';
+import Spacer from '../../../components/Spacer';
 
 export default function LoginDetails() {
   return (
@@ -15,35 +16,24 @@ export default function LoginDetails() {
       {/* Buttons */}
       <View style={styles.buttonContain}>
         <CustomButton
-          buttonText="Login"
+          buttonText="Sign in With Google"
           buttonContainerStyle={{
-            paddingVertical: 18,
-            borderRadius: 20,
+            paddingVertical: 12,
+            borderRadius: 10,
           }}
           colors={[COLORS.darkGreen, COLORS.lime]}
           onPress={() => AUTH.signIn('google')}
         />
+
         <AppleButton
           buttonStyle={AppleButton.Style.WHITE}
           buttonType={AppleButton.Type.SIGN_IN}
           style={{
-            width: 160,
-            height: 45,
+            height: 50,
+            marginTop: 10,
           }}
           onPress={() => AUTH.signIn('apple')}
         />
-        {/* <CustomButton
-          buttonText="Sign Up"
-          buttonContainerStyle={{
-            marginTop: SIZES.radius,
-            paddingVertical: 18,
-            borderRadius: 20,
-            borderColor: COLORS.darkLime,
-            borderWidth: 1,
-          }}
-          colors={[]}
-          onPress={() => {}}
-        /> */}
       </View>
     </View>
   );
