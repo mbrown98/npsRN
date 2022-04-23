@@ -23,7 +23,7 @@ export default function LoginDetails() {
           onPress={AUTH.signIn}
         />
 
-        <CustomButton
+        {/* <CustomButton
           buttonText="Sign Up"
           buttonContainerStyle={{
             marginTop: SIZES.radius,
@@ -34,7 +34,7 @@ export default function LoginDetails() {
           }}
           colors={[]}
           onPress={() => {}}
-        />
+        /> */}
       </View>
     </View>
   );

@@ -18,7 +18,10 @@ const AUTH = {
         const res = await firestore().collection('users').doc(uid).get();
 
         if (!res.exists) {
-          firestore().collection('users').doc(uid).set({name: 'matt'});
+          firestore()
+            .collection('users')
+            .doc(uid)
+            .set({favorites: {}, visited: {}});
         }
       })
       .catch(e => console.log('e', e));
