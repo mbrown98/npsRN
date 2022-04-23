@@ -1,8 +1,17 @@
 import React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {COLORS, FONTS} from '../../../constants';
 import CacheImage from '../../../components/CacheImage';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const FavCard = ({data}) => {
   const navigation = useNavigation();
@@ -40,7 +49,7 @@ export default FavCard;
 const styles = StyleSheet.create({
   contain: {
     flex: 1,
-    height: 90,
+    height: windowHeight * 0.13,
     backgroundColor: 'grey',
     borderRadius: 10,
     marginBottom: 10,
