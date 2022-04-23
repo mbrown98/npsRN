@@ -1,20 +1,11 @@
 import React, {useState} from 'react';
-import {
-  Button,
-  Image,
-  ImageBackground,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import MapView, {Marker, Overlay} from 'react-native-maps';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import {COLORS, FONTS, parkCodes} from '../../constants';
 import {useFirebase} from '../../context/firebase-content';
 import ASSETS from '../../assets';
-import {FIRESTORE} from '../../api/firebase/firestore';
+
 import {useAuth} from '../../context/auth-context';
 import VisitFavIcon from '../../components/VisitFavIcon';
 import CloseCircle from '../../components/CloseCircle';
@@ -30,14 +21,13 @@ const mapCoords = {
 Fontisto.loadFont();
 
 const FullMap = ({navigation}) => {
-  const {user} = useAuth();
   const {
     userData: {favorites, visited},
   } = useFirebase();
 
   const {
-    favorites: {FavPng, FavSvg, NoFavSvg},
-    visited: {VisitedPng, VisitedSvg, NoVisitedSvg},
+    favorites: {FavPng},
+    visited: {VisitedPng},
     map: {BinoSvg, CurrentPin},
   } = ASSETS;
 
@@ -84,11 +74,10 @@ const FullMap = ({navigation}) => {
           <View
             style={{
               flexDirection: 'row',
-              justifyContent: 'space-between',
               alignItems: 'center',
               marginBottom: 5,
             }}>
-            <Text style={{...FONTS.h3}}>
+            <Text style={{...FONTS.h3, maxWidth: '80%', marginRight: 'auto'}}>
               {parkCodes[selectedPark].fullName}
             </Text>
             <CloseCircle

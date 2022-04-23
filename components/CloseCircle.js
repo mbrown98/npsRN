@@ -19,5 +19,3 @@ const CloseCircle = ({touchProps, circleProps}) => {
 };
 
 export default CloseCircle;
-
-const styles = StyleSheet.create({});
