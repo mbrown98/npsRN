@@ -117,7 +117,7 @@ const Home = ({navigation}) => {
               // make this reusable
               <View style={{justifyContent: 'center', alignItems: 'center'}}>
                 <Text style={{fontWeight: '600'}}>
-                  {favorites.length
+                  {favorites?.length
                     ? 'No News for your Favorite Parks'
                     : 'Favorite Parks to stay in the know'}
                 </Text>

@@ -18,7 +18,7 @@ const VisitFavIcon = ({park, list, size}) => {
     visited: {VisitedSvg, NoVisitedSvg},
   } = ASSETS;
 
-  const dataSet = isFavs ? favorites : visited;
+  let dataSet = isFavs ? favorites : visited;
 
   return (
     <TouchableOpacity

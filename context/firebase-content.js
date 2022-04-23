@@ -14,7 +14,7 @@ function useFirebase() {
 
 const FirebaseProvider = ({...props}) => {
   const {user} = useAuth();
-  const [userData, setUserData] = useState({favorites: [], visited: []});
+  const [userData, setUserData] = useState({favorites: {}, visited: {}});
 
   useEffect(() => {
     if (!user) {
@@ -25,7 +25,8 @@ const FirebaseProvider = ({...props}) => {
       .doc(user.uid)
       .onSnapshot(documentSnapshot => {
         const data = documentSnapshot.data();
-        setUserData(data);
+        console.log('RESS S', data);
+        data && setUserData({...userData, ...data});
       });
 
     // Stop listening for updates when no longer required
