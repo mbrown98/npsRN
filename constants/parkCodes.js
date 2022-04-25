@@ -5529,7 +5529,7 @@ const parkCodes = {
     fullName: 'Yellowstone National Park',
     image: {
       credit: 'NPS/Jim Peaco',
-      url: 'https://www.nps.gov/common/uploads/structured_data/3C7D5920-1DD8-B71B-0B83F012ED802CEA.jpg',
+      url: 'https://www.nps.gov/common/uploads/structured_data/3C7D5920-1DD8-B71B-0B83F012ED802CEA.jpg?w=10%%',
     },
     latitude: '44.59824417',
     longitude: '-110.5471695',

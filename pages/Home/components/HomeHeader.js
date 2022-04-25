@@ -8,11 +8,17 @@ import {useAuth} from '../../../context/auth-context';
 const HomeHeader = () => {
   const {user} = useAuth();
   const [profileOpen, setProfileOpen] = useState(false);
+  console.log({user});
   return (
     <View style={styles.contain}>
       {!profileOpen ? (
         <View style={styles.userInfoWrapper}>
-          <Text style={styles.userName}>Hello {user.displayName},</Text>
+          <Text style={styles.userName}>
+            {user.displayName
+              ? `Hello ${user.displayName}`
+              : 'Welcome to Parkport'}
+            ,
+          </Text>
           <Text style={styles.subText}>What do you want to explore today?</Text>
         </View>
       ) : (
