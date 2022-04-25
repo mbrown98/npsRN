@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
   StyleSheet,
+  ImageBackground,
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import {getFeaturedParks} from '../../api/firebase/parks';
@@ -18,6 +19,7 @@ import {useFirebase} from '../../context/firebase-content';
 import ImgInfoBox from '../../components/ImgInfoBox';
 import Spacer from '../../components/Spacer';
 import {useAuth} from '../../context/auth-context';
+import {IMAGES} from '../../assets/images';
 
 Feather.loadFont();
 
@@ -92,10 +94,23 @@ const Home = ({navigation}) => {
               )}
             </View>
             <Spacer h={20} />
-            <TouchableOpacity
-              style={{height: 80, backgroundColor: 'grey', borderRadius: 10}}
-              onPress={() => navigation.navigate('ParkGame')}
-            />
+            <TouchableOpacity onPress={() => navigation.navigate('ParkGame')}>
+              <ImageBackground
+                resizeMode="cover"
+                imageStyle={{borderRadius: 10}}
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  paddingVertical: 20,
+                }}
+                source={IMAGES.onboard.olympic}>
+                <Text style={{fontWeight: '700', fontSize: 30, color: 'white'}}>
+                  Guess That Park
+                </Text>
+              </ImageBackground>
+            </TouchableOpacity>
+
             <Spacer h={20} />
             <Text style={styles.justForYouText}>Just For You</Text>
             <Spacer h={10} />
