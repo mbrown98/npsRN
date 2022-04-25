@@ -46,7 +46,7 @@ export default function Onboard() {
     {
       img: news,
       title: 'Stay in the Know',
-      sub: 'Follow news releases, alerts, and events for all your favorite parks.',
+      sub: 'Follow news releases, alerts, and events for all your favorite parks. The National Park Service is the source of all data.',
     },
   ];
   return (

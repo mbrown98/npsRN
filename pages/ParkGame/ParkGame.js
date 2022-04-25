@@ -123,7 +123,7 @@ const ParkGame = ({navigation}) => {
                     setTimeout(() => {
                       setCorrectCount(correctCount + 1);
                       setShowAnswer(-1);
-                    }, 3000);
+                    }, 500);
                   } else {
                     setShowAnswer(i);
                     setTimeout(() => {
