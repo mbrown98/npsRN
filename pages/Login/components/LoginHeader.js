@@ -4,7 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {IMAGES} from '../../../assets/images';
 import {COLORS, SIZES, FONTS} from '../../../constants';
 
-const {zion, olympic, bryce, yosemite} = IMAGES.onboard;
+const {olympic} = IMAGES.onboard;
 
 export default function LoginHeader() {
   return (
