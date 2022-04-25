@@ -8,6 +8,7 @@ import {
   ScrollView,
   SafeAreaView,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Swiper from 'react-native-swiper';
@@ -51,6 +52,7 @@ export default function Onboard() {
   ];
   return (
     <SafeAreaView style={styles.sa}>
+      <StatusBar barStyle="dark-content" />
       <ScrollView
         horizontal={true}
         pagingEnabled={true}
