@@ -9,21 +9,26 @@ const AUTH = {
     const cred = await AUTH.determineCred(provider);
 
     // Sign-in the user with the credential
-    const user_sign_in = auth().signInWithCredential(cred);
+    try {
+      auth()
+        .signInWithCredential(cred)
+        .then(async user => {
+          console.log('user', user);
+          const uid = user.user.uid;
+          console.log({uid});
+          const res = await firestore().collection('users').doc(uid).get();
 
-    user_sign_in
-      .then(async user => {
-        const uid = user.user.uid;
-        const res = await firestore().collection('users').doc(uid).get();
-
-        if (!res.exists) {
-          firestore()
-            .collection('users')
-            .doc(uid)
-            .set({favorites: {}, visited: {}});
-        }
-      })
-      .catch(e => console.log('e', e));
+          if (!res.exists) {
+            firestore()
+              .collection('users')
+              .doc(uid)
+              .set({favorites: {}, visited: {}});
+          }
+        })
+        .catch(e => console.log('errrrrr', e));
+    } catch (error) {
+      console.log('error', error);
+    }
   },
   signOut: async () => {
     auth()
@@ -46,18 +51,17 @@ const AUTH = {
     return auth.GoogleAuthProvider.credential(idToken);
   },
   getAppleCredential: async () => {
-    console.log('here');
     // Start the sign-in request
     const appleAuthRequestResponse = await appleAuth.performRequest({
       requestedOperation: appleAuth.Operation.LOGIN,
       requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
     });
-    console.log('here 2');
+
     // Ensure Apple returned a user identityToken
     if (!appleAuthRequestResponse.identityToken) {
       throw new Error('Apple Sign-In failed - no identify token returned');
     }
-    console.log('here 3');
+
     // Create a Firebase credential from the response
     const {identityToken, nonce} = appleAuthRequestResponse;
     const appleCredential = auth.AppleAuthProvider.credential(
@@ -66,7 +70,7 @@ const AUTH = {
     );
 
     // Sign the user in with the credential
-    return auth().signInWithCredential(appleCredential);
+    return appleCredential;
   },
 };
 
