@@ -4,16 +4,20 @@ import {
   View,
   SafeAreaView,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {COLORS, parkCodes, SIZES} from '../../constants';
 import CacheImage from '../../components/CacheImage';
 import {generateAnswers} from './utils';
 import {useAsyncStorage} from '@react-native-async-storage/async-storage';
 
+Ionicons.loadFont();
+
 const parksArr = Object.values(parkCodes);
 
-const ParkGame = () => {
+const ParkGame = ({navigation}) => {
   const {getItem, setItem} = useAsyncStorage('@game-record');
   const [questions, setQuestions] = useState([]);
   const [correctCount, setCorrectCount] = useState(0);
@@ -69,6 +73,7 @@ const ParkGame = () => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
+      <StatusBar barStyle="dark-content" />
       <View>
         {questions.map((opt, i) => (
           <CacheImage uri={opt.url} style={{height: 0}} />
@@ -76,7 +81,21 @@ const ParkGame = () => {
       </View>
 
       <View style={{flex: 1, paddingHorizontal: 20}}>
-        <Text style={styles.titleText}>Guess that Park</Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+          }}>
+          <Ionicons
+            name="chevron-back"
+            size={35}
+            color={COLORS.darkGreen}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={styles.titleText}>Guess that Park</Text>
+          <View />
+        </View>
 
         <View style={styles.statsRow}>
           <Text style={styles.statText}>Streak: {correctCount}</Text>
@@ -97,7 +116,7 @@ const ParkGame = () => {
                         ? opt.correct
                           ? COLORS.transparentGreen
                           : COLORS.transparentRed
-                        : COLORS.lightGray,
+                        : COLORS.transparentBlack1,
                   },
                 ]}
                 onPress={() => {
@@ -147,7 +166,7 @@ const styles = StyleSheet.create({
   answersContain: {flex: 1, flexWrap: 'wrap', marginVertical: 10},
   answerOpt: {
     flex: 1,
-    borderWidth: 0.2,
+
     marginVertical: 5,
     flexGrow: 1,
     width: '100%',
