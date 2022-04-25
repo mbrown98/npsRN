@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "onDevice": "react-native run-ios --device 'Matt iPhone'"
   },
   "dependencies": {
     "@invertase/react-native-apple-authentication": "^2.1.5",

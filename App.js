@@ -17,7 +17,15 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import {Favorites, Home, Park, Onboard, Login, FullMap} from './pages';
+import {
+  Favorites,
+  Home,
+  Park,
+  Onboard,
+  Login,
+  FullMap,
+  ParkGame,
+} from './pages';
 
 import {GlobalProvider, useGlobal} from './context/global-context';
 import {useAuth} from './context/auth-context';
@@ -113,6 +121,11 @@ export default function App() {
           <Stack.Screen
             name="Park"
             component={Park}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="ParkGame"
+            component={ParkGame}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

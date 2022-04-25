@@ -8,4 +8,11 @@ export const IMAGES = {
   login: {
     tallTrees: require('../images/login/tallTrees.jpg'),
   },
+  screens: {
+    game: require('./screenshots/game.png'),
+    map: require('./screenshots/map.png'),
+    news: require('./screenshots/news.png'),
+    park: require('./screenshots/park.png'),
+    visited: require('./screenshots/visited.png'),
+  },
 };
