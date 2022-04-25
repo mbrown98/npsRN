@@ -123,7 +123,7 @@ const ParkGame = ({navigation}) => {
                     setTimeout(() => {
                       setCorrectCount(correctCount + 1);
                       setShowAnswer(-1);
-                    }, 250);
+                    }, 3000);
                   } else {
                     setShowAnswer(i);
                     setTimeout(() => {
@@ -132,9 +132,7 @@ const ParkGame = ({navigation}) => {
                     }, 250);
                   }
                 }}>
-                <Text style={styles.answerText}>
-                  {opt.name} {opt.correct && 'T'}
-                </Text>
+                <Text style={styles.answerText}>{opt.name}</Text>
               </TouchableOpacity>
             );
           })}

@@ -62,6 +62,9 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
+    borderWidth: 2,
+
+    borderColor: COLORS.darkGreen,
   },
   toBox: {borderWidth: 1, padding: 10, borderRadius: 5},
   toText: {

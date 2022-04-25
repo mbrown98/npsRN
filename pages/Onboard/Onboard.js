@@ -18,7 +18,10 @@ import {COLORS, SIZES} from '../../constants';
 
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
-const {zion, olympic, bryce, yosemite} = IMAGES.onboard;
+const {
+  onboard: {zion, olympic, bryce, yosemite},
+  screens: {game, map, news, visited, park},
+} = IMAGES;
 
 Entypo.loadFont();
 
@@ -26,24 +29,24 @@ export default function Onboard() {
   const {name, setOnboardComplete} = useGlobal();
   const slideData = [
     {
-      img: bryce,
+      img: visited,
       title: 'Welcome',
-      sub: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+      sub: 'Parkport allows you to access the beauty of America in the palm of your hand. Find new parks, mark those you have visited, and favorite the ones you wish to learn more about.',
     },
     {
-      img: zion,
+      img: map,
       title: 'Discover',
-      sub: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+      sub: 'Use the map to travel around the country. Find new parks, uncover hidden gems, and plan your next road trip.',
     },
     {
-      img: yosemite,
-      title: 'Travel',
-      sub: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+      img: game,
+      title: 'Challenge',
+      sub: 'How well do you know your parks? From moments in history to massive mountains, challenge yourself to set high scores.',
     },
     {
-      img: olympic,
-      title: 'Get Started',
-      sub: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+      img: news,
+      title: 'Stay in the Know',
+      sub: 'Follow news releases, alerts, and events for all your favorite parks.',
     },
   ];
   return (
@@ -56,7 +59,7 @@ export default function Onboard() {
         {slideData.map((sl, i) => {
           return (
             <View style={styles.slide} key={i}>
-              <Image source={sl.img} style={styles.img} />
+              <Image source={sl.img} style={styles.img} resizeMode="cover" />
               <View style={styles.textContain}>
                 <Text style={styles.title}>{sl.title}</Text>
                 <Text style={styles.text}>{sl.sub}</Text>
@@ -83,19 +86,20 @@ export default function Onboard() {
 const styles = StyleSheet.create({
   sa: {
     flex: 1,
+    backgroundColor: 'white',
   },
   sv: {flex: 1},
   slide: {
     width: w,
     flex: 1,
-    paddingTop: 80,
+    paddingTop: 30,
     paddingHorizontal: SIZES.padding,
   },
   img: {
     alignSelf: 'center',
     borderTopRightRadius: 80,
     borderBottomLeftRadius: 80,
-    height: h * 0.4,
+    height: h * 0.5,
     width: w * 0.8,
   },
   textContain: {paddingHorizontal: 30},
