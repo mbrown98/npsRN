@@ -37,7 +37,7 @@ export default function Onboard() {
     {
       img: map,
       title: 'Discover',
-      sub: 'Use the map to travel around the country. Find new parks, uncover hidden gems, and plan your next road trip.',
+      sub: 'Use the map to travel around the country. Explore coast to coast, uncover hidden gems, and plan your next road trip.',
     },
     {
       img: game,
