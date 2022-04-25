@@ -13,9 +13,8 @@ const AUTH = {
       auth()
         .signInWithCredential(cred)
         .then(async user => {
-          console.log('user', user);
           const uid = user.user.uid;
-          console.log({uid});
+
           const res = await firestore().collection('users').doc(uid).get();
 
           if (!res.exists) {

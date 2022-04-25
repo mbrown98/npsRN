@@ -42,7 +42,7 @@ const FeaturedParkCard = ({containerStyle, parkId, onPress}) => {
     favorites: {FavSvg, NoFavSvg},
     visited: {VisitedSvg, NoVisitedSvg},
   } = ASSETS;
-  console.log('URLLLL', images[0].url);
+
   return (
     <TouchableOpacity
       style={{...styles.contain, ...containerStyle}}

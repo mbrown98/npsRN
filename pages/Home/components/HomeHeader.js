@@ -8,7 +8,7 @@ import {useAuth} from '../../../context/auth-context';
 const HomeHeader = () => {
   const {user} = useAuth();
   const [profileOpen, setProfileOpen] = useState(false);
-  console.log({user});
+
   return (
     <View style={styles.contain}>
       {!profileOpen ? (

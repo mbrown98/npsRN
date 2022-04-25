@@ -1,7 +1,6 @@
 import {parkCodes} from '../../constants';
 
 export const generateAnswers = correctPark => {
-  console.log('cccoo', correctPark);
   const parksArr = Object.values(parkCodes);
 
   let answerArr = [{...correctPark, correct: true}];

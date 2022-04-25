@@ -69,8 +69,6 @@ const ParkGame = ({navigation}) => {
 
   const currentQuestion = questions[0];
 
-  console.log(questions);
-
   return (
     <SafeAreaView style={{flex: 1}}>
       <StatusBar barStyle="dark-content" />
