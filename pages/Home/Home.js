@@ -29,7 +29,7 @@ const Home = ({navigation}) => {
   } = useFirebase();
   const {user} = useAuth();
   const [parkData, setParkData] = useState(null);
-
+  const [newsCount, setNewsCount] = useState(10);
   const {data: news} = useGroupParkData('newsreleases', [favorites], user);
 
   useEffect(() => {
@@ -59,7 +59,7 @@ const Home = ({navigation}) => {
   return (
     <SafeAreaView style={styles.contain}>
       <FlatList
-        data={infoListData?.slice(0, 30)}
+        data={infoListData?.slice(0, newsCount)}
         style={{marginHorizontal: 12}}
         ListHeaderComponent={() => (
           <>
@@ -132,7 +132,12 @@ const Home = ({navigation}) => {
           if (!infoListData.length) {
             return (
               // make this reusable
-              <View style={{justifyContent: 'center', alignItems: 'center'}}>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginBottom: 20,
+                }}>
                 <Text style={{fontWeight: '600'}}>
                   {favorites?.length
                     ? 'No News for your Favorite Parks'
@@ -144,6 +149,22 @@ const Home = ({navigation}) => {
                   <Text style={{color: COLORS.darkGreen}}>Explore Parks</Text>
                 </TouchableOpacity>
               </View>
+            );
+          }
+          if (newsCount < infoListData.length) {
+            return (
+              <TouchableOpacity
+                style={{marginVertical: 10, marginBottom: 20}}
+                onPress={() => setNewsCount(newsCount + 10)}>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    fontSize: 18,
+                    color: COLORS.darkGreen,
+                  }}>
+                  Show More
+                </Text>
+              </TouchableOpacity>
             );
           }
           return null;
