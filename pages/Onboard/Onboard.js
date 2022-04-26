@@ -92,8 +92,15 @@ export default function Onboard() {
                           source={opt.img}
                           style={{height: 20, width: 20, marginRight: 5}}
                         />
-                        <Text style={{fontSize: 16, fontWeight: '300'}}>
-                          <Text style={{fontWeight: '800'}}>{opt.t}:</Text>{' '}
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            fontWeight: '300',
+                            color: '#767676',
+                          }}>
+                          <Text style={{fontWeight: '800', color: 'black'}}>
+                            {opt.t}:
+                          </Text>{' '}
                           {opt.st}
                         </Text>
                       </View>
