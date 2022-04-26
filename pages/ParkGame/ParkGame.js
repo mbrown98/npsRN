@@ -77,7 +77,7 @@ const ParkGame = ({navigation}) => {
       <StatusBar barStyle="dark-content" />
       <View>
         {questions.map((opt, i) => (
-          <CacheImage uri={opt.url} style={{height: 0}} />
+          <CacheImage uri={opt.url} style={{height: 0}} key={i} />
         ))}
       </View>
 

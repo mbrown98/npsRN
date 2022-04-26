@@ -25,9 +25,7 @@ const HomeHeader = () => {
         {
           text: 'Delete',
           onPress: async () => {
-            const {uid} = user;
-
-            AUTH.deleteAccount(uid);
+            AUTH.deleteAccount(user.uid);
           },
         },
 

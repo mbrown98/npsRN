@@ -54,7 +54,7 @@ const MapLegend = () => {
       <Text style={styles.parkCountText}>
         {visitPer
           ? `You have visited ${visitPer}% of the National Parks`
-          : 'Mark a few more parks as visited to track progress'}
+          : 'Visit a few more parks to track progress'}
       </Text>
       <Spacer h={20} />
       <Pie
