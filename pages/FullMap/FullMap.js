@@ -10,6 +10,7 @@ import {useAuth} from '../../context/auth-context';
 import VisitFavIcon from '../../components/VisitFavIcon';
 import CloseCircle from '../../components/CloseCircle';
 import MapLegend from './components/MapLegend';
+import FastImage from 'react-native-fast-image';
 
 const mapCoords = {
   latitude: '38.88927229',
@@ -71,6 +72,11 @@ const FullMap = ({navigation}) => {
         <TouchableOpacity
           style={styles.selectedOverlay}
           onPress={() => navigation.navigate('Park', {code: selectedPark})}>
+          {/* pre-load park image */}
+          <FastImage
+            source={{uri: parkCodes[selectedPark].image.url}}
+            style={{height: 0, width: 0}}
+          />
           <View
             style={{
               flexDirection: 'row',
