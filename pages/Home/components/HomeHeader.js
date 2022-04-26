@@ -1,6 +1,13 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import React, {useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
+  Alert,
+} from 'react-native';
 import AUTH from '../../../api/firebase/auth';
 import {COLORS, FONTS, SIZES} from '../../../constants';
 import {useAuth} from '../../../context/auth-context';
@@ -8,6 +15,25 @@ import {useAuth} from '../../../context/auth-context';
 const HomeHeader = () => {
   const {user} = useAuth();
   const [profileOpen, setProfileOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+
+  const deleteAlert = () =>
+    Alert.alert(
+      'Confirm you wish to delete your account?',
+      'Select option below',
+      [
+        {
+          text: 'Delete',
+          onPress: async () => {
+            const {uid} = user;
+
+            AUTH.deleteAccount(uid);
+          },
+        },
+
+        {text: 'Cancel', onPress: () => setDeleteOpen(false)},
+      ],
+    );
 
   return (
     <View style={styles.contain}>
@@ -31,9 +57,12 @@ const HomeHeader = () => {
           <TouchableOpacity style={styles.toBox} onPress={() => AUTH.signOut()}>
             <Text style={styles.toText}>Sign-Out</Text>
           </TouchableOpacity>
-          {/* <TouchableOpacity style={styles.toBox}>
-            <Text style={styles.toText}>Delete Account</Text>
-          </TouchableOpacity> */}
+          <TouchableOpacity
+            style={[styles.toBox, {borderColor: 'red'}]}
+            onPress={() => setDeleteOpen(true)}>
+            <Text style={[styles.toText, {color: 'red'}]}>Delete Account</Text>
+          </TouchableOpacity>
+          {deleteOpen && deleteAlert()}
         </View>
       )}
       <TouchableOpacity onPress={() => setProfileOpen(!profileOpen)}>
