@@ -98,7 +98,7 @@ export default function Onboard() {
                             fontWeight: '300',
                             color: '#767676',
                           }}>
-                          <Text style={{fontWeight: '800', color: 'black'}}>
+                          <Text style={{fontWeight: '700', color: 'black'}}>
                             {opt.t}:
                           </Text>{' '}
                           {opt.st}

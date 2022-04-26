@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import MapView, {Marker, Overlay} from 'react-native-maps';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -11,13 +11,7 @@ import VisitFavIcon from '../../components/VisitFavIcon';
 import CloseCircle from '../../components/CloseCircle';
 import MapLegend from './components/MapLegend';
 import FastImage from 'react-native-fast-image';
-
-const mapCoords = {
-  latitude: '38.88927229',
-  longitude: '-77.05017778',
-  latitudeDelta: 0.1,
-  longitudeDelta: 0.1,
-};
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 Fontisto.loadFont();
 
@@ -26,11 +20,33 @@ const FullMap = ({navigation}) => {
     userData: {favorites, visited},
   } = useFirebase();
 
+  const {user} = useAuth();
+
+  const [mapRegion, setMapRegion] = useState(null);
+
   const {
     favorites: {FavPng},
     visited: {VisitedPng},
     map: {BinoSvg, CurrentPin},
   } = ASSETS;
+
+  useEffect(() => {
+    const getMyMapRegion = async () => {
+      try {
+        const res = await AsyncStorage.getItem(`@${user.uid}-map-region`);
+        setMapRegion(JSON.parse(res));
+      } catch (e) {
+        // read error
+        setMapRegion({
+          latitude: '90.88927229',
+          longitude: '-77.05017778',
+          latitudeDelta: 100,
+          longitudeDelta: 100,
+        });
+      }
+    };
+    getMyMapRegion();
+  }, [user]);
 
   const [selectedPark, setSelectedPark] = useState('');
 
@@ -49,8 +65,18 @@ const FullMap = ({navigation}) => {
   return (
     <>
       <MapView
-        initialRegion={mapCoords}
+        initialRegion={mapRegion}
         userInterfaceStyle={'dark'}
+        onRegionChangeComplete={async r => {
+          try {
+            await AsyncStorage.setItem(
+              `@${user.uid}-map-region`,
+              JSON.stringify(r),
+            );
+          } catch (e) {
+            // save error
+          }
+        }}
         style={styles.map}>
         {Object.values(parkCodes).map((park, index) => {
           const {latitude, longitude, fullName, parkCode} = park;
