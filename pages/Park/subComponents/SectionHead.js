@@ -11,7 +11,7 @@ const SectionHead = ({section: title}) => {
   return (
     <TouchableOpacity
       style={styles.topRow}
-      onPress={() => setSections({...sections, [title]: !sections[title]})}>
+      onPress={() => setSections({[title]: !sections[title]})}>
       <Text style={{...FONTS.h2, marginVertical: 5}}>{title}</Text>
 
       <Entypo
