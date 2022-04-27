@@ -55,12 +55,12 @@ const HomeHeader = () => {
           <TouchableOpacity style={styles.toBox} onPress={() => AUTH.signOut()}>
             <Text style={styles.toText}>Sign-Out</Text>
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={[styles.toBox, {borderColor: 'red'}]}
             onPress={() => setDeleteOpen(true)}>
             <Text style={[styles.toText, {color: 'red'}]}>Delete Account</Text>
           </TouchableOpacity>
-          {deleteOpen && deleteAlert()}
+          {deleteOpen && deleteAlert()} */}
         </View>
       )}
       <TouchableOpacity onPress={() => setProfileOpen(!profileOpen)}>
