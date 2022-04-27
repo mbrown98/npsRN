@@ -9,15 +9,13 @@ import React from 'react';
 import {IMAGES} from '../../../assets/images';
 import {useNavigation} from '@react-navigation/native';
 import {useGlobal} from '../../../context/global-context';
+import {CONNECTION} from '../../../utils/connection';
 
 const GuessParkBanner = () => {
   const navigation = useNavigation();
   const {connection} = useGlobal();
 
-  if (
-    !connection ||
-    (connection.type !== 'wifi' && connection.type !== 'cellular')
-  ) {
+  if (!CONNECTION.show(connection)) {
     return null;
   }
 
