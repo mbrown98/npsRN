@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   StatusBar,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -12,6 +13,7 @@ import {COLORS, parkCodes, SIZES} from '../../constants';
 import CacheImage from '../../components/CacheImage';
 import {generateAnswers} from './utils';
 import {useAsyncStorage} from '@react-native-async-storage/async-storage';
+import FastImage from 'react-native-fast-image';
 
 Ionicons.loadFont();
 
@@ -24,6 +26,7 @@ const ParkGame = ({navigation}) => {
   const [showAnswer, setShowAnswer] = useState(-1);
   const [answers, setAnswers] = useState([]);
   const [record, setRecord] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const writeItemToStorage = async newValue => {
     await setItem(newValue);
@@ -74,7 +77,7 @@ const ParkGame = ({navigation}) => {
       <StatusBar barStyle="dark-content" />
       <View>
         {questions.map((opt, i) => (
-          <CacheImage uri={opt.url} style={{height: 0}} />
+          <CacheImage uri={opt.url} style={{height: 0}} key={i} />
         ))}
       </View>
 
@@ -100,43 +103,57 @@ const ParkGame = ({navigation}) => {
           {!!record && <Text style={styles.statText}>Record: {record}</Text>}
         </View>
 
-        <CacheImage uri={currentQuestion.url} style={styles.mainImage} />
-
-        <View style={styles.answersContain}>
-          {answers.map((opt, i) => {
-            return (
-              <TouchableOpacity
-                style={[
-                  styles.answerOpt,
-                  {
-                    backgroundColor:
-                      showAnswer === i
-                        ? opt.correct
-                          ? COLORS.transparentGreen
-                          : COLORS.transparentRed
-                        : COLORS.transparentBlack1,
-                  },
-                ]}
-                onPress={() => {
-                  if (opt.correct) {
-                    setShowAnswer(i);
-                    setTimeout(() => {
-                      setCorrectCount(correctCount + 1);
-                      setShowAnswer(-1);
-                    }, 500);
-                  } else {
-                    setShowAnswer(i);
-                    setTimeout(() => {
-                      setCorrectCount(0);
-                      setShowAnswer(-1);
-                    }, 250);
-                  }
-                }}>
-                <Text style={styles.answerText}>{opt.name}</Text>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
+        <FastImage
+          source={{uri: currentQuestion.url}}
+          style={styles.mainImage}
+          onLoadEnd={() => {
+            setLoading(false);
+          }}
+          onLoadStart={() => setLoading(true)}
+        />
+        {!loading ? (
+          <View style={styles.answersContain}>
+            {answers.map((opt, i) => {
+              return (
+                <TouchableOpacity
+                  key={i}
+                  style={[
+                    styles.answerOpt,
+                    {
+                      backgroundColor:
+                        showAnswer === i
+                          ? opt.correct
+                            ? COLORS.transparentGreen
+                            : COLORS.transparentRed
+                          : COLORS.transparentBlack1,
+                    },
+                  ]}
+                  onPress={() => {
+                    if (opt.correct) {
+                      setShowAnswer(i);
+                      setTimeout(() => {
+                        setCorrectCount(correctCount + 1);
+                        setShowAnswer(-1);
+                      }, 500);
+                    } else {
+                      setShowAnswer(i);
+                      setTimeout(() => {
+                        setCorrectCount(0);
+                        setShowAnswer(-1);
+                      }, 250);
+                    }
+                  }}>
+                  <Text style={styles.answerText}>{opt.name}</Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        ) : (
+          <View
+            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <ActivityIndicator size="large" />
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -158,7 +175,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   statText: {fontWeight: '600', fontSize: 20},
-  mainImage: {height: '100%', borderRadius: 20, flex: 1},
+  mainImage: {
+    height: '100%',
+    borderRadius: 20,
+    flex: 1,
+    backgroundColor: COLORS.lightGreen,
+  },
   answersContain: {flex: 1, flexWrap: 'wrap', marginVertical: 10},
   answerOpt: {
     flex: 1,

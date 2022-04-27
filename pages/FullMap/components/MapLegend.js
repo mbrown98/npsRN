@@ -52,7 +52,9 @@ const MapLegend = () => {
       <SafeAreaView />
       <Spacer h={20} />
       <Text style={styles.parkCountText}>
-        You have visited {visitPer}% of the National Parks
+        {visitPer
+          ? `You have visited ${visitPer}% of the National Parks`
+          : 'Visit a few more parks to track progress'}
       </Text>
       <Spacer h={20} />
       <Pie

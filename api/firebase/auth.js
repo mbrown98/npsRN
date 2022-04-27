@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import firebase from '@react-native-firebase/app';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {appleAuth} from '@invertase/react-native-apple-authentication';
 
@@ -21,13 +22,24 @@ const AUTH = {
             firestore()
               .collection('users')
               .doc(uid)
-              .set({favorites: {}, visited: {}});
+              .set({user: user.user.email, favorites: {}, visited: {}});
           }
-        })
-        .catch(e => console.log('errrrrr', e));
+        });
     } catch (error) {
       console.log('error', error);
     }
+  },
+  deleteAccount: async uid => {
+    firebase
+      .auth()
+      .currentUser.delete()
+      .then(async () => {
+        await firestore().collection('users').doc(uid).delete();
+      })
+      .then(() => AsyncStorage.removeItem('ONBOARD_COMPLETE'))
+      .catch(function (error) {
+        console.error({error});
+      });
   },
   signOut: async () => {
     auth()

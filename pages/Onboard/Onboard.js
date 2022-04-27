@@ -8,25 +8,32 @@ import {
   ScrollView,
   SafeAreaView,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Swiper from 'react-native-swiper';
 import {IMAGES} from '../../assets/images';
 import {useGlobal} from '../../context/global-context';
 import {COLORS, SIZES} from '../../constants';
+import ASSETS from '../../assets';
 // import AppLoading from "expo-app-loading";
 
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 const {
-  onboard: {zion, olympic, bryce, yosemite},
   screens: {game, map, news, visited, park},
 } = IMAGES;
+
+const {
+  favorites: {FavPng},
+  visited: {VisitedPng},
+} = ASSETS;
 
 Entypo.loadFont();
 
 export default function Onboard() {
   const {name, setOnboardComplete} = useGlobal();
+
   const slideData = [
     {
       img: visited,
@@ -36,7 +43,7 @@ export default function Onboard() {
     {
       img: map,
       title: 'Discover',
-      sub: 'Use the map to travel around the country. Find new parks, uncover hidden gems, and plan your next road trip.',
+      sub: 'Use the map to travel around the country. Explore coast to coast, uncover hidden gems, and plan your next road trip.',
     },
     {
       img: game,
@@ -51,6 +58,7 @@ export default function Onboard() {
   ];
   return (
     <SafeAreaView style={styles.sa}>
+      <StatusBar barStyle="dark-content" />
       <ScrollView
         horizontal={true}
         pagingEnabled={true}
@@ -63,16 +71,59 @@ export default function Onboard() {
               <View style={styles.textContain}>
                 <Text style={styles.title}>{sl.title}</Text>
                 <Text style={styles.text}>{sl.sub}</Text>
-                {i === slideData.length - 1 && (
-                  <TouchableOpacity onPress={() => setOnboardComplete(true)}>
+                {sl.title === 'Discover' && (
+                  <View>
+                    {[
+                      {
+                        t: 'Favorite',
+                        st: 'To add a park to favorites',
+                        img: FavPng,
+                      },
+                      {
+                        t: 'Visited',
+                        st: 'To mark a park as visited',
+                        img: VisitedPng,
+                      },
+                    ].map((opt, i) => (
+                      <View
+                        style={{flexDirection: 'row', marginVertical: 10}}
+                        key={i}>
+                        <Image
+                          source={opt.img}
+                          style={{height: 20, width: 20, marginRight: 5}}
+                        />
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            fontWeight: '300',
+                            color: '#767676',
+                          }}>
+                          <Text style={{fontWeight: '700', color: 'black'}}>
+                            {opt.t}:
+                          </Text>{' '}
+                          {opt.st}
+                        </Text>
+                      </View>
+                    ))}
+                  </View>
+                )}
+                {
+                  <TouchableOpacity
+                    onPress={() =>
+                      i === slideData.length - 1 && setOnboardComplete(true)
+                    }>
                     <Entypo
                       name="chevron-right"
                       size={36}
-                      color={COLORS.darkGreen}
+                      color={
+                        i === slideData.length - 1
+                          ? COLORS.darkGreen
+                          : COLORS.lightGreen
+                      }
                       style={{alignSelf: 'flex-end', marginVertical: 5}}
                     />
                   </TouchableOpacity>
-                )}
+                }
               </View>
             </View>
           );
@@ -99,7 +150,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderTopRightRadius: 80,
     borderBottomLeftRadius: 80,
-    height: h * 0.5,
+    flex: 1,
     width: w * 0.8,
   },
   textContain: {paddingHorizontal: 30},

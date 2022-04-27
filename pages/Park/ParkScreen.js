@@ -23,6 +23,7 @@ import {useAuth} from '../../context/auth-context';
 import {useFirebase} from '../../context/firebase-content';
 import ParkInfoContent from './ParkInfoContent';
 import VisitFavIcon from '../../components/VisitFavIcon';
+import FastImage from 'react-native-fast-image';
 
 const HEADER_HEIGHT = 400;
 Feather.loadFont();
@@ -46,12 +47,14 @@ const ParkScreen = ({route}) => {
   const {images, fullName, name, addresses, description, parkCode} = data;
   const {city, stateCode} = addresses[0];
 
+  const AnimatedFastImage = Animated.createAnimatedComponent(FastImage);
+
   function renderParkCardHeader() {
     return (
       <View style={styles.parkCardHeader}>
-        <Animated.Image
+        <AnimatedFastImage
           source={{uri: images[imgIndex].url}}
-          resizeMode="cover"
+          resizeMode={FastImage.resizeMode.cover}
           style={{
             ...styles.animatedHeaderImg,
             backgroundColor: COLORS.transparentGreen,
