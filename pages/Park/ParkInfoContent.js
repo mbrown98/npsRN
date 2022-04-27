@@ -14,7 +14,6 @@ import {CONNECTION} from '../../utils/connection';
 import DevSection from './components/DevSection';
 import ParkDirections from './components/ParkDirections';
 import ParkHoursAndFees from './components/ParkHoursAndFees';
-import ParkPeople from './components/ParkPeople';
 import ParkWeather from './components/ParkWeather';
 import {usePark} from './park-context';
 import BoxListSection from './subComponents/BoxListSection';
