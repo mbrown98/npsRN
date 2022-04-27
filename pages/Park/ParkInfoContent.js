@@ -251,8 +251,20 @@ const ParkInfoContent = () => {
           },
 
           {
-            section: 'People',
-            content: <ParkPeople data={fullData?.people} />,
+            section: 'Historical Figures',
+            // content: <ParkPeople data={fullData?.people} />,
+            content: (
+              <ImgInfoBoxFlatList
+                data={fullData?.people.map(people => {
+                  return {
+                    ...people,
+                    infoUrl: people?.url,
+                    subText: people?.listingDescription,
+                    img: people?.images[0].url,
+                  };
+                })}
+              />
+            ),
           },
           {
             section: 'Topics',
