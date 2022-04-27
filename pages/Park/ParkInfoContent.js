@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import useFullParkData from '../../api/nps/getFullParkData';
 import {COLORS, FONTS, SIZES} from '../../constants';
+import {useGlobal} from '../../context/global-context';
+import {CONNECTION} from '../../utils/connection';
 import DevSection from './components/DevSection';
 import ParkDirections from './components/ParkDirections';
 import ParkHoursAndFees from './components/ParkHoursAndFees';
@@ -60,6 +62,7 @@ const FDKeys = [
 const ParkInfoContent = () => {
   const {data, setImgIndex, sections} = usePark();
   const {data: fullData} = useFullParkData(data.parkCode);
+  const {connection} = useGlobal();
 
   if (!data) {
     return null;
@@ -86,32 +89,34 @@ const ParkInfoContent = () => {
   return (
     <View style={styles.infoWrapper}>
       <Text style={styles.descriptionText}>{description}</Text>
-      <FlatList
-        style={styles.imageScrollWrapper}
-        horizontal={true}
-        data={images}
-        renderItem={item => {
-          const uri = item.item.url;
+      {CONNECTION.show(connection) && (
+        <FlatList
+          style={styles.imageScrollWrapper}
+          horizontal={true}
+          data={images}
+          renderItem={item => {
+            const uri = item.item.url;
 
-          return (
-            <TouchableOpacity
-              style={{marginRight: 10}}
-              onPress={() => setImgIndex(item.index)}>
-              <Image
-                source={{uri}}
-                style={{
-                  height: 120,
-                  width: 120,
-                  borderRadius: 10,
-                  backgroundColor: COLORS.transparentGreen,
-                }}
-              />
-            </TouchableOpacity>
-          );
-        }}
-        keyExtractor={item => item.index}
-        showsHorizontalScrollIndicator={false}
-      />
+            return (
+              <TouchableOpacity
+                style={{marginRight: 10}}
+                onPress={() => setImgIndex(item.index)}>
+                <Image
+                  source={{uri}}
+                  style={{
+                    height: 120,
+                    width: 120,
+                    borderRadius: 10,
+                    backgroundColor: COLORS.transparentGreen,
+                  }}
+                />
+              </TouchableOpacity>
+            );
+          }}
+          keyExtractor={item => item.index}
+          showsHorizontalScrollIndicator={false}
+        />
+      )}
 
       <FlatList
         data={[
