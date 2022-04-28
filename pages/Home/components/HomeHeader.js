@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-community/async-storage';
 import React, {useState} from 'react';
 import {
   StyleSheet,
@@ -6,7 +5,7 @@ import {
   TouchableOpacity,
   View,
   Image,
-  Alert,
+  // Alert,
 } from 'react-native';
 import AUTH from '../../../api/firebase/auth';
 import {COLORS, FONTS, SIZES} from '../../../constants';
@@ -15,23 +14,23 @@ import {useAuth} from '../../../context/auth-context';
 const HomeHeader = () => {
   const {user} = useAuth();
   const [profileOpen, setProfileOpen] = useState(false);
-  const [deleteOpen, setDeleteOpen] = useState(false);
+  // const [deleteOpen, setDeleteOpen] = useState(false);
 
-  const deleteAlert = () =>
-    Alert.alert(
-      'Confirm you wish to delete your account?',
-      'Select option below',
-      [
-        {
-          text: 'Delete',
-          onPress: async () => {
-            AUTH.deleteAccount(user.uid);
-          },
-        },
+  // const deleteAlert = () =>
+  //   Alert.alert(
+  //     'Confirm you wish to delete your account?',
+  //     'Select option below',
+  //     [
+  //       {
+  //         text: 'Delete',
+  //         onPress: async () => {
+  //           AUTH.deleteAccount(user.uid);
+  //         },
+  //       },
 
-        {text: 'Cancel', onPress: () => setDeleteOpen(false)},
-      ],
-    );
+  //       {text: 'Cancel', onPress: () => setDeleteOpen(false)},
+  //     ],
+  //   );
 
   return (
     <View style={styles.contain}>

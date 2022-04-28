@@ -2,6 +2,7 @@ import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
 import {UTILS} from '../utils';
 import {COLORS} from '../constants';
+import DIM from '../utils/viewport';
 
 const ImgInfoBox = ({
   data: {infoUrl, img, title, subText, index, parkCode},
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     alignItems: 'center',
     paddingHorizontal: 10,
-    height: 100,
+    minHeight: DIM.h * 0.1,
   },
   imgWrapper: {flex: 2, maxHeight: 60},
   img: {
