@@ -32,7 +32,6 @@ const AUTH = {
   deleteAccount: async () => {
     try {
       const user = firebase.auth().currentUser;
-      console.log(user.providerData);
       const cred = await AUTH.determineCred(user.providerData[0].providerId);
       return user
         .reauthenticateWithCredential(cred)
