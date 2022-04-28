@@ -38,9 +38,7 @@ const AUTH = {
         .reauthenticateWithCredential(cred)
         .then(u => u.user.delete())
         .then(res => firestore().collection('users').doc(user.uid).delete())
-        .then(res => {
-          return true;
-        });
+        .then(res => AsyncStorage.removeItem('ONBOARD_COMPLETE'));
     } catch (error) {
       return null;
     }
