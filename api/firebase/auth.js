@@ -32,7 +32,7 @@ const AUTH = {
   deleteAccount: async () => {
     try {
       const user = firebase.auth().currentUser;
-
+      console.log(user.providerData);
       const cred = await AUTH.determineCred(user.providerData[0].providerId);
       return user
         .reauthenticateWithCredential(cred)
@@ -40,7 +40,8 @@ const AUTH = {
         .then(res => firestore().collection('users').doc(user.uid).delete())
         .then(res => AsyncStorage.removeItem('ONBOARD_COMPLETE'));
     } catch (error) {
-      return null;
+      console.log('e', error);
+      return 'failed';
     }
   },
   signOut: async () => {
@@ -50,8 +51,10 @@ const AUTH = {
       .catch(e => console.log('e'));
   },
   determineCred: async provider => {
+    console.log('provider', provider);
     switch (provider) {
       case 'apple':
+      case 'apple.com':
         return await AUTH.getAppleCredential();
       case 'google':
       case 'google.com':
