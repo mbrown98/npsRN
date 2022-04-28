@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   FlatList,
   StyleSheet,
-  ImageBackground,
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import {getFeaturedParks} from '../../api/firebase/parks';
@@ -19,7 +18,6 @@ import {useFirebase} from '../../context/firebase-content';
 import ImgInfoBox from '../../components/ImgInfoBox';
 import Spacer from '../../components/Spacer';
 import {useAuth} from '../../context/auth-context';
-import {IMAGES} from '../../assets/images';
 
 import GuessParkBanner from './components/GuessParkBanner';
 

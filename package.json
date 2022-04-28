@@ -8,7 +8,9 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "onDevice": "react-native run-ios --device 'Matt iPhone'"
+    "onDevice": "react-native run-ios --device 'Matt iPhone'",
+    "ipad": "react-native run-ios --simulator='iPad Pro (11-inch) (3rd generation)'",
+    "showDevices": "xcrun simctl list devices"
   },
   "dependencies": {
     "@invertase/react-native-apple-authentication": "^2.1.5",
