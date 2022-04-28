@@ -9,7 +9,7 @@
     "test": "jest",
     "lint": "eslint .",
     "onDevice": "react-native run-ios --device 'Matt iPhone'",
-    "ipad": "react-native run-ios --simulator='iPad Pro (11-inch) (3rd generation)'",
+    "ipad": "react-native run-ios --simulator='iPad Pro (12.9-inch) (5th generation)'",
     "showDevices": "xcrun simctl list devices"
   },
   "dependencies": {
