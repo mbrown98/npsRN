@@ -34,15 +34,15 @@ const AUTH = {
       const user = firebase.auth().currentUser;
 
       const cred = await AUTH.determineCred(user.providerData[0].providerId);
-      user
+      return user
         .reauthenticateWithCredential(cred)
         .then(u => u.user.delete())
         .then(res => firestore().collection('users').doc(user.uid).delete())
         .then(res => {
-          console.log('USER DELETE SUCCESSFUL');
+          return true;
         });
     } catch (error) {
-      console.log('eeee', error);
+      return null;
     }
   },
   signOut: async () => {
