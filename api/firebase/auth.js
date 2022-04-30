@@ -41,6 +41,10 @@ const AUTH = {
     }
   },
   signOut: async () => {
+    const user = firebase.auth().currentUser;
+    if (!user.email) {
+      await firestore().collection('users').doc(user.uid).delete();
+    }
     auth()
       .signOut()
       .then(() => AsyncStorage.removeItem('ONBOARD_COMPLETE'))

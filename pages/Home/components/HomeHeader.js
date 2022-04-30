@@ -63,7 +63,7 @@ const HomeHeader = () => {
           <TouchableOpacity style={styles.toBox} onPress={() => AUTH.signOut()}>
             <Text style={styles.toText}>Sign-Out</Text>
           </TouchableOpacity>
-          {userData.user !== 'guest' && (
+          {user.email && (
             <>
               <TouchableOpacity
                 style={[styles.toBox, {borderColor: COLORS.lightGray2}]}
