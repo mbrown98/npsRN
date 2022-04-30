@@ -9,11 +9,9 @@ import {FIRESTORE} from './firestore';
 const AUTH = {
   signIn: async provider => {
     AUTH.determineCred(provider)
-      .catch(e => console.log('Failed to create cred'))
       .then(cred => auth().signInWithCredential(cred))
-      .catch(e => console.log('failed to sign in with cred'))
       .then(user => FIRESTORE.createUserDoc(user.user))
-      .catch(e => console.log('failed to create user doc'));
+      .catch(e => console.log('failed to create user doc', e));
   },
   guestSignIn: async () => {
     auth()
@@ -23,31 +21,26 @@ const AUTH = {
   },
 
   deleteAccount: async () => {
-    try {
-      const user = firebase.auth().currentUser;
-      AUTH.determineCred(user.providerData[0].providerId)
-        .then(cred => user.reauthenticateWithCredential(cred))
-        .then(u => u.user.delete())
-        .then(() => firestore().collection('users').doc(user.uid).delete())
-        .then(() => AsyncStorage.removeItem('ONBOARD_COMPLETE'));
-    } catch (error) {
-      console.log('e', error);
-      return 'failed';
-    }
+    const user = firebase.auth().currentUser;
+    AUTH.determineCred(user.providerData[0].providerId)
+      .then(cred => user.reauthenticateWithCredential(cred))
+      .then(u => u.user.delete())
+      .then(() => firestore().collection('users').doc(user.uid).delete())
+      .then(() => AsyncStorage.removeItem('ONBOARD_COMPLETE'))
+      .catch(e => console.log('failed to delete account', e));
   },
   signOut: async () => {
     const user = firebase.auth().currentUser;
 
     auth()
       .signOut()
-      .catch(e => console.log('failed to sign out'))
       .then(() => AsyncStorage.removeItem('ONBOARD_COMPLETE'))
       .then(() => {
         if (!user.email) {
           firestore().collection('users').doc(user.uid).delete();
         }
       })
-      .catch(e => console.log('failed to delete user'));
+      .catch(e => console.log('failed to delete user', e));
   },
   determineCred: async provider => {
     switch (provider) {
