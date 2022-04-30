@@ -10,11 +10,15 @@ import {
 import AUTH from '../../../api/firebase/auth';
 import {COLORS, FONTS, SIZES} from '../../../constants';
 import {useAuth} from '../../../context/auth-context';
+import {useFirebase} from '../../../context/firebase-content';
 
 const HomeHeader = () => {
   const {user} = useAuth();
+  const {userData} = useFirebase();
   const [profileOpen, setProfileOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+
+  console.log({userData});
 
   const deleteAlert = () =>
     Alert.alert(
@@ -59,14 +63,18 @@ const HomeHeader = () => {
           <TouchableOpacity style={styles.toBox} onPress={() => AUTH.signOut()}>
             <Text style={styles.toText}>Sign-Out</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.toBox, {borderColor: COLORS.lightGray2}]}
-            onPress={() => setDeleteOpen(true)}>
-            <Text style={[styles.toText, {color: COLORS.lightGray2}]}>
-              Delete Account
-            </Text>
-          </TouchableOpacity>
-          {deleteOpen && deleteAlert()}
+          {userData.user !== 'guest' && (
+            <>
+              <TouchableOpacity
+                style={[styles.toBox, {borderColor: COLORS.lightGray2}]}
+                onPress={() => setDeleteOpen(true)}>
+                <Text style={[styles.toText, {color: COLORS.lightGray2}]}>
+                  Delete Account
+                </Text>
+              </TouchableOpacity>
+              {deleteOpen && deleteAlert()}
+            </>
+          )}
         </View>
       )}
       <TouchableOpacity onPress={() => setProfileOpen(!profileOpen)}>

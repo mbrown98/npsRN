@@ -25,6 +25,7 @@ const AUTH = {
       .then(user => FIRESTORE.createUserDoc(user.user))
       .catch(e => console.log('failed to sign in as guest', e));
   },
+
   deleteAccount: async () => {
     try {
       const user = firebase.auth().currentUser;
