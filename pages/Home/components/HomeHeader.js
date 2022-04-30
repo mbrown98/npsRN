@@ -10,15 +10,12 @@ import {
 import AUTH from '../../../api/firebase/auth';
 import {COLORS, FONTS, SIZES} from '../../../constants';
 import {useAuth} from '../../../context/auth-context';
-import {useFirebase} from '../../../context/firebase-content';
 
 const HomeHeader = () => {
   const {user} = useAuth();
-  const {userData} = useFirebase();
+
   const [profileOpen, setProfileOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
-
-  console.log({userData});
 
   const deleteAlert = () =>
     Alert.alert(
