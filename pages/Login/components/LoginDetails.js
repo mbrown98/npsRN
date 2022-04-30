@@ -10,7 +10,7 @@ export default function LoginDetails() {
   return (
     <View style={styles.contain}>
       <Text style={styles.infoText}>
-        Discover more than 500 parks in your hands!
+        Discover more than 500 parks in the palm of your hand!
       </Text>
 
       {/* Buttons */}
