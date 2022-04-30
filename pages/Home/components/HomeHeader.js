@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-community/async-storage';
 import React, {useState} from 'react';
 import {
   StyleSheet,
@@ -19,13 +18,18 @@ const HomeHeader = () => {
 
   const deleteAlert = () =>
     Alert.alert(
-      'Confirm you wish to delete your account?',
+      deleteOpen === 'failed'
+        ? 'Failed to Delete'
+        : 'Confirm you wish to delete your account?',
       'Select option below',
       [
         {
           text: 'Delete',
           onPress: async () => {
-            AUTH.deleteAccount(user.uid);
+            const res = await AUTH.deleteAccount();
+            if (res === 'failed') {
+              setDeleteOpen('failed');
+            }
           },
         },
 
@@ -56,9 +60,11 @@ const HomeHeader = () => {
             <Text style={styles.toText}>Sign-Out</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.toBox, {borderColor: 'red'}]}
+            style={[styles.toBox, {borderColor: COLORS.lightGray2}]}
             onPress={() => setDeleteOpen(true)}>
-            <Text style={[styles.toText, {color: 'red'}]}>Delete Account</Text>
+            <Text style={[styles.toText, {color: COLORS.lightGray2}]}>
+              Delete Account
+            </Text>
           </TouchableOpacity>
           {deleteOpen && deleteAlert()}
         </View>

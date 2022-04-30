@@ -38,8 +38,8 @@ const FullMap = ({navigation}) => {
       } catch (e) {
         // read error
         setMapRegion({
-          latitude: '90.88927229',
-          longitude: '-77.05017778',
+          latitude: 90.88927229,
+          longitude: -77.05017778,
           latitudeDelta: 100,
           longitudeDelta: 100,
         });
@@ -79,11 +79,14 @@ const FullMap = ({navigation}) => {
         }}
         style={styles.map}>
         {Object.values(parkCodes).map((park, index) => {
-          const {latitude, longitude, fullName, parkCode} = park;
+          const {latitude, longitude, parkCode} = park;
           return (
             <MapView.Marker
               key={index}
-              coordinate={{latitude, longitude}}
+              coordinate={{
+                latitude: Number(latitude),
+                longitude: Number(longitude),
+              }}
               // title={fullName}
               onPress={() => setSelectedPark(parkCode)}>
               {determinePin(parkCode)}

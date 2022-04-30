@@ -8,7 +8,11 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "onDevice": "react-native run-ios --device 'Matt iPhone'"
+    "onDevice": "react-native run-ios --device 'Matt iPhone'",
+    "ipad": "react-native run-ios --simulator='iPad Pro (12.9-inch) (2nd generation)'",
+    "showDevices": "xcrun simctl list devices",
+    "6.5phone": "react-native run-ios --simulator='iPhone 11 Pro Max'",
+    "5.5phone": "react-native run-ios --simulator='iPhone 8 Plus'"
   },
   "dependencies": {
     "@invertase/react-native-apple-authentication": "^2.1.5",
@@ -16,6 +20,7 @@
     "@react-native-community/art": "^1.2.0",
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/blur": "^3.6.0",
+    "@react-native-community/netinfo": "^8.3.0",
     "@react-native-firebase/app": "^14.5.1",
     "@react-native-firebase/auth": "^14.5.1",
     "@react-native-firebase/firestore": "^14.5.1",
