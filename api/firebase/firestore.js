@@ -19,4 +19,20 @@ export const FIRESTORE = {
       })
       .catch(e => console.log('ERROR!!!!!!', e));
   },
+  createUserDoc: async user => {
+    try {
+      const {uid, email} = user;
+
+      const res = await firestore().collection('users').doc(uid).get();
+
+      if (!res.exists) {
+        firestore()
+          .collection('users')
+          .doc(uid)
+          .set({user: email ? email : 'guest', favorites: {}, visited: {}});
+      }
+    } catch (error) {
+      throw Error(`failed to create user doc', ${error}`);
+    }
+  },
 };

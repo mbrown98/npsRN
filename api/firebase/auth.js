@@ -4,6 +4,7 @@ import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {appleAuth} from '@invertase/react-native-apple-authentication';
+import {FIRESTORE} from './firestore';
 
 const AUTH = {
   signIn: async provider => {
@@ -13,18 +14,7 @@ const AUTH = {
     try {
       auth()
         .signInWithCredential(cred)
-        .then(async user => {
-          const uid = user.user.uid;
-
-          const res = await firestore().collection('users').doc(uid).get();
-
-          if (!res.exists) {
-            firestore()
-              .collection('users')
-              .doc(uid)
-              .set({user: user.user.email, favorites: {}, visited: {}});
-          }
-        });
+        .then(user => FIRESTORE.createUserDoc(user.user));
     } catch (error) {
       console.log('error', error);
     }
@@ -32,9 +22,7 @@ const AUTH = {
   guestSignIn: async () => {
     auth()
       .signInAnonymously()
-      .then(r => {
-        console.log('signed in as guest');
-      })
+      .then(user => FIRESTORE.createUserDoc(user.user))
       .catch(e => console.log('failed to sign in as guest', e));
   },
   deleteAccount: async () => {
