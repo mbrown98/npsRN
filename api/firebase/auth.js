@@ -29,6 +29,14 @@ const AUTH = {
       console.log('error', error);
     }
   },
+  guestSignIn: async () => {
+    auth()
+      .signInAnonymously()
+      .then(r => {
+        console.log('signed in as guest');
+      })
+      .catch(e => console.log('failed to sign in as guest', e));
+  },
   deleteAccount: async () => {
     try {
       const user = firebase.auth().currentUser;

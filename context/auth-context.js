@@ -20,8 +20,9 @@ const AuthProvider = ({...props}) => {
 
   useEffect(() => {
     // Handle user state changes
-    function onAuthStateChanged(user) {
-      setUser(user);
+    function onAuthStateChanged(u) {
+      console.log('-------------------- NEW USER --------------------', u);
+      setUser(u);
       if (initializing) {
         setInitializing(false);
       }

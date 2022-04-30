@@ -13,7 +13,10 @@ const CustomButton = ({buttonText, buttonContainerStyle, onPress, colors}) => {
           start={{x: 0, y: 0}}
           end={{x: 1, y: 0}}
           colors={colors}
-          style={{...buttonContainerStyle}}>
+          style={[
+            {paddingVertical: 12, borderRadius: 10},
+            {...buttonContainerStyle},
+          ]}>
           <Text
             style={{
               textAlign: 'center',
