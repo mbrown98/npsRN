@@ -32,7 +32,7 @@ export const FIRESTORE = {
           .set({user: email ? email : 'guest', favorites: {}, visited: {}});
       }
     } catch (error) {
-      throw Error(`failed to create user doc', ${error}`);
+      // throw Error(`failed to create user doc', ${error}`);
     }
   },
 };

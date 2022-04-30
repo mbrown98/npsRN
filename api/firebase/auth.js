@@ -8,16 +8,12 @@ import {FIRESTORE} from './firestore';
 
 const AUTH = {
   signIn: async provider => {
-    const cred = await AUTH.determineCred(provider);
-
-    // Sign-in the user with the credential
-    try {
-      auth()
-        .signInWithCredential(cred)
-        .then(user => FIRESTORE.createUserDoc(user.user));
-    } catch (error) {
-      console.log('error', error);
-    }
+    AUTH.determineCred(provider)
+      .catch(e => console.log('Failed to create cred'))
+      .then(cred => auth().signInWithCredential(cred))
+      .catch(e => console.log('failed to sign in with cred'))
+      .then(user => FIRESTORE.createUserDoc(user.user))
+      .catch(e => console.log('failed to create user doc'));
   },
   guestSignIn: async () => {
     auth()
@@ -29,12 +25,11 @@ const AUTH = {
   deleteAccount: async () => {
     try {
       const user = firebase.auth().currentUser;
-      const cred = await AUTH.determineCred(user.providerData[0].providerId);
-      return user
-        .reauthenticateWithCredential(cred)
+      AUTH.determineCred(user.providerData[0].providerId)
+        .then(cred => user.reauthenticateWithCredential(cred))
         .then(u => u.user.delete())
-        .then(res => firestore().collection('users').doc(user.uid).delete())
-        .then(res => AsyncStorage.removeItem('ONBOARD_COMPLETE'));
+        .then(() => firestore().collection('users').doc(user.uid).delete())
+        .then(() => AsyncStorage.removeItem('ONBOARD_COMPLETE'));
     } catch (error) {
       console.log('e', error);
       return 'failed';
@@ -42,16 +37,19 @@ const AUTH = {
   },
   signOut: async () => {
     const user = firebase.auth().currentUser;
-    if (!user.email) {
-      await firestore().collection('users').doc(user.uid).delete();
-    }
+
     auth()
       .signOut()
+      .catch(e => console.log('failed to sign out'))
       .then(() => AsyncStorage.removeItem('ONBOARD_COMPLETE'))
-      .catch(e => console.log('e'));
+      .then(() => {
+        if (!user.email) {
+          firestore().collection('users').doc(user.uid).delete();
+        }
+      })
+      .catch(e => console.log('failed to delete user'));
   },
   determineCred: async provider => {
-    console.log('provider', provider);
     switch (provider) {
       case 'apple':
       case 'apple.com':
