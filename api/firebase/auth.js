@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import auth from '@react-native-firebase/auth';
+import auth, {deleteUser} from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
@@ -21,13 +21,14 @@ const AUTH = {
   },
 
   deleteAccount: async () => {
-    const user = firebase.auth().currentUser;
-    AUTH.determineCred(user.providerData[0].providerId)
-      .then(cred => user.reauthenticateWithCredential(cred))
-      .then(u => u.user.delete())
-      .then(() => firestore().collection('users').doc(user.uid).delete())
-      .then(() => AsyncStorage.removeItem('ONBOARD_COMPLETE'))
-      .catch(e => console.log('failed to delete account', e));
+    console.log('delete');
+    // const user = firebase.auth().currentUser;
+    // AUTH.determineCred(user.providerData[0].providerId)
+    //   .then(cred => user.reauthenticateWithCredential(cred))
+    //   .then(u => u.user.delete())
+    //   .then(() => firestore().collection('users').doc(user.uid).delete())
+    //   .then(() => AsyncStorage.removeItem('ONBOARD_COMPLETE'))
+    //   .catch(e => console.log('failed to delete account', e));
   },
   signOut: async () => {
     const user = firebase.auth().currentUser;
