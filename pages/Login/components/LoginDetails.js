@@ -10,29 +10,34 @@ export default function LoginDetails() {
   return (
     <View style={styles.contain}>
       <Text style={styles.infoText}>
-        Discover more than 500 parks in your hands!
+        Discover more than 500 parks in the palm of your hand!
       </Text>
 
       {/* Buttons */}
       <View style={styles.buttonContain}>
         <CustomButton
           buttonText="Sign in With Google"
-          buttonContainerStyle={{
-            paddingVertical: 12,
-            borderRadius: 10,
-          }}
+          buttonContainerStyle={{}}
           colors={[COLORS.darkGreen, COLORS.lime]}
           onPress={() => AUTH.signIn('google')}
         />
-
+        <Spacer h={10} />
         <AppleButton
           buttonStyle={AppleButton.Style.WHITE}
           buttonType={AppleButton.Type.SIGN_IN}
           style={{
             height: 50,
-            marginTop: 10,
           }}
           onPress={() => AUTH.signIn('apple')}
+        />
+        <Spacer h={10} />
+        <CustomButton
+          buttonText="Continue as Guest"
+          buttonContainerStyle={{}}
+          colors={[COLORS.gray, COLORS.lightGray2]}
+          onPress={() => {
+            AUTH.guestSignIn();
+          }}
         />
       </View>
     </View>

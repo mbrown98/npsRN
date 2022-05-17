@@ -20,8 +20,9 @@ const AuthProvider = ({...props}) => {
 
   useEffect(() => {
     // Handle user state changes
-    function onAuthStateChanged(user) {
-      setUser(user);
+    function onAuthStateChanged(u) {
+      // console.log('-------------------- NEW USER --------------------', u);
+      setUser(u);
       if (initializing) {
         setInitializing(false);
       }
@@ -60,3 +61,19 @@ const AuthProvider = ({...props}) => {
 };
 
 export {AuthProvider, useAuth};
+
+const guest = {
+  displayName: null,
+  email: null,
+  emailVerified: false,
+  isAnonymous: true,
+  metadata: {creationTime: 1651333195837, lastSignInTime: 1651333195837},
+  phoneNumber: null,
+  photoURL: null,
+  providerData: [],
+  providerId: 'firebase',
+  refreshToken:
+    'AIwUaOkMZo93xJj6y9ZA_06kzl9V8AkjyAerpTbgJLqf-AdFkC-bhvTF747xE4dchbtrnQzmtjWqoxaupTCODoTzij61MdFRYE5N6u1WQH-r9t6sLGP9wIGbQi7q-XAW0H73OXwin-_LuniD7EC_d6TMb2LvXPCWW5i14f-HVOUb9YTzJuXy0OM2L7OYMwa6YtItMA45Ww-s',
+  tenantId: null,
+  uid: 'SYmln6Hni2MPPTwBZcrHdNe2KeD2',
+};

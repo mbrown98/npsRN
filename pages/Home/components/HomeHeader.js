@@ -13,29 +13,30 @@ import {useAuth} from '../../../context/auth-context';
 
 const HomeHeader = () => {
   const {user} = useAuth();
+
   const [profileOpen, setProfileOpen] = useState(false);
-  const [deleteOpen, setDeleteOpen] = useState(false);
+  // const [deleteOpen, setDeleteOpen] = useState(false);
 
-  const deleteAlert = () =>
-    Alert.alert(
-      deleteOpen === 'failed'
-        ? 'Failed to Delete'
-        : 'Confirm you wish to delete your account?',
-      'Select option below',
-      [
-        {
-          text: 'Delete',
-          onPress: async () => {
-            const res = await AUTH.deleteAccount();
-            if (res === 'failed') {
-              setDeleteOpen('failed');
-            }
-          },
-        },
+  // const deleteAlert = () =>
+  //   Alert.alert(
+  //     deleteOpen === 'failed'
+  //       ? 'Failed to Delete'
+  //       : 'Confirm you wish to delete your account?',
+  //     'Select option below',
+  //     [
+  //       {
+  //         text: 'Delete',
+  //         onPress: async () => {
+  //           const res = await AUTH.deleteAccount();
+  //           if (res === 'failed') {
+  //             setDeleteOpen('failed');
+  //           }
+  //         },
+  //       },
 
-        {text: 'Cancel', onPress: () => setDeleteOpen(false)},
-      ],
-    );
+  //       {text: 'Cancel', onPress: () => setDeleteOpen(false)},
+  //     ],
+  //   );
 
   return (
     <View style={styles.contain}>
@@ -59,14 +60,18 @@ const HomeHeader = () => {
           <TouchableOpacity style={styles.toBox} onPress={() => AUTH.signOut()}>
             <Text style={styles.toText}>Sign-Out</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.toBox, {borderColor: COLORS.lightGray2}]}
-            onPress={() => setDeleteOpen(true)}>
-            <Text style={[styles.toText, {color: COLORS.lightGray2}]}>
-              Delete Account
-            </Text>
-          </TouchableOpacity>
-          {deleteOpen && deleteAlert()}
+          {/* {user.email && (
+            <>
+              <TouchableOpacity
+                style={[styles.toBox, {borderColor: COLORS.lightGray2}]}
+                onPress={() => setDeleteOpen(true)}>
+                <Text style={[styles.toText, {color: COLORS.lightGray2}]}>
+                  Delete Account
+                </Text>
+              </TouchableOpacity>
+              {deleteOpen && deleteAlert()}
+            </>
+          )} */}
         </View>
       )}
       <TouchableOpacity onPress={() => setProfileOpen(!profileOpen)}>

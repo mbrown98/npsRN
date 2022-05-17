@@ -1,56 +1,49 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import auth from '@react-native-firebase/auth';
+import auth, {deleteUser} from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {appleAuth} from '@invertase/react-native-apple-authentication';
+import {FIRESTORE} from './firestore';
 
 const AUTH = {
   signIn: async provider => {
-    const cred = await AUTH.determineCred(provider);
-
-    // Sign-in the user with the credential
-    try {
-      auth()
-        .signInWithCredential(cred)
-        .then(async user => {
-          const uid = user.user.uid;
-
-          const res = await firestore().collection('users').doc(uid).get();
-
-          if (!res.exists) {
-            firestore()
-              .collection('users')
-              .doc(uid)
-              .set({user: user.user.email, favorites: {}, visited: {}});
-          }
-        });
-    } catch (error) {
-      console.log('error', error);
-    }
+    AUTH.determineCred(provider)
+      .then(cred => auth().signInWithCredential(cred))
+      .then(user => FIRESTORE.createUserDoc(user.user))
+      .catch(e => console.log('failed to create user doc', e));
   },
+  guestSignIn: async () => {
+    auth()
+      .signInAnonymously()
+      .then(user => FIRESTORE.createUserDoc(user.user))
+      .catch(e => console.log('failed to sign in as guest', e));
+  },
+
   deleteAccount: async () => {
-    try {
-      const user = firebase.auth().currentUser;
-      const cred = await AUTH.determineCred(user.providerData[0].providerId);
-      return user
-        .reauthenticateWithCredential(cred)
-        .then(u => u.user.delete())
-        .then(res => firestore().collection('users').doc(user.uid).delete())
-        .then(res => AsyncStorage.removeItem('ONBOARD_COMPLETE'));
-    } catch (error) {
-      console.log('e', error);
-      return 'failed';
-    }
+    console.log('delete');
+    // const user = firebase.auth().currentUser;
+    // AUTH.determineCred(user.providerData[0].providerId)
+    //   .then(cred => user.reauthenticateWithCredential(cred))
+    //   .then(u => u.user.delete())
+    //   .then(() => firestore().collection('users').doc(user.uid).delete())
+    //   .then(() => AsyncStorage.removeItem('ONBOARD_COMPLETE'))
+    //   .catch(e => console.log('failed to delete account', e));
   },
   signOut: async () => {
+    const user = firebase.auth().currentUser;
+
     auth()
       .signOut()
       .then(() => AsyncStorage.removeItem('ONBOARD_COMPLETE'))
-      .catch(e => console.log('e'));
+      .then(() => {
+        if (!user.email) {
+          firestore().collection('users').doc(user.uid).delete();
+        }
+      })
+      .catch(e => console.log('failed to delete user', e));
   },
   determineCred: async provider => {
-    console.log('provider', provider);
     switch (provider) {
       case 'apple':
       case 'apple.com':

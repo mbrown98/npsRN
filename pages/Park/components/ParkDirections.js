@@ -5,17 +5,14 @@ import BROWSER from '../../../utils/browser';
 import {COLORS} from '../../../constants';
 
 const ParkDirections = ({data}) => {
-  let {latLong, directionsUrl, directionsInfo} = data[0];
-
-  const coords = latLong.replace('lat:', '').replace(', long:', '|').split('|');
+  let {directionsUrl, directionsInfo, fullName} = data[0];
 
   const mapOpts = [
     {
       text: 'Open in Maps',
       onPress: () => {
         openMap({
-          latitude: Number(coords[0]),
-          longitude: Number(coords[1]),
+          query: fullName,
         });
       },
     },
