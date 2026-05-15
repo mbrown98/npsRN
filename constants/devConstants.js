@@ -1,0 +1,31 @@
+export const DEV_favorites = [
+  {id: 'acad'},
+  {id: 'appa'},
+  {id: 'anti'},
+  {id: 'beol'},
+  {id: 'bawa'},
+  {id: 'deso'},
+  {id: 'deva'},
+  {id: 'bith'},
+  {id: 'bibe'},
+  {id: 'cebr'},
+  {id: 'crla'},
+  {id: 'frri'},
+  {id: 'gwca'},
+  {id: 'glca'},
+  {id: 'jame'},
+  {id: 'hocu'},
+  {id: 'lewi'},
+];
+
+export const DEV_visited = [
+  {id: 'timu'},
+  {id: 'thst'},
+  {id: 'vive'},
+  {id: 'waco'},
+  {id: 'vicr'},
+  {id: 'waca'},
+  {id: 'wapa'},
+  {id: 'whis'},
+  {id: 'wing'},
+];

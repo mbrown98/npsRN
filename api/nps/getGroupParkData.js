@@ -1,0 +1,42 @@
+import axios from 'axios';
+import {useQuery} from '@tanstack/react-query';
+import {genApiKey} from './genAPIKey';
+
+const getGroupParkData = async (field, parkIds) => {
+  if (!Object.keys(parkIds[0]).length) {
+    return [];
+  }
+  const URL = `https://developer.nps.gov/api/v1/${field}?parkCode=${_genParksQuery(
+    parkIds[0],
+  )}&api_key=${genApiKey()}`;
+
+  return axios
+    .get(URL)
+    .then(async res => {
+      return res.data.data;
+    })
+    .catch(e => {
+      console.log('e', e);
+      return [];
+    });
+};
+
+const _genParksQuery = arr => {
+  let parksString = '';
+  const parkCodes = Object.keys(arr);
+  parkCodes.forEach((pc, i) => {
+    parksString += pc;
+    if (i !== parkCodes.length - 1) {
+      parksString += ',';
+    }
+  });
+  return parksString;
+};
+
+const useGroupParkData = (field, parkId) =>
+  useQuery({
+    queryKey: ['fullPark', field, parkId],
+    queryFn: () => getGroupParkData(field, parkId),
+    refetchOnMount: false,
+  });
+export default useGroupParkData;
